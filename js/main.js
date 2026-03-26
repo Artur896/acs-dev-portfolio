@@ -22,6 +22,10 @@ if (typewriterEl) {
     'Solana Builder',
     'Freelance & Empleo',
   ];
+
+  // Calcula el ancho dinámicamente según la frase más larga
+  const longest = phrases.reduce((a, b) => a.length > b.length ? a : b);
+  document.documentElement.style.setProperty('--typewriter-ch', longest.length);
   let phraseIndex = 0;
   let charIndex = 0;
   let deleting = false;
@@ -49,6 +53,7 @@ if (typewriterEl) {
       typewriterEl.textContent = current.slice(0, charIndex - 1);
       charIndex--;
       if (charIndex === 0) {
+        typewriterEl.textContent = '\u00A0'; // espacio invisible — evita colapso del span
         deleting = false;
         phraseIndex = (phraseIndex + 1) % phrases.length;
         setTimeout(typeStep, 400);

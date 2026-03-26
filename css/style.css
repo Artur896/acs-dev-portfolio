@@ -632,6 +632,8 @@ ul {
   line-height: 1.2;
   letter-spacing: -0.02em;
   margin: 0;
+  white-space: nowrap;
+  contain: layout;
 }
 
 .hero__title-name {
@@ -641,16 +643,17 @@ ul {
 }
 
 .hero__title-accent {
-  display: inline-block;
-  min-width: 2px; /* reserva espacio cuando está vacío */
-  min-height: 1.2em;
+  display: inline-flex;
+  align-items: center;
+  width: calc(var(--typewriter-ch, 22) * 1ch);
+  white-space: nowrap;
+  overflow: hidden;
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  max-width: 100%;
-  vertical-align: top;
 }
+
 
 /* Subtitle */
 .hero__subtitle {
@@ -2566,9 +2569,10 @@ a.contact__item-value:hover {
 
 .hero__cursor {
   display: inline-block;
+  width: 1ch;
+  white-space: nowrap;
   color: var(--accent);
   font-weight: 300;
-  font-size: clamp(2.4rem, 6vw, 4rem);
   animation: cursorBlink 1s step-end infinite;
   margin-left: 2px;
 }
