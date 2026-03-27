@@ -3822,3 +3822,100 @@ a.contact__item-value:hover {
     font-size: 1.4rem;
   }
 }
+
+/* ============================================
+   WHATSAPP BUBBLE
+   ============================================ */
+.wa-bubble {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-full);
+  background: var(--bg-card);
+  border: 1px solid rgba(37, 211, 102, 0.3);
+  color: #25d366;
+  text-decoration: none;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 0 0 rgba(37, 211, 102, 0.25);
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+  animation: waPulseRing 3s ease-in-out infinite;
+}
+
+.wa-bubble:hover {
+  transform: translateY(-4px) scale(1.08);
+  border-color: rgba(37, 211, 102, 0.65);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45), 0 0 20px rgba(37, 211, 102, 0.2);
+}
+
+.wa-bubble:hover .wa-bubble__tooltip {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: none;
+}
+
+.wa-bubble__ring {
+  position: absolute;
+  inset: -4px;
+  border-radius: var(--radius-full);
+  border: 1.5px solid rgba(37, 211, 102, 0.2);
+  animation: waRingExpand 3s ease-out infinite;
+}
+
+.wa-bubble__icon {
+  flex-shrink: 0;
+}
+
+.wa-bubble__tooltip {
+  position: absolute;
+  right: calc(100% + 12px);
+  top: 50%;
+  transform: translateX(6px) translateY(-50%);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-md);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity var(--transition), transform var(--transition);
+  box-shadow: var(--shadow-md);
+}
+
+.wa-bubble__tooltip::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  transform: translateY(-50%);
+  border: 5px solid transparent;
+  border-left-color: var(--border);
+}
+
+@keyframes waPulseRing {
+  0%, 100% { box-shadow: 0 4px 20px rgba(0,0,0,0.4), 0 0 0 0 rgba(37,211,102,0.2); }
+  50%       { box-shadow: 0 4px 20px rgba(0,0,0,0.4), 0 0 0 8px rgba(37,211,102,0); }
+}
+
+@keyframes waRingExpand {
+  0%   { transform: scale(1); opacity: 0.5; }
+  70%  { transform: scale(1.5); opacity: 0; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+[data-theme="light"] .wa-bubble {
+  background: #ffffff;
+  border-color: rgba(37, 211, 102, 0.4);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.12), 0 0 0 0 rgba(37,211,102,0.2);
+}
+
+[data-theme="light"] .wa-bubble__tooltip {
+  background: #ffffff;
+}
