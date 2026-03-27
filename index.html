@@ -96,7 +96,7 @@
                 <span class="hero__badge-dot"></span>
                 Disponible · Empleo &amp; Freelance
               </div>
-              <p class="hero__meta">Fullstack Developer · 22 años · México</p>
+              <p class="hero__meta">Fullstack Developer · 21 años · México</p>
               <h1 class="hero__title">
                 <span class="hero__title-name">Arturo de la Cruz</span>
                 <span class="hero__title-accent" id="typewriterTarget"></span><span class="hero__cursor">|</span>
@@ -137,14 +137,8 @@
           <div class="hero__timeline">
             <div class="hero__timeline-item">
               <div class="hero__timeline-dot"></div>
-              <span class="hero__timeline-year">2021</span>
-              <span class="hero__timeline-label">Primer empleo</span>
-            </div>
-            <div class="hero__timeline-line"></div>
-            <div class="hero__timeline-item">
-              <div class="hero__timeline-dot"></div>
               <span class="hero__timeline-year">2022</span>
-              <span class="hero__timeline-label">Sector Médico</span>
+              <span class="hero__timeline-label">Primer empleo</span>
             </div>
             <div class="hero__timeline-line"></div>
             <div class="hero__timeline-item">
@@ -153,9 +147,15 @@
               <span class="hero__timeline-label">Gobierno Edomex</span>
             </div>
             <div class="hero__timeline-line"></div>
-            <div class="hero__timeline-item hero__timeline-item--active">
+            <div class="hero__timeline-item">
               <div class="hero__timeline-dot"></div>
               <span class="hero__timeline-year">2024</span>
+              <span class="hero__timeline-label">Sector Médico</span>
+            </div>
+            <div class="hero__timeline-line"></div>
+            <div class="hero__timeline-item hero__timeline-item--active">
+              <div class="hero__timeline-dot"></div>
+              <span class="hero__timeline-year">2026</span>
               <span class="hero__timeline-label">Freelance · Solana</span>
             </div>
           </div>
@@ -175,7 +175,7 @@
         <div class="about__grid">
           <div class="about__content">
             <p class="about__lead">
-              Empecé a programar por curiosidad a los 16 años. Hoy, con casi 3 años de experiencia laboral real, construyo sistemas que resuelven problemas de negocio concretos.
+              Empecé a programar por curiosidad a los 17 años. Hoy, con casi 3 años de experiencia laboral real, construyo sistemas que resuelven problemas de negocio concretos.
             </p>
             <p class="about__text">
               Soy Fullstack Developer con TSU en Tecnologías de la Información (Entornos Virtuales y Negocios Digitales), actualmente cursando Ingeniería en la Universidad Tecnológica de Zinacantepec. He trabajado en producción para el sector médico privado y para el Gobierno del Estado de México, usando <strong>Laravel, React, MySQL y Docker</strong>.
@@ -392,67 +392,93 @@
             <div class="project-case__meta">
               <span class="project-case__number">01</span>
               <div>
-                <span class="tag tag--primary">Producción</span>
-                <span class="tag tag--secondary">E-commerce</span>
-                <span class="tag tag--secondary">Pagos</span>
+                <span class="tag tag--primary">Freelance</span>
+                <span class="tag tag--secondary">Web</span>
+                <span class="tag tag--secondary">SaaS</span>
+                <span class="tag tag--secondary">Educación</span>
+                <span class="tag tag--secondary">Salud</span>
               </div>
             </div>
             <h3 class="project-case__title">Educación Médica Especializada</h3>
-            <p class="project-case__subtitle">Plataforma de venta y gestión de cursos de especialización médica con pagos internacionales</p>
+            <p class="project-case__subtitle">Plataforma de educación médica con panel de administración completo para gestionar cursos de certificación (CRIO, ALSO, BLSO) dirigidos a profesionales de la salud en México, con presencia en 16+ estados y más de 5,000 profesionales capacitados.</p>
           </div>
 
           <div class="project-case__body">
             <div class="project-case__left">
               <div class="case-block">
                 <h4 class="case-block__title">🎯 El Problema</h4>
-                <p>La empresa gestionaba inscripciones y pagos de forma manual — transferencias bancarias verificadas a mano, sin control de acceso automático al contenido tras el pago, y sin historial de transacciones consolidado.</p>
+                <p>La organización coordinaba cursos de certificación médica a nivel nacional sin una plataforma centralizada. Las inscripciones se gestionaban manualmente, los comprobantes de pago llegaban por vías informales, y no había forma de que los alumnos consultaran su historial, accedieran a materiales o participaran en foros entre sesiones. La escala nacional (32 estados disponibles) hacía inviable seguir operando sin un sistema propio.</p>
               </div>
               <div class="case-block">
                 <h4 class="case-block__title">⚙️ El Proceso</h4>
                 <div class="architecture">
-                  <div class="arch-node arch-node--frontend">React<br/><small>SPA</small></div>
+                  <div class="arch-node arch-node--frontend">PHP + MySQLi/PDO<br/><small>Backend + Admin</small></div>
                   <div class="arch-arrow">→</div>
-                  <div class="arch-node arch-node--backend">Laravel<br/><small>API REST</small></div>
+                  <div class="arch-node arch-node--backend">MariaDB<br/><small>Datos</small></div>
                   <div class="arch-arrow">→</div>
-                  <div class="arch-node arch-node--db">Stripe / PayPal<br/><small>Webhooks</small></div>
+                  <div class="arch-node arch-node--db">JS Vanilla + AJAX<br/><small>Interactividad</small></div>
                 </div>
                 <ul class="case-list">
-                  <li><strong>Roles con Laravel Sanctum:</strong> Admin, Instructor y Alumno con middleware de acceso propio y rutas protegidas.</li>
-                  <li><strong>Webhooks de Stripe y PayPal:</strong> El acceso al curso se activa automáticamente al confirmar el pago, sin intervención humana.</li>
-                  <li><strong>Idempotency keys:</strong> Garantizan que los webhooks se procesen exactamente una vez, incluso con reintentos.</li>
+                  <li><strong>Portal del alumno:</strong> Registro con verificación de correo (código de 6 dígitos, 30 min), login con email o Google OAuth, dashboard personal con cursos inscritos, foro por curso, galería de imágenes y syllabus en PDF.</li>
+                  <li><strong>Pasarela de pagos múltiple:</strong> Integración simultánea de Stripe, PayPal, OXXO y Amazon Pay, más flujo manual de comprobante fotográfico con soporte de hasta 12 archivos por transacción.</li>
+                  <li><strong>Panel de administración:</strong> Gestión completa de cursos, lista de alumnos con estado de inscripción, seguimiento de ventas por tipo de curso (CRIO/ALSO/BLSO), generación de reportes en Excel y registro de actividad del admin.</li>
+                  <li><strong>Campañas de correo masivo:</strong> Sistema de cola en base de datos procesada por cron job, con soporte de adjuntos, selección de destinatarios y seguimiento de progreso en tiempo real.</li>
+                  <li><strong>Webinars en vivo:</strong> Implementación WebRTC con acceso exclusivo de cámara/micrófono para el admin y sistema de comentarios en tiempo real para los asistentes.</li>
+                  <li><strong>Gestión de rosters:</strong> Sistema de estados (pendiente → perfil creado → datos confirmados) para el control de inscripciones por tipo de curso.</li>
                 </ul>
               </div>
               <div class="case-block">
                 <h4 class="case-block__title">🔥 El Desafío</h4>
-                <p>Evitar doble activación de accesos ante reintentos de webhooks. Implementé una tabla de eventos procesados y verificación de idempotency key antes de ejecutar cualquier acción.</p>
+                <p>Construir un SaaS médico de alcance nacional sin frameworks modernos — PHP puro con consultas preparadas, JS vanilla y sin ORM. El mayor reto fue el sistema de pagos: coordinar cuatro pasarelas distintas (incluyendo OXXO, que requiere flujo asíncrono) junto a un proceso de verificación manual de comprobantes. La escala de correos masivos también obligó a diseñar un sistema de cola propio para evitar timeouts, con procesamiento en background vía cron.</p>
               </div>
             </div>
             <div class="project-case__right">
               <div class="case-results">
                 <h4 class="case-block__title">📊 Resultados</h4>
                 <div class="result-item">
-                  <div class="result-item__label">Tiempo de activación de acceso</div>
+                  <div class="result-item__label">Inscripciones</div>
                   <div class="result-item__bar">
-                    <div class="result-item__before" style="width:100%">Antes: 24-48h (manual)</div>
+                    <div class="result-item__before" style="width:100%">Antes: Manual / por teléfono</div>
                   </div>
                   <div class="result-item__bar">
-                    <div class="result-item__after" style="width:5%">Después: &lt;30s</div>
+                    <div class="result-item__after" style="width:80%">Después: Online 24/7</div>
                   </div>
                 </div>
                 <div class="result-item">
-                  <div class="result-item__label">Doble cobro en producción</div>
-                  <div class="result-metric">0% registrado desde el deploy</div>
+                  <div class="result-item__label">Seguimiento de pagos</div>
+                  <div class="result-metric">Informal → Dashboard en tiempo real</div>
+                </div>
+                <div class="result-item">
+                  <div class="result-item__label">Métodos de pago</div>
+                  <div class="result-metric">1 (efectivo/transferencia) → 4 pasarelas + comprobante</div>
+                </div>
+                <div class="result-item">
+                  <div class="result-item__label">Cobertura digital</div>
+                  <div class="result-metric">Ninguna → 16+ estados activos</div>
+                </div>
+                <div class="result-item">
+                  <div class="result-item__label">Acceso a materiales</div>
+                  <div class="result-metric">Solo presencial → Portal del alumno</div>
                 </div>
               </div>
               <div class="project-case__tech">
                 <h4 class="case-block__title">🔨 Stack</h4>
                 <div class="project-case__tags">
-                  <span class="tag tag--primary">Laravel</span>
-                  <span class="tag tag--primary">React</span>
-                  <span class="tag tag--primary">MySQL</span>
-                  <span class="tag tag--secondary">Stripe API</span>
-                  <span class="tag tag--secondary">PayPal SDK</span>
-                  <span class="tag tag--secondary">Sanctum</span>
+                  <span class="tag tag--primary">PHP</span>
+                  <span class="tag tag--primary">MySQL/MariaDB</span>
+                  <span class="tag tag--primary">JavaScript</span>
+                  <span class="tag tag--secondary">AJAX</span>
+                  <span class="tag tag--secondary">PHPMailer</span>
+                  <span class="tag tag--secondary">Stripe</span>
+                  <span class="tag tag--secondary">PayPal</span>
+                  <span class="tag tag--secondary">Amazon Pay</span>
+                  <span class="tag tag--secondary">Google OAuth</span>
+                  <span class="tag tag--secondary">WebRTC</span>
+                  <span class="tag tag--secondary">Leaflet.js</span>
+                  <span class="tag tag--secondary">PhpSpreadsheet</span>
+                  <span class="tag tag--tertiary">XAMPP</span>
+                  <span class="tag tag--tertiary">Hostinger</span>
+                  <span class="tag tag--tertiary">Apache</span>
                 </div>
               </div>
               <div class="project-case__links">
@@ -541,83 +567,180 @@
               <span class="project-case__number">03</span>
               <div>
                 <span class="tag tag--primary">Freelance</span>
-                <span class="tag tag--secondary">E-commerce</span>
-                <span class="tag tag--secondary">Inventario</span>
+                <span class="tag tag--secondary">Web</span>
+                <span class="tag tag--secondary">Institucional</span>
+                <span class="tag tag--secondary">Catálogo Digital</span>
               </div>
             </div>
             <h3 class="project-case__title">Ferreteros Unidos</h3>
-            <p class="project-case__subtitle">Plataforma de e-commerce y gestión de inventario para red de ferreterías — ventas online + control de stock en tiempo real</p>
+            <p class="project-case__subtitle">Sitio web institucional con catálogo digital de 1,000+ productos y panel de administración para cadena de ferreterías con 50 años de experiencia en CDMX.</p>
           </div>
 
           <div class="project-case__body">
             <div class="project-case__left">
               <div class="case-block">
                 <h4 class="case-block__title">🎯 El Problema</h4>
-                <p>La red de ferreterías operaba sin catálogo digital ni ventas online. El inventario se manejaba en hojas de cálculo desconectadas entre sucursales, generando quiebres de stock invisibles y pedidos duplicados.</p>
+                <p>La empresa operaba sin ninguna presencia digital. Clientes — incluyendo dependencias gubernamentales como Pemex, SEDENA, SAT y más de 16 alcaldías — debían llamar o visitar la tienda para consultar productos. El catálogo se manejaba de forma completamente manual, sin posibilidad de mostrarlo en línea.</p>
               </div>
               <div class="case-block">
                 <h4 class="case-block__title">⚙️ El Proceso</h4>
                 <div class="architecture">
-                  <div class="arch-node arch-node--frontend">React<br/><small>Catálogo</small></div>
+                  <div class="arch-node arch-node--frontend">PHP<br/><small>Sitio + Admin</small></div>
                   <div class="arch-arrow">→</div>
-                  <div class="arch-node arch-node--backend">Laravel<br/><small>API + Admin</small></div>
+                  <div class="arch-node arch-node--backend">MySQL<br/><small>Catálogo</small></div>
                   <div class="arch-arrow">→</div>
-                  <div class="arch-node arch-node--db">MySQL<br/><small>Inventario</small></div>
+                  <div class="arch-node arch-node--db">JavaScript / AJAX<br/><small>Búsqueda en tiempo real</small></div>
                 </div>
                 <ul class="case-list">
-                  <li><strong>Catálogo con búsqueda:</strong> Más de 2,000 productos indexados con filtros por categoría, marca y disponibilidad por sucursal.</li>
-                  <li><strong>Control de stock en tiempo real:</strong> Cada venta — online o en caja — descuenta automáticamente del inventario de la sucursal correspondiente.</li>
-                  <li><strong>Panel de administración:</strong> Gestión de productos, sucursales, pedidos y reportes de ventas con exportación a CSV/PDF.</li>
+                  <li><strong>Catálogo con búsqueda y filtros:</strong> 1,000+ productos organizados en 15 categorías (cemento, aceros, plomería, impermeabilizantes, etc.), con búsqueda en tiempo real vía AJAX y paginación por sesión con orden aleatorio.</li>
+                  <li><strong>Panel de administración:</strong> Gestión completa de productos — alta, edición, eliminación, activar/desactivar — con subida de imágenes y autenticación por sesión.</li>
+                  <li><strong>Sitio institucional:</strong> Secciones de nosotros, 2 sucursales, 16 marcas distribuidoras (Truper, Makita, Bosch, Dewalt, Cruz Azul…), galería de 22+ clientes gubernamentales y flota de transporte propia.</li>
                 </ul>
               </div>
               <div class="case-block">
                 <h4 class="case-block__title">🔥 El Desafío</h4>
-                <p>Sincronizar el inventario entre tienda online y punto de venta físico sin conflictos de concurrencia. Usé transacciones de base de datos con bloqueos a nivel de fila para garantizar consistencia.</p>
+                <p>Construir un catálogo funcional y rápido de 1,000+ productos sin frameworks modernos, usando PHP puro con consultas preparadas y AJAX vanilla. El reto fue mantener la búsqueda ágil y la experiencia fluida para usuarios con conexiones variables, además de que el panel de admin fuera usable por personal no técnico.</p>
               </div>
             </div>
             <div class="project-case__right">
               <div class="case-results">
                 <h4 class="case-block__title">📊 Resultados</h4>
                 <div class="result-item">
-                  <div class="result-item__label">Quiebres de stock no detectados</div>
+                  <div class="result-item__label">Presencia digital</div>
                   <div class="result-item__bar">
-                    <div class="result-item__before" style="width:100%">Antes: frecuentes</div>
+                    <div class="result-item__before" style="width:100%">Antes: Ninguna</div>
                   </div>
                   <div class="result-item__bar">
-                    <div class="result-item__after" style="width:4%">Después: ~0</div>
+                    <div class="result-item__after" style="width:80%">Después: Online</div>
                   </div>
                 </div>
                 <div class="result-item">
-                  <div class="result-item__label">Canal de ventas</div>
-                  <div class="result-metric">Online habilitado desde cero</div>
+                  <div class="result-item__label">Consulta de catálogo</div>
+                  <div class="result-metric">Solo en tienda → 24/7 en línea</div>
                 </div>
                 <div class="result-item">
-                  <div class="result-item__label">Productos en catálogo</div>
-                  <div class="result-metric">2,000+ SKUs gestionados</div>
+                  <div class="result-item__label">Productos accesibles</div>
+                  <div class="result-metric">0 → 1,000+ SKUs</div>
+                </div>
+                <div class="result-item">
+                  <div class="result-item__label">Categorías organizadas</div>
+                  <div class="result-metric">15 categorías estructuradas</div>
                 </div>
               </div>
               <div class="project-case__tech">
                 <h4 class="case-block__title">🔨 Stack</h4>
                 <div class="project-case__tags">
-                  <span class="tag tag--primary">Laravel</span>
-                  <span class="tag tag--primary">React</span>
+                  <span class="tag tag--primary">PHP</span>
                   <span class="tag tag--primary">MySQL</span>
-                  <span class="tag tag--secondary">Stripe</span>
-                  <span class="tag tag--secondary">Docker</span>
-                  <span class="tag tag--tertiary">Redis</span>
+                  <span class="tag tag--primary">JavaScript</span>
+                  <span class="tag tag--secondary">AJAX</span>
+                  <span class="tag tag--secondary">HTML/CSS</span>
+                  <span class="tag tag--tertiary">XAMPP</span>
                 </div>
               </div>
             </div>
           </div>
         </article>
 
-        <!-- ══ PROYECTOS COMPACTOS (04 y 05) ══ -->
+        <!-- ══ PROYECTO 04 — Acuario Martinez ══ -->
+        <article class="project-case project-case--featured" id="acuario-martinez">
+          <div class="project-case__header">
+            <div class="project-case__meta">
+              <span class="project-case__number">04</span>
+              <div>
+                <span class="tag tag--primary">Freelance</span>
+                <span class="tag tag--secondary">Web</span>
+                <span class="tag tag--secondary">E-commerce</span>
+                <span class="tag tag--secondary">Catálogo Digital</span>
+              </div>
+            </div>
+            <h3 class="project-case__title">Acuario Martinez</h3>
+            <p class="project-case__subtitle">Landing page animada con catálogo digital y panel de administración para tienda especializada en peces ornamentales y accesorios para acuario.</p>
+          </div>
+
+          <div class="project-case__body">
+            <div class="project-case__left">
+              <div class="case-block">
+                <h4 class="case-block__title">🎯 El Problema</h4>
+                <p>La tienda no tenía presencia digital. Los clientes no podían consultar productos disponibles sin visitar físicamente el local, y el proceso de reservas se hacía solo por llamada. Sin inventario en línea, sin gestión de pedidos y sin forma de mostrar el catálogo fuera del local.</p>
+              </div>
+              <div class="case-block">
+                <h4 class="case-block__title">⚙️ El Proceso</h4>
+                <div class="architecture">
+                  <div class="arch-node arch-node--frontend">Supabase<br/><small>Base de datos + Admin</small></div>
+                  <div class="arch-arrow">→</div>
+                  <div class="arch-node arch-node--backend">HTML / CSS / JS<br/><small>Interfaz + Animaciones</small></div>
+                  <div class="arch-arrow">→</div>
+                  <div class="arch-node arch-node--db">WhatsApp API<br/><small>Reservas automáticas</small></div>
+                </div>
+                <ul class="case-list">
+                  <li><strong>Landing page animada:</strong> Pantalla de carga tipo acuario con llenado de agua, peces decorativos con animaciones independientes en el hero, burbujas flotantes ambientales y revelado por scroll.</li>
+                  <li><strong>Catálogo digital:</strong> Página separada con filtros por categoría, búsqueda en tiempo real, tarjetas de producto con imagen, precio y botón de reserva directa por WhatsApp.</li>
+                  <li><strong>Sistema de reservas:</strong> Flujo completo desde modal de producto hasta mensaje pre-armado en WhatsApp, con registro automático del pedido en la base de datos.</li>
+                  <li><strong>Panel de administración:</strong> Auth con Supabase, CRUD completo de productos y categorías, subida de imágenes a Supabase Storage, gestión de pedidos con cambio de estado (pendiente / confirmado / entregado / cancelado) y dashboard con estadísticas.</li>
+                </ul>
+              </div>
+              <div class="case-block">
+                <h4 class="case-block__title">🔥 El Desafío</h4>
+                <p>Construir una experiencia visual inmersiva — peces animados con dirección correcta, pantalla de llenado de agua, burbujas — usando solo HTML, CSS y JS vanilla sin ninguna librería de animación. El reto técnico mayor fue integrar Supabase como BaaS completo (DB + Auth + Storage) para eliminar la necesidad de servidor propio y mantener el costo de operación cercano a cero, mientras el panel de administración fuera usable por personal sin conocimientos técnicos.</p>
+              </div>
+            </div>
+            <div class="project-case__right">
+              <div class="case-results">
+                <h4 class="case-block__title">📊 Resultados</h4>
+                <div class="result-item">
+                  <div class="result-item__label">Presencia digital</div>
+                  <div class="result-item__bar">
+                    <div class="result-item__before" style="width:100%">Antes: Ninguna</div>
+                  </div>
+                  <div class="result-item__bar">
+                    <div class="result-item__after" style="width:80%">Después: Online</div>
+                  </div>
+                </div>
+                <div class="result-item">
+                  <div class="result-item__label">Consulta de catálogo</div>
+                  <div class="result-metric">Solo en tienda → 24/7 en línea</div>
+                </div>
+                <div class="result-item">
+                  <div class="result-item__label">Reservas</div>
+                  <div class="result-metric">Solo por llamada → WhatsApp automatizado</div>
+                </div>
+                <div class="result-item">
+                  <div class="result-item__label">Gestión de pedidos</div>
+                  <div class="result-metric">Manual / sin registro → Panel web en tiempo real</div>
+                </div>
+                <div class="result-item">
+                  <div class="result-metric">— → $0 (Supabase free tier)</div>
+                </div>
+              </div>
+              <div class="project-case__tech">
+                <h4 class="case-block__title">🔨 Stack</h4>
+                <div class="project-case__tags">
+                  <span class="tag tag--primary">HTML</span>
+                  <span class="tag tag--primary">CSS</span>
+                  <span class="tag tag--primary">JavaScript</span>
+                  <span class="tag tag--secondary">Supabase</span>
+                  <span class="tag tag--secondary">PostgreSQL</span>
+                  <span class="tag tag--secondary">Supabase Auth</span>
+                  <span class="tag tag--secondary">Supabase Storage</span>
+                  <span class="tag tag--tertiary">Apache / XAMPP</span>
+                  <span class="tag tag--tertiary">Vercel</span>
+                </div>
+              </div>
+              <div class="project-case__links">
+                <a href="#" class="btn btn--primary btn--sm" style="pointer-events:none;opacity:0.5;">Ver sitio (próximamente)</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ══ PROYECTOS COMPACTOS (05 y 06) ══ -->
         <div class="projects__compact-grid">
 
-          <!-- Proyecto 04: Gobierno -->
+          <!-- Proyecto 05: Gobierno -->
           <article class="project-card" id="gobierno-geo">
             <div class="project-card__header">
-              <span class="project-card__number">04</span>
+              <span class="project-card__number">05</span>
               <div class="project-card__tags">
                 <span class="tag tag--primary">Producción</span>
                 <span class="tag tag--secondary">Gobierno · 2024</span>
@@ -644,10 +767,10 @@
             </div>
           </article>
 
-          <!-- Proyecto 05: Control Escolar -->
+          <!-- Proyecto 06: Control Escolar -->
           <article class="project-card" id="control-escolar">
             <div class="project-card__header">
-              <span class="project-card__number">05</span>
+              <span class="project-card__number">06</span>
               <div class="project-card__tags">
                 <span class="tag tag--primary">Producción</span>
                 <span class="tag tag--secondary">Educación</span>
