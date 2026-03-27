@@ -942,6 +942,94 @@ ul {
   color: var(--text-secondary);
 }
 
+/* ============================================
+   PROJECTS — Banner hero (image at top of card)
+   ============================================ */
+.project-case__banner {
+  margin: calc(-1 * var(--space-8)) calc(-1 * var(--space-8)) var(--space-6);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  overflow: hidden;
+  height: 300px;
+  position: relative;
+  opacity: 0;
+  transform: translateY(-16px) scale(1.02);
+  transition:
+    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.project-case__banner.banner-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.project-case__banner-inner {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  text-decoration: none;
+}
+
+.project-case__banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.project-case__banner:hover .project-case__banner-img {
+  transform: scale(1.04);
+}
+
+.project-case__banner-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.42);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.project-case__banner:hover .project-case__banner-overlay {
+  opacity: 1;
+}
+
+.project-case__banner-cta {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #fff;
+  background: var(--accent);
+  padding: 0.5rem 1.4rem;
+  border-radius: var(--radius);
+  letter-spacing: 0.04em;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.35);
+  transform: translateY(10px) scale(0.95);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.project-case__banner:hover .project-case__banner-cta {
+  transform: none;
+}
+
+.project-case__banner-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 90px;
+  background: linear-gradient(to bottom, transparent, var(--bg-card));
+  pointer-events: none;
+}
+
+/* ============================================
+   PROJECTS — Body two-column layout
+   ============================================ */
 .project-case__body {
   display: grid;
   grid-template-columns: 1fr 300px;
@@ -1123,6 +1211,102 @@ ul {
 .project-case__links {
   display: flex;
   gap: var(--space-3);
+}
+
+/* ============================================
+   PROJECTS — Preview image
+   ============================================ */
+.project-preview {
+  position: relative;
+  width: 100%;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: var(--space-5);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+  /* Base reveal state */
+  opacity: 0;
+  transform: translateY(24px) scale(0.97);
+  transition:
+    opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.4s ease,
+    border-color 0.4s ease;
+}
+
+.project-preview.visible {
+  opacity: 1;
+  transform: none;
+}
+
+.project-preview::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    var(--accent-glow) 0%,
+    transparent 60%
+  );
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.project-preview:hover::before {
+  opacity: 1;
+}
+
+.project-preview:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent), 0 8px 32px rgba(0,0,0,0.28);
+}
+
+.project-preview__img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.project-preview:hover .project-preview__img {
+  transform: scale(1.04);
+}
+
+.project-preview__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.45);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  z-index: 2;
+  text-decoration: none;
+}
+
+.project-preview:hover .project-preview__overlay {
+  opacity: 1;
+}
+
+.project-preview__cta {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: #fff;
+  background: var(--accent);
+  padding: 0.45rem 1.1rem;
+  border-radius: var(--radius);
+  letter-spacing: 0.04em;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  transform: translateY(6px);
+  transition: transform 0.35s ease;
+}
+
+.project-preview:hover .project-preview__cta {
+  transform: none;
 }
 
 /* ============================================
@@ -3453,6 +3637,10 @@ a.contact__item-value:hover {
     gap: var(--space-8);
   }
 
+  .project-case__banner {
+    height: 240px;
+  }
+
   .project-case__body {
     grid-template-columns: 1fr 260px;
     gap: var(--space-6);
@@ -3483,6 +3671,10 @@ a.contact__item-value:hover {
     position: static;
     max-width: 420px;
     margin: 0 auto;
+  }
+
+  .project-case__banner {
+    height: 200px;
   }
 
   .project-case__body {

@@ -190,6 +190,30 @@ const revealObserver = new IntersectionObserver(
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
 /* ============================================
+   PROJECT BANNER — Clip-path curtain reveal
+   ============================================ */
+const bannerObserver = new IntersectionObserver(
+  entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('banner-visible');
+        bannerObserver.unobserve(entry.target);
+      }
+    });
+  },
+  { threshold: 0, rootMargin: '0px 0px 0px 0px' }
+);
+
+document.querySelectorAll('.project-case__banner').forEach(el => {
+  bannerObserver.observe(el);
+  // Fallback: si ya está en el viewport al cargar, actívalo tras un frame
+  const rect = el.getBoundingClientRect();
+  if (rect.top < window.innerHeight) {
+    requestAnimationFrame(() => el.classList.add('banner-visible'));
+  }
+});
+
+/* ============================================
    ANIMATED STAT COUNTERS
    ============================================ */
 function animateCounter(el, target, suffix, duration = 1200) {
