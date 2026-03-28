@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Todos los proyectos de Arturo de la Cruz — Desarrollador Web Fullstack." />
+  <title>Proyectos — Arturo de la Cruz</title>
+  <link rel="icon" type="image/png" href="acs.png" />
+  <link rel="apple-touch-icon" href="acs.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+
+    /* ════════════════════════════
+       PAGE HERO
+    ════════════════════════════ */
+    .projs-hero {
+      padding: calc(var(--space-16) + 72px) 0 var(--space-12);
+      position: relative;
+      overflow: hidden;
+    }
+    .projs-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 15% 40%, rgba(124,106,255,0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 85% 60%, rgba(0,212,170,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .projs-hero__inner { position: relative; }
+
+    .projs-back {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      margin-bottom: var(--space-6);
+      transition: color var(--transition), gap var(--transition);
+    }
+    .projs-back:hover { color: var(--accent); gap: var(--space-3); }
+    .projs-back:hover svg { transform: translateX(-3px); }
+    .projs-back svg { transition: transform var(--transition); }
+
+    .projs-hero__tag {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: var(--space-3);
+    }
+    .projs-hero__title {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: var(--space-4);
+    }
+    .projs-hero__title span { color: var(--accent); }
+    .projs-hero__desc {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      max-width: 480px;
+      line-height: 1.7;
+    }
+
+    /* ════════════════════════════
+       FILTER BAR
+    ════════════════════════════ */
+    .projs-filter {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin-bottom: var(--space-8);
+    }
+    .projs-filter__btn {
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-full);
+      padding: 0.4rem 1rem;
+      cursor: pointer;
+      transition: color var(--transition), border-color var(--transition), background var(--transition);
+      letter-spacing: 0.04em;
+    }
+    .projs-filter__btn:hover { color: var(--text-primary); border-color: var(--border); }
+    .projs-filter__btn.active {
+      color: var(--accent);
+      border-color: var(--accent);
+      background: var(--accent-glow);
+    }
+
+    /* ════════════════════════════
+       PROJECTS GRID
+    ════════════════════════════ */
+    .projs-section { padding-bottom: var(--space-16); }
+
+    .projs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: var(--space-6);
+    }
+
+    /* ════════════════════════════
+       PROJECT CARD
+    ════════════════════════════ */
+    .pc-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      transform: translateY(24px);
+      transition:
+        opacity 0.5s ease,
+        transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+        border-color var(--transition),
+        box-shadow var(--transition);
+    }
+    .pc-card.card-visible { opacity: 1; transform: none; }
+    .pc-card.card-hidden  { display: none; }
+    .pc-card:hover {
+      border-color: var(--accent);
+      box-shadow: var(--shadow-accent);
+    }
+
+    /* Thumbnail */
+    .pc-card__thumb {
+      width: 100%;
+      height: 180px;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .pc-card__thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                  filter 0.7s ease;
+      filter: brightness(0.95) saturate(1.05);
+    }
+    .pc-card:hover .pc-card__thumb img {
+      transform: scale(1.05);
+      filter: brightness(0.8) saturate(1.1);
+    }
+
+    /* Gradient placeholder thumbs */
+    .pc-card__thumb--gradient {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .pc-card__thumb--geo {
+      background:
+        radial-gradient(ellipse 70% 60% at 30% 50%, rgba(0,212,170,0.18) 0%, transparent 70%),
+        linear-gradient(135deg, #071a14 0%, #0c2a1e 50%, #071510 100%);
+    }
+    .pc-card__thumb--escolar {
+      background:
+        radial-gradient(ellipse 70% 60% at 70% 50%, rgba(124,106,255,0.18) 0%, transparent 70%),
+        linear-gradient(135deg, #0d0d24 0%, #141432 50%, #09091a 100%);
+    }
+    .pc-card__thumb--soon {
+      background:
+        linear-gradient(135deg, var(--bg-card) 0%, var(--bg-surface) 100%);
+    }
+
+    /* Scanline texture on gradient thumbs */
+    .pc-card__thumb--gradient::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(255,255,255,0.012) 3px,
+        rgba(255,255,255,0.012) 4px
+      );
+      pointer-events: none;
+    }
+
+    /* Accent top line on every thumb */
+    .pc-card__thumb::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent) 40%, var(--accent-2) 60%, transparent);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+    .pc-card:hover .pc-card__thumb::after { opacity: 1; }
+
+    /* SVG icon inside gradient thumb */
+    .pc-card__thumb-icon {
+      position: relative;
+      z-index: 1;
+      opacity: 0.25;
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+    .pc-card:hover .pc-card__thumb-icon { opacity: 0.4; transform: scale(1.08); }
+
+    /* Card body */
+    .pc-card__body {
+      padding: var(--space-4) var(--space-5) var(--space-3);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+    .pc-card__title {
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.35;
+      color: var(--text-primary);
+    }
+    .pc-card__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+    }
+
+    /* Card actions */
+    .pc-card__actions {
+      display: flex;
+      gap: var(--space-2);
+      padding: var(--space-3) var(--space-5) var(--space-5);
+      border-top: 1px solid var(--border-subtle);
+      margin-top: auto;
+    }
+    .pc-card__actions .btn {
+      flex: 1;
+      justify-content: center;
+      text-align: center;
+      font-size: 0.8rem;
+      padding: 0.45rem 0.75rem;
+    }
+
+    /* Soon card */
+    .pc-card--soon {
+      border-style: dashed;
+      pointer-events: none;
+      min-height: 300px;
+    }
+    .pc-card--soon:hover { border-color: var(--border-subtle); box-shadow: none; }
+    .pc-card--soon .pc-card__thumb {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+    }
+    .pc-soon__label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      opacity: 0.5;
+    }
+
+    /* ════════════════════════════
+       MODAL
+    ════════════════════════════ */
+    .pc-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-6);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .pc-modal.is-open {
+      pointer-events: all;
+      opacity: 1;
+    }
+    .pc-modal__backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.72);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      cursor: pointer;
+    }
+    .pc-modal__box {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      width: 100%;
+      max-width: 620px;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: var(--space-8);
+      box-shadow: var(--shadow-lg), 0 0 60px rgba(124,106,255,0.12);
+      transform: translateY(20px) scale(0.97);
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+    .pc-modal.is-open .pc-modal__box {
+      transform: none;
+    }
+    .pc-modal__close {
+      position: absolute;
+      top: var(--space-4);
+      right: var(--space-4);
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-full);
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background var(--transition), color var(--transition), border-color var(--transition);
+      line-height: 1;
+    }
+    .pc-modal__close:hover {
+      background: var(--bg-card-hover);
+      color: var(--text-primary);
+      border-color: var(--border);
+    }
+    .pc-modal__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin-bottom: var(--space-4);
+    }
+    .pc-modal__title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      margin-bottom: var(--space-5);
+    }
+    .pc-modal__section-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: var(--space-3);
+    }
+    .pc-modal__desc {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      margin-bottom: var(--space-6);
+    }
+    .pc-modal__arch {
+      margin-bottom: var(--space-6);
+    }
+    .pc-modal__stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+    }
+    .pc-modal__divider {
+      border: none;
+      border-top: 1px solid var(--border-subtle);
+      margin: var(--space-5) 0;
+    }
+
+    /* ════════════════════════════
+       BOTTOM CTA
+    ════════════════════════════ */
+    .projs-cta-section {
+      padding: var(--space-16) 0;
+      border-top: 1px solid var(--border-subtle);
+    }
+    .projs-cta {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: var(--space-4);
+    }
+    .projs-cta__title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .projs-cta__desc {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      max-width: 380px;
+      line-height: 1.65;
+    }
+    .projs-cta__actions {
+      display: flex;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: var(--space-2);
+    }
+
+    /* ════════════════════════════
+       RESPONSIVE
+    ════════════════════════════ */
+    @media (max-width: 640px) {
+      .projs-grid { grid-template-columns: 1fr; }
+      .projs-hero__title { font-size: 1.9rem; }
+      .pc-modal { padding: var(--space-4); }
+      .pc-modal__box { padding: var(--space-6); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PANTALLA DE CARGA -->
+  <div class="loader" id="loader">
+    <div class="loader__inner">
+      <img src="acs.png" alt="ACS-Dev" class="loader__logo" />
+      <div class="loader__bar"><div class="loader__fill"></div></div>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav__container">
+      <a href="index.html" class="nav__logo">
+        <img src="acs.png" alt="ACS-Dev" class="nav__logo-img" />
+        <span>ACS-Dev<span class="accent">.</span></span>
+      </a>
+      <ul class="nav__links">
+        <li><a href="index.html#sobre-mi"       class="nav__link">Sobre mí</a></li>
+        <li><a href="index.html#habilidades"     class="nav__link">Habilidades</a></li>
+        <li><a href="index.html#proyectos"       class="nav__link">Proyectos</a></li>
+        <li><a href="index.html#certificaciones" class="nav__link">Certificaciones</a></li>
+        <li><a href="index.html#contacto"        class="nav__link">Contacto</a></li>
+      </ul>
+      <div class="nav__actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+          <span class="theme-toggle__icon theme-toggle__sun">☀️</span>
+          <span class="theme-toggle__icon theme-toggle__moon">🌙</span>
+        </button>
+        <button class="nav__burger" id="navBurger" aria-label="Menú">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+    <div class="nav__mobile" id="navMobile">
+      <a href="index.html#sobre-mi"       class="nav__mobile-link">Sobre mí</a>
+      <a href="index.html#habilidades"    class="nav__mobile-link">Habilidades</a>
+      <a href="index.html#proyectos"      class="nav__mobile-link">Proyectos</a>
+      <a href="index.html#certificaciones" class="nav__mobile-link">Certificaciones</a>
+      <a href="index.html#contacto"       class="nav__mobile-link">Contacto</a>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="projs-hero">
+      <div class="container projs-hero__inner">
+        <a href="index.html#proyectos" class="projs-back">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+          Volver al portfolio
+        </a>
+        <p class="projs-hero__tag">Proyectos adicionales</p>
+        <h1 class="projs-hero__title">Más <span>trabajos</span></h1>
+        <p class="projs-hero__desc">Proyectos complementarios al portfolio principal — sistemas de producción, backend gubernamental y herramientas de gestión.</p>
+      </div>
+    </section>
+
+    <!-- GRID -->
+    <section class="projs-section">
+      <div class="container">
+
+        <!-- Filtros -->
+        <div class="projs-filter" role="group" aria-label="Filtrar proyectos">
+          <button class="projs-filter__btn active" data-filter="all">Todos</button>
+          <button class="projs-filter__btn" data-filter="gobierno">Gobierno</button>
+          <button class="projs-filter__btn" data-filter="educacion">Educación</button>
+          <button class="projs-filter__btn" data-filter="produccion">Producción</button>
+        </div>
+
+        <div class="projs-grid" id="projsGrid">
+
+          <!-- ══ Card 01: Geolocalización ══ -->
+          <article class="pc-card" data-id="geo" data-category="gobierno produccion">
+            <div class="pc-card__thumb pc-card__thumb--gradient pc-card__thumb--geo">
+              <div class="pc-card__thumb-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 24 24"
+                     fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                     style="color:var(--accent-2)">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                  <circle cx="12" cy="9" r="2.5"/>
+                </svg>
+              </div>
+            </div>
+            <div class="pc-card__body">
+              <h3 class="pc-card__title">Sistema de Geolocalización Gubernamental</h3>
+              <div class="pc-card__tags">
+                <span class="tag tag--primary">Gobierno</span>
+                <span class="tag tag--secondary">Python · Flask</span>
+                <span class="tag tag--tertiary">Leaflet.js</span>
+              </div>
+            </div>
+            <div class="pc-card__actions">
+              <button class="btn btn--ghost pc-detail-btn" data-id="geo">Ver detalles</button>
+            </div>
+          </article>
+
+          <!-- ══ Card 02: Control Escolar ══ -->
+          <article class="pc-card" data-id="escolar" data-category="educacion produccion">
+            <div class="pc-card__thumb pc-card__thumb--gradient pc-card__thumb--escolar">
+              <div class="pc-card__thumb-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 24 24"
+                     fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                     style="color:var(--accent)">
+                  <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                  <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                </svg>
+              </div>
+            </div>
+            <div class="pc-card__body">
+              <h3 class="pc-card__title">Sistema de Control Escolar</h3>
+              <div class="pc-card__tags">
+                <span class="tag tag--primary">Educación</span>
+                <span class="tag tag--secondary">PHP · MySQL</span>
+                <span class="tag tag--tertiary">PDF · JWT</span>
+              </div>
+            </div>
+            <div class="pc-card__actions">
+              <button class="btn btn--ghost pc-detail-btn" data-id="escolar">Ver detalles</button>
+            </div>
+          </article>
+
+          <!-- ══ Placeholder ══ -->
+          <article class="pc-card pc-card--soon card-visible">
+            <div class="pc-card__thumb pc-card__thumb--gradient pc-card__thumb--soon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
+                   fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"
+                   style="color:var(--text-muted);opacity:0.3">
+                <circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/>
+              </svg>
+            </div>
+            <div class="pc-card__body" style="align-items:center;justify-content:center;padding-top:var(--space-6)">
+              <span class="pc-soon__label">Próximo proyecto</span>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="projs-cta-section">
+      <div class="container">
+        <div class="projs-cta">
+          <h2 class="projs-cta__title">¿Tienes un proyecto en mente?</h2>
+          <p class="projs-cta__desc">Estoy disponible para nuevos proyectos freelance y oportunidades de empleo.</p>
+          <div class="projs-cta__actions">
+            <a href="index.html#contacto" class="btn btn--primary">Hablemos →</a>
+            <a href="https://github.com/Artur896" target="_blank" rel="noopener noreferrer" class="btn btn--ghost">GitHub</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__content">
+        <span class="footer__logo">ACS-Dev<span class="accent">.</span></span>
+        <p class="footer__text">Diseñado y construido por Arturo de la Cruz — 2024</p>
+        <p class="footer__text footer__text--small">HTML + CSS + JavaScript vanilla · Sin frameworks · Carga rápida</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MODAL DE DETALLES -->
+  <div class="pc-modal" id="pcModal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="pc-modal__backdrop" id="pcModalBackdrop"></div>
+    <div class="pc-modal__box">
+      <button class="pc-modal__close" id="pcModalClose" aria-label="Cerrar">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 6 6 18M6 6l12 12"/>
+        </svg>
+      </button>
+      <div id="pcModalContent"></div>
+    </div>
+  </div>
+
+  <!-- WHATSAPP BUBBLE -->
+  <a href="https://wa.me/5217296463642?text=Hola%20Arturo%2C%20vi%20tu%20portfolio%20y%20me%20interesa%20contactarte."
+     class="wa-bubble" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp">
+    <span class="wa-bubble__ring"></span>
+    <svg class="wa-bubble__icon" viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+    </svg>
+    <span class="wa-bubble__tooltip">Escríbeme</span>
+  </a>
+
+  <script src="js/main.js"></script>
+  <script>
+    /* ══════════════════════════════════
+       PROJECT DATA
+       Para agregar un proyecto nuevo:
+       1. Añade una entrada aquí
+       2. Agrega una <article class="pc-card"> en el HTML
+    ══════════════════════════════════ */
+    const PROJECT_DATA = {
+      geo: {
+        title: 'Sistema de Geolocalización Gubernamental',
+        tags: [
+          { text: 'Producción',      cls: 'tag--primary'   },
+          { text: 'Gobierno · 2024', cls: 'tag--secondary' },
+        ],
+        desc: 'Backend para localizar y mostrar servicios públicos georreferenciados del Gobierno del Estado de México. Flask + PHP para procesamiento geoespacial; Leaflet.js para mapas interactivos sin Google Maps. Múltiples secretarías con credenciales independientes y rate limiting por token.',
+        arch: [
+          { label: 'Leaflet.js',   sub: 'Mapas',    cls: 'arch-node--frontend' },
+          { label: 'Flask + PHP',  sub: 'API',      cls: 'arch-node--backend'  },
+          { label: 'MySQL',        sub: 'GeoJSON',  cls: 'arch-node--db'       },
+        ],
+        stack: [
+          { text: 'Python',     cls: 'tag--tertiary'  },
+          { text: 'Flask',      cls: 'tag--secondary' },
+          { text: 'PHP',        cls: 'tag--primary'   },
+          { text: 'MySQL',      cls: 'tag--primary'   },
+          { text: 'Leaflet.js', cls: 'tag--secondary' },
+          { text: 'GeoJSON',    cls: 'tag--secondary' },
+        ],
+        url: null,
+      },
+      escolar: {
+        title: 'Sistema de Control Escolar',
+        tags: [
+          { text: 'Producción', cls: 'tag--primary'   },
+          { text: 'Educación',  cls: 'tag--secondary' },
+        ],
+        desc: 'Sistema integral de gestión académica: alumnos, materias, calificaciones y reportes PDF automáticos. Roles diferenciados (Director / Docente / Alumno), auditoría completa de cambios con timestamp y generación de boletas sin intervención administrativa.',
+        arch: [
+          { label: 'PHP Views', sub: 'CRUD',   cls: 'arch-node--frontend' },
+          { label: 'PHP MVC',   sub: 'Lógica', cls: 'arch-node--backend'  },
+          { label: 'MySQL',     sub: 'Datos',  cls: 'arch-node--db'       },
+        ],
+        stack: [
+          { text: 'PHP',            cls: 'tag--primary'   },
+          { text: 'MySQL',          cls: 'tag--primary'   },
+          { text: 'JavaScript',     cls: 'tag--primary'   },
+          { text: 'JWT',            cls: 'tag--secondary' },
+          { text: 'PDF Generation', cls: 'tag--secondary' },
+        ],
+        url: null,
+      },
+    };
+
+    /* ── Build modal content ── */
+    function buildModalContent(id) {
+      const d = PROJECT_DATA[id];
+      if (!d) return '';
+
+      const tagsHTML = d.tags
+        .map(t => `<span class="tag ${t.cls}">${t.text}</span>`)
+        .join('');
+
+      const archHTML = d.arch
+        .map((n, i) => {
+          const arrow = i < d.arch.length - 1
+            ? '<div class="arch-arrow">→</div>'
+            : '';
+          return `<div class="arch-node ${n.cls}">${n.label}<br/><small>${n.sub}</small></div>${arrow}`;
+        })
+        .join('');
+
+      const stackHTML = d.stack
+        .map(t => `<span class="tag ${t.cls}">${t.text}</span>`)
+        .join('');
+
+      const urlBtn = d.url
+        ? `<a href="${d.url}" target="_blank" rel="noopener noreferrer"
+              class="btn btn--primary btn--sm" style="margin-top:var(--space-2)">
+              Ver sitio →
+           </a>`
+        : '';
+
+      return `
+        <div class="pc-modal__tags">${tagsHTML}</div>
+        <h2 class="pc-modal__title">${d.title}</h2>
+
+        <p class="pc-modal__section-label">Descripción</p>
+        <p class="pc-modal__desc">${d.desc}</p>
+
+        <hr class="pc-modal__divider"/>
+
+        <p class="pc-modal__section-label">Arquitectura</p>
+        <div class="architecture pc-modal__arch">${archHTML}</div>
+
+        <hr class="pc-modal__divider"/>
+
+        <p class="pc-modal__section-label">Stack</p>
+        <div class="pc-modal__stack">${stackHTML}</div>
+
+        ${urlBtn}
+      `;
+    }
+
+    /* ── Modal open / close ── */
+    const modal        = document.getElementById('pcModal');
+    const modalContent = document.getElementById('pcModalContent');
+    const modalClose   = document.getElementById('pcModalClose');
+    const modalBack    = document.getElementById('pcModalBackdrop');
+
+    function openModal(id) {
+      modalContent.innerHTML = buildModalContent(id);
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.pc-detail-btn').forEach(btn => {
+      btn.addEventListener('click', () => openModal(btn.dataset.id));
+    });
+
+    modalClose.addEventListener('click', closeModal);
+    modalBack.addEventListener('click', closeModal);
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    /* ── Filter ── */
+    const filterBtns  = document.querySelectorAll('.projs-filter__btn');
+    const realCards   = document.querySelectorAll('.pc-card:not(.pc-card--soon)');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        realCards.forEach(card => {
+          const cats  = card.dataset.category || '';
+          const match = filter === 'all' || cats.includes(filter);
+          card.classList.toggle('card-hidden', !match);
+        });
+      });
+    });
+
+    /* ── Scroll reveal ── */
+    const revealObs = new IntersectionObserver(entries => {
+      entries.forEach((entry, i) => {
+        if (!entry.isIntersecting) return;
+        entry.target.style.transitionDelay = `${i * 90}ms`;
+        entry.target.classList.add('card-visible');
+        revealObs.unobserve(entry.target);
+      });
+    }, { threshold: 0.08 });
+
+    realCards.forEach(c => revealObs.observe(c));
+  </script>
+</body>
+</html>

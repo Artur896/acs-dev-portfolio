@@ -15,6 +15,138 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ════════════════════════════
+       PROJECT CARD (pc-card)
+    ════════════════════════════ */
+    .projs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: var(--space-6);
+    }
+    .pc-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      transform: translateY(24px);
+      transition:
+        opacity 0.5s ease,
+        transform 0.5s cubic-bezier(0.22,1,0.36,1),
+        border-color var(--transition),
+        box-shadow var(--transition);
+    }
+    .pc-card.card-visible { opacity: 1; transform: none; }
+    .pc-card:hover {
+      border-color: var(--accent);
+      box-shadow: var(--shadow-accent);
+    }
+    .pc-card__thumb {
+      width: 100%; height: 180px;
+      position: relative; overflow: hidden; flex-shrink: 0;
+    }
+    .pc-card__thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: top center; display: block;
+      transition: transform 0.7s cubic-bezier(0.22,1,0.36,1), filter 0.7s ease;
+      filter: brightness(0.95) saturate(1.05);
+    }
+    .pc-card:hover .pc-card__thumb img {
+      transform: scale(1.05);
+      filter: brightness(0.8) saturate(1.1);
+    }
+    .pc-card__thumb::after {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent) 40%, var(--accent-2) 60%, transparent);
+      opacity: 0; transition: opacity 0.35s ease;
+    }
+    .pc-card:hover .pc-card__thumb::after { opacity: 1; }
+    .pc-card__body {
+      padding: var(--space-4) var(--space-5) var(--space-3);
+      flex: 1; display: flex; flex-direction: column; gap: var(--space-3);
+    }
+    .pc-card__title {
+      font-size: 1rem; font-weight: 700;
+      line-height: 1.35; color: var(--text-primary);
+    }
+    .pc-card__tags { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+    .pc-card__actions {
+      display: flex; gap: var(--space-2);
+      padding: var(--space-3) var(--space-5) var(--space-5);
+      border-top: 1px solid var(--border-subtle); margin-top: auto;
+    }
+    .pc-card__actions .btn {
+      flex: 1; justify-content: center;
+      text-align: center; font-size: 0.8rem; padding: 0.45rem 0.75rem;
+    }
+    /* ════════════════════════════
+       MODAL
+    ════════════════════════════ */
+    .pc-modal {
+      position: fixed; inset: 0; z-index: 900;
+      display: flex; align-items: center; justify-content: center;
+      padding: var(--space-6); pointer-events: none;
+      opacity: 0; transition: opacity 0.3s ease;
+    }
+    .pc-modal.is-open { pointer-events: all; opacity: 1; }
+    .pc-modal__backdrop {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      cursor: pointer;
+    }
+    .pc-modal__box {
+      position: relative;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      width: 100%; max-width: 660px; max-height: 88vh;
+      overflow-y: auto; padding: var(--space-8);
+      box-shadow: var(--shadow-lg), 0 0 60px rgba(124,106,255,0.12);
+      transform: translateY(20px) scale(0.97);
+      transition: transform 0.35s cubic-bezier(0.22,1,0.36,1);
+      scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+    }
+    .pc-modal.is-open .pc-modal__box { transform: none; }
+    .pc-modal__close {
+      position: absolute; top: var(--space-4); right: var(--space-4);
+      width: 32px; height: 32px; border-radius: var(--radius-full);
+      background: transparent; border: 1px solid var(--border-subtle);
+      color: var(--text-muted); cursor: pointer; font-size: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: background var(--transition), color var(--transition), border-color var(--transition);
+    }
+    .pc-modal__close:hover {
+      background: var(--bg-card-hover); color: var(--text-primary); border-color: var(--border);
+    }
+    .pc-modal__tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-4); }
+    .pc-modal__title {
+      font-size: 1.5rem; font-weight: 700;
+      letter-spacing: -0.02em; line-height: 1.25; margin-bottom: var(--space-2);
+    }
+    .pc-modal__subtitle {
+      font-size: 0.9rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: var(--space-5);
+    }
+    .pc-modal__section-label {
+      font-family: var(--font-mono); font-size: 0.72rem; color: var(--accent);
+      letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: var(--space-3);
+      display: block;
+    }
+    .pc-modal__desc { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.75; margin-bottom: var(--space-5); }
+    .pc-modal__arch { margin-bottom: var(--space-5); }
+    .pc-modal__list { margin-bottom: var(--space-5); }
+    .pc-modal__stack { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+    .pc-modal__links { display: flex; gap: var(--space-3); margin-top: var(--space-5); flex-wrap: wrap; }
+    .pc-modal__divider { border: none; border-top: 1px solid var(--border-subtle); margin: var(--space-5) 0; }
+    @media (max-width: 640px) {
+      .projs-grid { grid-template-columns: 1fr; }
+      .pc-modal { padding: var(--space-4); }
+      .pc-modal__box { padding: var(--space-6); }
+    }
+  </style>
 </head>
 <body>
 
@@ -386,449 +518,115 @@
           <p class="section__subtitle">No solo código — problemas reales, decisiones técnicas justificadas y resultados medibles.</p>
         </div>
 
-        <!-- ══ PROYECTO 01 — Educación Médica Especializada ══ -->
-        <article class="project-case project-case--featured" id="ecommerce-medico">
-          <div class="project-case__banner">
-            <a href="https://educacionmedicaespecializada.com.mx" target="_blank" rel="noopener noreferrer" class="project-case__banner-inner">
-              <img src="img/eme.png" alt="Educación Médica Especializada" class="project-case__banner-img" loading="lazy" />
-              <div class="project-case__banner-overlay">
-                <span class="project-case__banner-cta">Ver sitio →</span>
-              </div>
-            </a>
-            <div class="project-case__banner-fade"></div>
-          </div>
-          <div class="project-case__header">
-            <div class="project-case__meta">
-              <span class="project-case__number">01</span>
-              <div>
+        <!-- ══ GRID DE PROYECTOS ══ -->
+        <div class="projs-grid" style="margin-top:var(--space-8)">
+
+          <!-- Card 01: EME -->
+          <article class="pc-card" data-id="eme">
+            <div class="pc-card__thumb">
+              <img src="img/eme.png" alt="Educación Médica Especializada" loading="lazy" />
+            </div>
+            <div class="pc-card__body">
+              <h3 class="pc-card__title">Educación Médica Especializada</h3>
+              <div class="pc-card__tags">
                 <span class="tag tag--primary">Freelance</span>
-                <span class="tag tag--secondary">Web</span>
-                <span class="tag tag--secondary">SaaS</span>
-                <span class="tag tag--secondary">Educación</span>
-                <span class="tag tag--secondary">Salud</span>
+                <span class="tag tag--secondary">SaaS · Salud</span>
+                <span class="tag tag--tertiary">PHP · MySQL</span>
               </div>
             </div>
-            <h3 class="project-case__title">Educación Médica Especializada</h3>
-            <p class="project-case__subtitle">Plataforma de educación médica con panel de administración completo para gestionar cursos de certificación (CRIO, ALSO, BLSO) dirigidos a profesionales de la salud en México, con presencia en 16+ estados y más de 5,000 profesionales capacitados.</p>
-          </div>
+            <div class="pc-card__actions">
+              <button class="btn btn--ghost pc-detail-btn" data-id="eme">Ver detalles</button>
+              <a href="https://educacionmedicaespecializada.com.mx" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Ver sitio →</a>
+            </div>
+          </article>
 
-          <div class="project-case__body">
-            <div class="project-case__left">
-              <div class="case-block">
-                <h4 class="case-block__title">🎯 El Problema</h4>
-                <p>La organización coordinaba cursos de certificación médica a nivel nacional sin una plataforma centralizada. Las inscripciones se gestionaban manualmente, los comprobantes de pago llegaban por vías informales, y no había forma de que los alumnos consultaran su historial, accedieran a materiales o participaran en foros entre sesiones. La escala nacional (32 estados disponibles) hacía inviable seguir operando sin un sistema propio.</p>
-              </div>
-              <div class="case-block">
-                <h4 class="case-block__title">⚙️ El Proceso</h4>
-                <div class="architecture">
-                  <div class="arch-node arch-node--frontend">PHP + MySQLi/PDO<br/><small>Backend + Admin</small></div>
-                  <div class="arch-arrow">→</div>
-                  <div class="arch-node arch-node--backend">MariaDB<br/><small>Datos</small></div>
-                  <div class="arch-arrow">→</div>
-                  <div class="arch-node arch-node--db">JS Vanilla + AJAX<br/><small>Interactividad</small></div>
-                </div>
-                <ul class="case-list">
-                  <li><strong>Portal del alumno:</strong> Registro con verificación de correo (código de 6 dígitos, 30 min), login con email o Google OAuth, dashboard personal con cursos inscritos, foro por curso, galería de imágenes y syllabus en PDF.</li>
-                  <li><strong>Pasarela de pagos múltiple:</strong> Integración simultánea de Stripe, PayPal, OXXO y Amazon Pay, más flujo manual de comprobante fotográfico con soporte de hasta 12 archivos por transacción.</li>
-                  <li><strong>Panel de administración:</strong> Gestión completa de cursos, lista de alumnos con estado de inscripción, seguimiento de ventas por tipo de curso (CRIO/ALSO/BLSO), generación de reportes en Excel y registro de actividad del admin.</li>
-                  <li><strong>Campañas de correo masivo:</strong> Sistema de cola en base de datos procesada por cron job, con soporte de adjuntos, selección de destinatarios y seguimiento de progreso en tiempo real.</li>
-                  <li><strong>Webinars en vivo:</strong> Implementación WebRTC con acceso exclusivo de cámara/micrófono para el admin y sistema de comentarios en tiempo real para los asistentes.</li>
-                  <li><strong>Gestión de rosters:</strong> Sistema de estados (pendiente → perfil creado → datos confirmados) para el control de inscripciones por tipo de curso.</li>
-                </ul>
-              </div>
-              <div class="case-block">
-                <h4 class="case-block__title">🔥 El Desafío</h4>
-                <p>Construir un SaaS médico de alcance nacional sin frameworks modernos — PHP puro con consultas preparadas, JS vanilla y sin ORM. El mayor reto fue el sistema de pagos: coordinar cuatro pasarelas distintas (incluyendo OXXO, que requiere flujo asíncrono) junto a un proceso de verificación manual de comprobantes. La escala de correos masivos también obligó a diseñar un sistema de cola propio para evitar timeouts, con procesamiento en background vía cron.</p>
-              </div>
+          <!-- Card 02: BlinkTasks -->
+          <article class="pc-card" data-id="blink">
+            <div class="pc-card__thumb">
+              <img src="img/blink.png" alt="BlinkTasks" loading="lazy" />
             </div>
-            <div class="project-case__right">
-              <div class="case-results">
-                <h4 class="case-block__title">📊 Resultados</h4>
-                <div class="result-item">
-                  <div class="result-item__label">Inscripciones</div>
-                  <div class="result-item__bar">
-                    <div class="result-item__before" style="width:100%">Antes: Manual / por teléfono</div>
-                  </div>
-                  <div class="result-item__bar">
-                    <div class="result-item__after" style="width:80%">Después: Online 24/7</div>
-                  </div>
-                </div>
-                <div class="result-item">
-                  <div class="result-item__label">Seguimiento de pagos</div>
-                  <div class="result-metric">Informal → Dashboard en tiempo real</div>
-                </div>
-                <div class="result-item">
-                  <div class="result-item__label">Métodos de pago</div>
-                  <div class="result-metric">1 (efectivo/transferencia) → 4 pasarelas + comprobante</div>
-                </div>
-                <div class="result-item">
-                  <div class="result-item__label">Cobertura digital</div>
-                  <div class="result-metric">Ninguna → 16+ estados activos</div>
-                </div>
-                <div class="result-item">
-                  <div class="result-item__label">Acceso a materiales</div>
-                  <div class="result-metric">Solo presencial → Portal del alumno</div>
-                </div>
-              </div>
-              <div class="project-case__tech">
-                <h4 class="case-block__title">🔨 Stack</h4>
-                <div class="project-case__tags">
-                  <span class="tag tag--primary">PHP</span>
-                  <span class="tag tag--primary">MySQL/MariaDB</span>
-                  <span class="tag tag--primary">JavaScript</span>
-                  <span class="tag tag--secondary">AJAX</span>
-                  <span class="tag tag--secondary">PHPMailer</span>
-                  <span class="tag tag--secondary">Stripe</span>
-                  <span class="tag tag--secondary">PayPal</span>
-                  <span class="tag tag--secondary">Amazon Pay</span>
-                  <span class="tag tag--secondary">Google OAuth</span>
-                  <span class="tag tag--secondary">WebRTC</span>
-                  <span class="tag tag--secondary">Leaflet.js</span>
-                  <span class="tag tag--secondary">PhpSpreadsheet</span>
-                  <span class="tag tag--tertiary">XAMPP</span>
-                  <span class="tag tag--tertiary">Hostinger</span>
-                  <span class="tag tag--tertiary">Apache</span>
-                </div>
-              </div>
-              <div class="project-case__links">
-                <a href="https://educacionmedicaespecializada.com.mx" target="_blank" rel="noopener noreferrer" class="btn btn--primary btn--sm">Ver sitio</a>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- ══ PROYECTO 02 — BlinkTasks ══ -->
-        <article class="project-case project-case--featured" id="blinktasks">
-          <div class="project-case__banner">
-            <a href="https://blink-tasks-fc7g.vercel.app" target="_blank" rel="noopener noreferrer" class="project-case__banner-inner">
-              <img src="img/blink.png" alt="BlinkTasks" class="project-case__banner-img" loading="lazy" />
-              <div class="project-case__banner-overlay">
-                <span class="project-case__banner-cta">Ver Demo →</span>
-              </div>
-            </a>
-            <div class="project-case__banner-fade"></div>
-          </div>
-          <div class="project-case__header">
-            <div class="project-case__meta">
-              <span class="project-case__number">02</span>
-              <div>
+            <div class="pc-card__body">
+              <h3 class="pc-card__title">BlinkTasks</h3>
+              <div class="pc-card__tags">
                 <span class="tag tag--primary">Hackathon</span>
-                <span class="tag tag--secondary">Solana</span>
-                <span class="tag tag--secondary">Web3</span>
+                <span class="tag tag--secondary">Solana · Web3</span>
+                <span class="tag tag--tertiary">Rust · Anchor</span>
               </div>
             </div>
-            <h3 class="project-case__title">BlinkTasks</h3>
-            <p class="project-case__subtitle">Gestión de tareas sobre la blockchain de Solana usando Solana Actions y Blinks — hackathon Solana</p>
-          </div>
+            <div class="pc-card__actions">
+              <button class="btn btn--ghost pc-detail-btn" data-id="blink">Ver detalles</button>
+              <a href="https://blink-tasks-fc7g.vercel.app" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Ver demo →</a>
+            </div>
+          </article>
 
-          <div class="project-case__body">
-            <div class="project-case__left">
-              <div class="case-block">
-                <h4 class="case-block__title">🎯 El Problema</h4>
-                <p>Explorar gestión de tareas colaborativas en blockchain pública: acciones verificables sin intermediarios, accesibles desde cualquier URL con Solana Blinks — sin abrir una dApp.</p>
-              </div>
-              <div class="case-block">
-                <h4 class="case-block__title">⚙️ El Proceso</h4>
-                <div class="architecture">
-                  <div class="arch-node arch-node--frontend">Blinks UI<br/><small>Actions API</small></div>
-                  <div class="arch-arrow">→</div>
-                  <div class="arch-node arch-node--backend">Anchor<br/><small>Smart Contract</small></div>
-                  <div class="arch-arrow">→</div>
-                  <div class="arch-node arch-node--db">Solana<br/><small>Devnet</small></div>
-                </div>
-                <ul class="case-list">
-                  <li><strong>Anchor + Rust:</strong> Smart contract on-chain que gestiona creación, asignación y completado de tareas.</li>
-                  <li><strong>Solana Blinks:</strong> Operación de tareas desde una URL embebible en cualquier plataforma.</li>
-                  <li><strong>Solana Actions:</strong> Endpoints REST que traducen interacciones en transacciones firmadas enviadas a la red.</li>
-                </ul>
-              </div>
-              <div class="case-block">
-                <h4 class="case-block__title">🔥 El Desafío</h4>
-                <p>Integrar el flujo de firma de transacciones dentro de una UX fluida, sin exponer complejidad blockchain al usuario. Construido bajo la presión de tiempo de un hackathon.</p>
-              </div>
+          <!-- Card 03: Ferreteros Unidos -->
+          <article class="pc-card" data-id="ferreteros">
+            <div class="pc-card__thumb">
+              <img src="img/ferreteros.png" alt="Ferreteros Unidos" loading="lazy" />
             </div>
-            <div class="project-case__right">
-              <div class="case-results">
-                <h4 class="case-block__title">📊 Resultados</h4>
-                <div class="result-item">
-                  <div class="result-item__label">Contexto</div>
-                  <div class="result-metric">Hackathon oficial de Solana</div>
-                </div>
-                <div class="result-item">
-                  <div class="result-item__label">Deploy</div>
-                  <div class="result-metric">Live en Vercel · Devnet activo</div>
-                </div>
-              </div>
-              <div class="project-case__tech">
-                <h4 class="case-block__title">🔨 Stack</h4>
-                <div class="project-case__tags">
-                  <span class="tag tag--tertiary">Rust</span>
-                  <span class="tag tag--secondary">Anchor</span>
-                  <span class="tag tag--secondary">Solana</span>
-                  <span class="tag tag--secondary">Solana Actions</span>
-                  <span class="tag tag--secondary">Blinks</span>
-                  <span class="tag tag--secondary">Vercel</span>
-                </div>
-              </div>
-              <div class="project-case__links">
-                <a href="https://blink-tasks-fc7g.vercel.app" target="_blank" rel="noopener noreferrer" class="btn btn--primary btn--sm">Ver Demo</a>
-                <a href="https://github.com/Artur896/BlinkTasks" target="_blank" rel="noopener noreferrer" class="btn btn--ghost btn--sm">GitHub</a>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- ══ PROYECTO 03 — Ferreteros Unidos ══ -->
-        <article class="project-case project-case--featured" id="ferreteros-unidos">
-          <div class="project-case__banner">
-            <div class="project-case__banner-inner">
-              <img src="img/ferreteros.png" alt="Ferreteros Unidos" class="project-case__banner-img" loading="lazy" />
-            </div>
-            <div class="project-case__banner-fade"></div>
-          </div>
-          <div class="project-case__header">
-            <div class="project-case__meta">
-              <span class="project-case__number">03</span>
-              <div>
+            <div class="pc-card__body">
+              <h3 class="pc-card__title">Ferreteros Unidos</h3>
+              <div class="pc-card__tags">
                 <span class="tag tag--primary">Freelance</span>
-                <span class="tag tag--secondary">Web</span>
                 <span class="tag tag--secondary">Institucional</span>
-                <span class="tag tag--secondary">Catálogo Digital</span>
+                <span class="tag tag--tertiary">PHP · Catálogo</span>
               </div>
             </div>
-            <h3 class="project-case__title">Ferreteros Unidos</h3>
-            <p class="project-case__subtitle">Sitio web institucional con catálogo digital de 1,000+ productos y panel de administración para cadena de ferreterías con 50 años de experiencia en CDMX.</p>
-          </div>
+            <div class="pc-card__actions">
+              <button class="btn btn--ghost pc-detail-btn" data-id="ferreteros">Ver detalles</button>
+            </div>
+          </article>
 
-          <div class="project-case__body">
-            <div class="project-case__left">
-              <div class="case-block">
-                <h4 class="case-block__title">🎯 El Problema</h4>
-                <p>La empresa operaba sin ninguna presencia digital. Clientes — incluyendo dependencias gubernamentales como Pemex, SEDENA, SAT y más de 16 alcaldías — debían llamar o visitar la tienda para consultar productos. El catálogo se manejaba de forma completamente manual, sin posibilidad de mostrarlo en línea.</p>
-              </div>
-              <div class="case-block">
-                <h4 class="case-block__title">⚙️ El Proceso</h4>
-                <div class="architecture">
-                  <div class="arch-node arch-node--frontend">PHP<br/><small>Sitio + Admin</small></div>
-                  <div class="arch-arrow">→</div>
-                  <div class="arch-node arch-node--backend">MySQL<br/><small>Catálogo</small></div>
-                  <div class="arch-arrow">→</div>
-                  <div class="arch-node arch-node--db">JavaScript / AJAX<br/><small>Búsqueda en tiempo real</small></div>
-                </div>
-                <ul class="case-list">
-                  <li><strong>Catálogo con búsqueda y filtros:</strong> 1,000+ productos organizados en 15 categorías (cemento, aceros, plomería, impermeabilizantes, etc.), con búsqueda en tiempo real vía AJAX y paginación por sesión con orden aleatorio.</li>
-                  <li><strong>Panel de administración:</strong> Gestión completa de productos — alta, edición, eliminación, activar/desactivar — con subida de imágenes y autenticación por sesión.</li>
-                  <li><strong>Sitio institucional:</strong> Secciones de nosotros, 2 sucursales, 16 marcas distribuidoras (Truper, Makita, Bosch, Dewalt, Cruz Azul…), galería de 22+ clientes gubernamentales y flota de transporte propia.</li>
-                </ul>
-              </div>
-              <div class="case-block">
-                <h4 class="case-block__title">🔥 El Desafío</h4>
-                <p>Construir un catálogo funcional y rápido de 1,000+ productos sin frameworks modernos, usando PHP puro con consultas preparadas y AJAX vanilla. El reto fue mantener la búsqueda ágil y la experiencia fluida para usuarios con conexiones variables, además de que el panel de admin fuera usable por personal no técnico.</p>
-              </div>
+          <!-- Card 04: Acuario Martinez -->
+          <article class="pc-card" data-id="acuario">
+            <div class="pc-card__thumb">
+              <img src="img/Am.png" alt="Acuario Martinez" loading="lazy" />
             </div>
-            <div class="project-case__right">
-              <div class="case-results">
-                <h4 class="case-block__title">📊 Resultados</h4>
-                <div class="result-item">
-                  <div class="result-item__label">Presencia digital</div>
-                  <div class="result-item__bar">
-                    <div class="result-item__before" style="width:100%">Antes: Ninguna</div>
-                  </div>
-                  <div class="result-item__bar">
-                    <div class="result-item__after" style="width:80%">Después: Online</div>
-                  </div>
-                </div>
-                <div class="result-item">
-                  <div class="result-item__label">Consulta de catálogo</div>
-                  <div class="result-metric">Solo en tienda → 24/7 en línea</div>
-                </div>
-                <div class="result-item">
-                  <div class="result-item__label">Productos accesibles</div>
-                  <div class="result-metric">0 → 1,000+ SKUs</div>
-                </div>
-                <div class="result-item">
-                  <div class="result-item__label">Categorías organizadas</div>
-                  <div class="result-metric">15 categorías estructuradas</div>
-                </div>
-              </div>
-              <div class="project-case__tech">
-                <h4 class="case-block__title">🔨 Stack</h4>
-                <div class="project-case__tags">
-                  <span class="tag tag--primary">PHP</span>
-                  <span class="tag tag--primary">MySQL</span>
-                  <span class="tag tag--primary">JavaScript</span>
-                  <span class="tag tag--secondary">AJAX</span>
-                  <span class="tag tag--secondary">HTML/CSS</span>
-                  <span class="tag tag--tertiary">XAMPP</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- ══ PROYECTO 04 — Acuario Martinez ══ -->
-        <article class="project-case project-case--featured" id="acuario-martinez">
-          <div class="project-case__banner">
-            <a href="https://acuario-martinez.vercel.app/" target="_blank" rel="noopener noreferrer" class="project-case__banner-inner">
-              <img src="img/Am.png" alt="Acuario Martinez" class="project-case__banner-img" loading="lazy" />
-              <div class="project-case__banner-overlay">
-                <span class="project-case__banner-cta">Ver sitio →</span>
-              </div>
-            </a>
-            <div class="project-case__banner-fade"></div>
-          </div>
-          <div class="project-case__header">
-            <div class="project-case__meta">
-              <span class="project-case__number">04</span>
-              <div>
+            <div class="pc-card__body">
+              <h3 class="pc-card__title">Acuario Martinez</h3>
+              <div class="pc-card__tags">
                 <span class="tag tag--primary">Freelance</span>
-                <span class="tag tag--secondary">Web</span>
                 <span class="tag tag--secondary">E-commerce</span>
-                <span class="tag tag--secondary">Catálogo Digital</span>
+                <span class="tag tag--tertiary">Supabase · JS</span>
               </div>
             </div>
-            <h3 class="project-case__title">Acuario Martinez</h3>
-            <p class="project-case__subtitle">Landing page animada con catálogo digital y panel de administración para tienda especializada en peces ornamentales y accesorios para acuario.</p>
-          </div>
-
-          <div class="project-case__body">
-            <div class="project-case__left">
-              <div class="case-block">
-                <h4 class="case-block__title">🎯 El Problema</h4>
-                <p>La tienda no tenía presencia digital. Los clientes no podían consultar productos disponibles sin visitar físicamente el local, y el proceso de reservas se hacía solo por llamada. Sin inventario en línea, sin gestión de pedidos y sin forma de mostrar el catálogo fuera del local.</p>
-              </div>
-              <div class="case-block">
-                <h4 class="case-block__title">⚙️ El Proceso</h4>
-                <div class="architecture">
-                  <div class="arch-node arch-node--frontend">Supabase<br/><small>Base de datos + Admin</small></div>
-                  <div class="arch-arrow">→</div>
-                  <div class="arch-node arch-node--backend">HTML / CSS / JS<br/><small>Interfaz + Animaciones</small></div>
-                  <div class="arch-arrow">→</div>
-                  <div class="arch-node arch-node--db">WhatsApp API<br/><small>Reservas automáticas</small></div>
-                </div>
-                <ul class="case-list">
-                  <li><strong>Landing page animada:</strong> Pantalla de carga tipo acuario con llenado de agua, peces decorativos con animaciones independientes en el hero, burbujas flotantes ambientales y revelado por scroll.</li>
-                  <li><strong>Catálogo digital:</strong> Página separada con filtros por categoría, búsqueda en tiempo real, tarjetas de producto con imagen, precio y botón de reserva directa por WhatsApp.</li>
-                  <li><strong>Sistema de reservas:</strong> Flujo completo desde modal de producto hasta mensaje pre-armado en WhatsApp, con registro automático del pedido en la base de datos.</li>
-                  <li><strong>Panel de administración:</strong> Auth con Supabase, CRUD completo de productos y categorías, subida de imágenes a Supabase Storage, gestión de pedidos con cambio de estado (pendiente / confirmado / entregado / cancelado) y dashboard con estadísticas.</li>
-                </ul>
-              </div>
-              <div class="case-block">
-                <h4 class="case-block__title">🔥 El Desafío</h4>
-                <p>Construir una experiencia visual inmersiva — peces animados con dirección correcta, pantalla de llenado de agua, burbujas — usando solo HTML, CSS y JS vanilla sin ninguna librería de animación. El reto técnico mayor fue integrar Supabase como BaaS completo (DB + Auth + Storage) para eliminar la necesidad de servidor propio y mantener el costo de operación cercano a cero, mientras el panel de administración fuera usable por personal sin conocimientos técnicos.</p>
-              </div>
-            </div>
-            <div class="project-case__right">
-              <div class="case-results">
-                <h4 class="case-block__title">📊 Resultados</h4>
-                <div class="result-item">
-                  <div class="result-item__label">Presencia digital</div>
-                  <div class="result-item__bar">
-                    <div class="result-item__before" style="width:100%">Antes: Ninguna</div>
-                  </div>
-                  <div class="result-item__bar">
-                    <div class="result-item__after" style="width:80%">Después: Online</div>
-                  </div>
-                </div>
-                <div class="result-item">
-                  <div class="result-item__label">Consulta de catálogo</div>
-                  <div class="result-metric">Solo en tienda → 24/7 en línea</div>
-                </div>
-                <div class="result-item">
-                  <div class="result-item__label">Reservas</div>
-                  <div class="result-metric">Solo por llamada → WhatsApp automatizado</div>
-                </div>
-                <div class="result-item">
-                  <div class="result-item__label">Gestión de pedidos</div>
-                  <div class="result-metric">Manual / sin registro → Panel web en tiempo real</div>
-                </div>
-                <div class="result-item">
-                  <div class="result-metric">— → $0 (Supabase free tier)</div>
-                </div>
-              </div>
-              <div class="project-case__tech">
-                <h4 class="case-block__title">🔨 Stack</h4>
-                <div class="project-case__tags">
-                  <span class="tag tag--primary">HTML</span>
-                  <span class="tag tag--primary">CSS</span>
-                  <span class="tag tag--primary">JavaScript</span>
-                  <span class="tag tag--secondary">Supabase</span>
-                  <span class="tag tag--secondary">PostgreSQL</span>
-                  <span class="tag tag--secondary">Supabase Auth</span>
-                  <span class="tag tag--secondary">Supabase Storage</span>
-                  <span class="tag tag--tertiary">Apache / XAMPP</span>
-                  <span class="tag tag--tertiary">Vercel</span>
-                </div>
-              </div>
-              <div class="project-case__links">
-                <a href="https://acuario-martinez.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn btn--primary btn--sm">Ver sitio</a>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- ══ PROYECTOS COMPACTOS (05 y 06) ══ -->
-        <div class="projects__compact-grid">
-
-          <!-- Proyecto 05: Gobierno -->
-          <article class="project-card" id="gobierno-geo">
-            <div class="project-card__header">
-              <span class="project-card__number">05</span>
-              <div class="project-card__tags">
-                <span class="tag tag--primary">Producción</span>
-                <span class="tag tag--secondary">Gobierno · 2024</span>
-              </div>
-            </div>
-            <h3 class="project-card__title">Sistema de Geolocalización Gubernamental</h3>
-            <p class="project-card__desc">Backend para localizar y mostrar servicios públicos georreferenciados del Gobierno del Estado de México. Flask + PHP para procesamiento geoespacial; Leaflet.js para mapas interactivos sin Google Maps. Múltiples secretarías con credenciales independientes y rate limiting por token.</p>
-            <div class="architecture" style="margin: var(--space-4) 0;">
-              <div class="arch-node arch-node--frontend">Leaflet.js<br/><small>Mapas</small></div>
-              <div class="arch-arrow">→</div>
-              <div class="arch-node arch-node--backend">Flask + PHP<br/><small>API</small></div>
-              <div class="arch-arrow">→</div>
-              <div class="arch-node arch-node--db">MySQL<br/><small>GeoJSON</small></div>
-            </div>
-            <div class="project-card__footer">
-              <div class="project-case__tags">
-                <span class="tag tag--tertiary">Python</span>
-                <span class="tag tag--secondary">Flask</span>
-                <span class="tag tag--primary">PHP</span>
-                <span class="tag tag--primary">MySQL</span>
-                <span class="tag tag--secondary">Leaflet.js</span>
-                <span class="tag tag--secondary">GeoJSON</span>
-              </div>
+            <div class="pc-card__actions">
+              <button class="btn btn--ghost pc-detail-btn" data-id="acuario">Ver detalles</button>
+              <a href="https://acuario-martinez.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Ver sitio →</a>
             </div>
           </article>
 
-          <!-- Proyecto 06: Control Escolar -->
-          <article class="project-card" id="control-escolar">
-            <div class="project-card__header">
-              <span class="project-card__number">06</span>
-              <div class="project-card__tags">
-                <span class="tag tag--primary">Producción</span>
-                <span class="tag tag--secondary">Educación</span>
+          <!-- Card 05: Synapse -->
+          <article class="pc-card" data-id="synapse">
+            <div class="pc-card__thumb">
+              <img src="img/synapse.png" alt="Synapse" loading="lazy" />
+            </div>
+            <div class="pc-card__body">
+              <h3 class="pc-card__title">Synapse</h3>
+              <div class="pc-card__tags">
+                <span class="tag tag--primary">Personal · SaaS</span>
+                <span class="tag tag--secondary">Full Stack</span>
+                <span class="tag tag--tertiary">React · Node.js</span>
               </div>
             </div>
-            <h3 class="project-card__title">Sistema de Control Escolar</h3>
-            <p class="project-card__desc">Sistema integral de gestión académica: alumnos, materias, calificaciones y reportes PDF automáticos. Roles diferenciados (Director / Docente / Alumno), auditoría completa de cambios con timestamp y generación de boletas sin intervención administrativa.</p>
-            <div class="architecture" style="margin: var(--space-4) 0;">
-              <div class="arch-node arch-node--frontend">PHP Views<br/><small>CRUD</small></div>
-              <div class="arch-arrow">→</div>
-              <div class="arch-node arch-node--backend">PHP MVC<br/><small>Lógica</small></div>
-              <div class="arch-arrow">→</div>
-              <div class="arch-node arch-node--db">MySQL<br/><small>Datos</small></div>
-            </div>
-            <div class="project-card__footer">
-              <div class="project-case__tags">
-                <span class="tag tag--primary">PHP</span>
-                <span class="tag tag--primary">MySQL</span>
-                <span class="tag tag--primary">JavaScript</span>
-                <span class="tag tag--secondary">JWT</span>
-                <span class="tag tag--secondary">PDF Generation</span>
-              </div>
+            <div class="pc-card__actions">
+              <button class="btn btn--ghost pc-detail-btn" data-id="synapse">Ver detalles</button>
+              <a href="https://synapse-pearl-zeta.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Ver sitio →</a>
             </div>
           </article>
 
+        </div><!-- /projs-grid -->
+
+
+        <!-- ══ MÁS PROYECTOS ══ -->
+        <div class="projects__more">
+          <p class="projects__more-text">¿Quieres ver más trabajos?</p>
+          <a href="proyectos.html" class="btn btn--ghost projects__more-btn">
+            Ver más proyectos
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
         </div>
 
       </div>
@@ -982,6 +780,321 @@
     <span class="wa-bubble__tooltip">Escríbeme</span>
   </a>
 
+  <!-- MODAL DE PROYECTOS -->
+  <div class="pc-modal" id="pcModal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="pc-modal__backdrop" id="pcModalBackdrop"></div>
+    <div class="pc-modal__box">
+      <button class="pc-modal__close" id="pcModalClose" aria-label="Cerrar">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 6 6 18M6 6l12 12"/>
+        </svg>
+      </button>
+      <div id="pcModalContent"></div>
+    </div>
+  </div>
+
   <script src="js/main.js"></script>
+  <script>
+    const PROJECT_DATA = {
+      eme: {
+        title: 'Educación Médica Especializada',
+        subtitle: 'Plataforma SaaS de educación médica con panel de administración completo para gestionar cursos de certificación (CRIO, ALSO, BLSO) dirigidos a profesionales de la salud en México, con presencia en 16+ estados.',
+        tags: [
+          { text: 'Freelance', cls: 'tag--primary'   },
+          { text: 'SaaS',      cls: 'tag--secondary' },
+          { text: 'Educación', cls: 'tag--secondary' },
+          { text: 'Salud',     cls: 'tag--secondary' },
+        ],
+        problem: 'La organización coordinaba cursos de certificación médica a nivel nacional sin una plataforma centralizada. Las inscripciones se gestionaban manualmente, los comprobantes llegaban por vías informales y no había forma de que los alumnos consultaran su historial o accedieran a materiales. La escala nacional (32 estados) hacía inviable seguir operando sin un sistema propio.',
+        arch: [
+          { label: 'PHP + MySQLi/PDO',  sub: 'Backend + Admin', cls: 'arch-node--frontend' },
+          { label: 'MariaDB',           sub: 'Datos',           cls: 'arch-node--backend'  },
+          { label: 'JS Vanilla + AJAX', sub: 'Interactividad',  cls: 'arch-node--db'       },
+        ],
+        process: [
+          { title: 'Portal del alumno',          desc: 'Registro con verificación de correo (código 6 dígitos, 30 min), login con email o Google OAuth, dashboard personal, foro por curso, galería de imágenes y syllabus PDF.' },
+          { title: 'Pasarela de pagos múltiple', desc: 'Integración simultánea de Stripe, PayPal, OXXO y Amazon Pay, más flujo manual de comprobante fotográfico con soporte de hasta 12 archivos por transacción.' },
+          { title: 'Panel de administración',    desc: 'Gestión completa de cursos, alumnos con estado de inscripción, seguimiento de ventas, reportes en Excel y registro de actividad del admin.' },
+          { title: 'Correo masivo',              desc: 'Sistema de cola en base de datos procesada por cron job, con soporte de adjuntos, selección de destinatarios y seguimiento en tiempo real.' },
+          { title: 'Webinars en vivo',           desc: 'Implementación WebRTC con acceso exclusivo de cámara/micrófono para el admin y sistema de comentarios en tiempo real.' },
+        ],
+        challenge: 'Construir un SaaS médico de alcance nacional sin frameworks modernos — PHP puro con consultas preparadas y sin ORM. El mayor reto fue coordinar cuatro pasarelas de pago distintas (incluyendo OXXO con flujo asíncrono) junto a verificación manual de comprobantes. Los correos masivos obligaron a diseñar un sistema de cola propio procesado en background vía cron.',
+        results: [
+          { type: 'bar',    label: 'Inscripciones',       before: 'Manual / por teléfono', after: 'Online 24/7' },
+          { type: 'metric', label: 'Seguimiento de pagos', value: 'Informal → Dashboard en tiempo real' },
+          { type: 'metric', label: 'Métodos de pago',      value: '1 (efectivo) → 4 pasarelas + comprobante' },
+          { type: 'metric', label: 'Cobertura digital',    value: 'Ninguna → 16+ estados activos' },
+          { type: 'metric', label: 'Acceso a materiales',  value: 'Solo presencial → Portal del alumno' },
+        ],
+        stack: [
+          { text: 'PHP',            cls: 'tag--primary'   },
+          { text: 'MySQL/MariaDB',  cls: 'tag--primary'   },
+          { text: 'JavaScript',     cls: 'tag--primary'   },
+          { text: 'AJAX',           cls: 'tag--secondary' },
+          { text: 'PHPMailer',      cls: 'tag--secondary' },
+          { text: 'Stripe',         cls: 'tag--secondary' },
+          { text: 'PayPal',         cls: 'tag--secondary' },
+          { text: 'Amazon Pay',     cls: 'tag--secondary' },
+          { text: 'Google OAuth',   cls: 'tag--secondary' },
+          { text: 'WebRTC',         cls: 'tag--secondary' },
+          { text: 'PhpSpreadsheet', cls: 'tag--secondary' },
+          { text: 'XAMPP',          cls: 'tag--tertiary'  },
+          { text: 'Hostinger',      cls: 'tag--tertiary'  },
+        ],
+        links: [
+          { text: 'Ver sitio →', url: 'https://educacionmedicaespecializada.com.mx', cls: 'btn--primary' },
+        ],
+      },
+      blink: {
+        title: 'BlinkTasks',
+        subtitle: 'Gestión de tareas sobre la blockchain de Solana usando Solana Actions y Blinks — construido en hackathon oficial de Solana.',
+        tags: [
+          { text: 'Hackathon', cls: 'tag--primary'   },
+          { text: 'Solana',    cls: 'tag--secondary' },
+          { text: 'Web3',      cls: 'tag--secondary' },
+        ],
+        problem: 'Explorar gestión de tareas colaborativas en blockchain pública: acciones verificables sin intermediarios, accesibles desde cualquier URL con Solana Blinks — sin necesidad de abrir una dApp.',
+        arch: [
+          { label: 'Blinks UI', sub: 'Actions API',    cls: 'arch-node--frontend' },
+          { label: 'Anchor',    sub: 'Smart Contract', cls: 'arch-node--backend'  },
+          { label: 'Solana',    sub: 'Devnet',         cls: 'arch-node--db'       },
+        ],
+        process: [
+          { title: 'Anchor + Rust',  desc: 'Smart contract on-chain que gestiona creación, asignación y completado de tareas.' },
+          { title: 'Solana Blinks',  desc: 'Operación de tareas desde una URL embebible en cualquier plataforma.' },
+          { title: 'Solana Actions', desc: 'Endpoints REST que traducen interacciones en transacciones firmadas enviadas a la red.' },
+        ],
+        challenge: 'Integrar el flujo de firma de transacciones dentro de una UX fluida, sin exponer complejidad blockchain al usuario. Construido bajo la presión de tiempo de un hackathon.',
+        results: [
+          { type: 'metric', label: 'Contexto', value: 'Hackathon oficial de Solana' },
+          { type: 'metric', label: 'Deploy',   value: 'Live en Vercel · Devnet activo' },
+        ],
+        stack: [
+          { text: 'Rust',           cls: 'tag--tertiary'  },
+          { text: 'Anchor',         cls: 'tag--secondary' },
+          { text: 'Solana',         cls: 'tag--secondary' },
+          { text: 'Solana Actions', cls: 'tag--secondary' },
+          { text: 'Blinks',         cls: 'tag--secondary' },
+          { text: 'Vercel',         cls: 'tag--tertiary'  },
+        ],
+        links: [
+          { text: 'Ver demo →', url: 'https://blink-tasks-fc7g.vercel.app',    cls: 'btn--primary' },
+          { text: 'GitHub',     url: 'https://github.com/Artur896/BlinkTasks', cls: 'btn--ghost'   },
+        ],
+      },
+      ferreteros: {
+        title: 'Ferreteros Unidos',
+        subtitle: 'Sitio web institucional con catálogo digital de 1,000+ productos y panel de administración para cadena de ferreterías con 50 años de experiencia en CDMX.',
+        tags: [
+          { text: 'Freelance',        cls: 'tag--primary'   },
+          { text: 'Institucional',    cls: 'tag--secondary' },
+          { text: 'Catálogo Digital', cls: 'tag--secondary' },
+        ],
+        problem: 'La empresa operaba sin ninguna presencia digital. Clientes — incluyendo Pemex, SEDENA, SAT y 16 alcaldías — debían llamar o visitar la tienda para consultar productos. El catálogo se manejaba de forma completamente manual.',
+        arch: [
+          { label: 'PHP',      sub: 'Sitio + Admin',        cls: 'arch-node--frontend' },
+          { label: 'MySQL',    sub: 'Catálogo',             cls: 'arch-node--backend'  },
+          { label: 'JS/AJAX',  sub: 'Búsqueda tiempo real', cls: 'arch-node--db'       },
+        ],
+        process: [
+          { title: 'Catálogo con búsqueda',     desc: '1,000+ productos en 15 categorías, búsqueda en tiempo real vía AJAX y paginación por sesión.' },
+          { title: 'Panel de administración',   desc: 'Gestión completa — alta, edición, eliminación, activar/desactivar — con subida de imágenes y autenticación por sesión.' },
+          { title: 'Sitio institucional',       desc: '2 sucursales, 16 marcas distribuidoras (Truper, Makita, Bosch, Dewalt…), galería de clientes gubernamentales y flota de transporte.' },
+        ],
+        challenge: 'Construir un catálogo funcional y rápido de 1,000+ productos sin frameworks modernos, usando PHP puro con consultas preparadas y AJAX vanilla. El reto fue mantener la búsqueda ágil y que el panel de admin fuera usable por personal no técnico.',
+        results: [
+          { type: 'bar',    label: 'Presencia digital',    before: 'Antes: Ninguna', after: 'Después: Online' },
+          { type: 'metric', label: 'Consulta de catálogo', value: 'Solo en tienda → 24/7 en línea' },
+          { type: 'metric', label: 'Productos accesibles', value: '0 → 1,000+ SKUs' },
+          { type: 'metric', label: 'Categorías',           value: '15 categorías estructuradas' },
+        ],
+        stack: [
+          { text: 'PHP',        cls: 'tag--primary'   },
+          { text: 'MySQL',      cls: 'tag--primary'   },
+          { text: 'JavaScript', cls: 'tag--primary'   },
+          { text: 'AJAX',       cls: 'tag--secondary' },
+          { text: 'HTML/CSS',   cls: 'tag--secondary' },
+          { text: 'XAMPP',      cls: 'tag--tertiary'  },
+        ],
+        links: [],
+      },
+      acuario: {
+        title: 'Acuario Martinez',
+        subtitle: 'Landing page animada con catálogo digital y panel de administración para tienda especializada en peces ornamentales y accesorios para acuario.',
+        tags: [
+          { text: 'Freelance',        cls: 'tag--primary'   },
+          { text: 'E-commerce',       cls: 'tag--secondary' },
+          { text: 'Catálogo Digital', cls: 'tag--secondary' },
+        ],
+        problem: 'La tienda no tenía presencia digital. Los clientes no podían consultar productos sin visitar físicamente el local, y las reservas se hacían solo por llamada. Sin inventario en línea, sin gestión de pedidos y sin catálogo fuera del local.',
+        arch: [
+          { label: 'Supabase',    sub: 'DB + Admin',            cls: 'arch-node--frontend' },
+          { label: 'HTML/CSS/JS', sub: 'Interfaz + Animaciones', cls: 'arch-node--backend' },
+          { label: 'WhatsApp API',sub: 'Reservas automáticas',  cls: 'arch-node--db'       },
+        ],
+        process: [
+          { title: 'Landing page animada',    desc: 'Pantalla de carga tipo acuario con llenado de agua, peces decorativos con animaciones independientes, burbujas flotantes y revelado por scroll.' },
+          { title: 'Catálogo digital',        desc: 'Filtros por categoría, búsqueda en tiempo real, tarjetas con imagen, precio y botón de reserva directa por WhatsApp.' },
+          { title: 'Sistema de reservas',     desc: 'Flujo completo desde modal de producto hasta mensaje pre-armado en WhatsApp, con registro automático del pedido en la base de datos.' },
+          { title: 'Panel de administración', desc: 'Auth con Supabase, CRUD de productos y categorías, subida de imágenes a Supabase Storage, gestión de pedidos con estados y dashboard con estadísticas.' },
+        ],
+        challenge: 'Construir una experiencia visual inmersiva — peces animados, pantalla de llenado de agua, burbujas — usando solo HTML, CSS y JS vanilla sin ninguna librería de animación. Integrar Supabase como BaaS completo (DB + Auth + Storage) para eliminar la necesidad de servidor propio y mantener el costo cercano a cero.',
+        results: [
+          { type: 'bar',    label: 'Presencia digital',  before: 'Antes: Ninguna', after: 'Después: Online' },
+          { type: 'metric', label: 'Catálogo',           value: 'Solo en tienda → 24/7 en línea' },
+          { type: 'metric', label: 'Reservas',           value: 'Solo por llamada → WhatsApp automatizado' },
+          { type: 'metric', label: 'Gestión de pedidos', value: 'Manual → Panel web en tiempo real' },
+          { type: 'metric', label: 'Costo servidor',     value: '— → $0 (Supabase free tier)' },
+        ],
+        stack: [
+          { text: 'HTML',             cls: 'tag--primary'   },
+          { text: 'CSS',              cls: 'tag--primary'   },
+          { text: 'JavaScript',       cls: 'tag--primary'   },
+          { text: 'Supabase',         cls: 'tag--secondary' },
+          { text: 'PostgreSQL',       cls: 'tag--secondary' },
+          { text: 'Supabase Auth',    cls: 'tag--secondary' },
+          { text: 'Supabase Storage', cls: 'tag--secondary' },
+          { text: 'Vercel',           cls: 'tag--tertiary'  },
+        ],
+        links: [
+          { text: 'Ver sitio →', url: 'https://acuario-martinez.vercel.app/', cls: 'btn--primary' },
+        ],
+      },
+      synapse: {
+        title: 'Synapse',
+        subtitle: 'Editor de mapas mentales y conceptuales con generación automática desde texto libre o Wikipedia, motor de layout propio y exportación en múltiples formatos.',
+        tags: [
+          { text: 'Personal · SaaS',    cls: 'tag--primary'   },
+          { text: 'Herramienta Visual', cls: 'tag--secondary' },
+          { text: 'Full Stack',         cls: 'tag--secondary' },
+        ],
+        problem: 'Las herramientas existentes de mapas mentales son demasiado simples o requieren suscripciones de pago para funciones básicas. La alternativa era construir desde cero un editor visual potente que generara estructuras automáticamente desde texto, sin depender de APIs de IA externas ni de costos por uso.',
+        arch: [
+          { label: 'React · ReactFlow', sub: 'Canvas interactivo', cls: 'arch-node--frontend' },
+          { label: 'Node.js · Express', sub: 'API REST CRUD',      cls: 'arch-node--backend'  },
+          { label: 'MySQL',             sub: 'Persistencia',       cls: 'arch-node--db'       },
+        ],
+        process: [
+          { title: 'Canvas interactivo',    desc: 'Editor basado en ReactFlow con nodos arrastrables, conexiones entre handles, edición inline de etiquetas, menú contextual (colores, imágenes, eliminar) y minimapa.' },
+          { title: 'NLP vanilla JS',        desc: 'Motor propio sin librerías externas que extrae temas y conceptos desde texto en español usando regex y filtrado de stopwords.' },
+          { title: 'Integración Wikipedia', desc: 'Búsqueda y consumo de la API pública en español; el artículo se procesa con el motor NLP y se convierte automáticamente en mapa estructurado.' },
+          { title: 'Motor de layout',       desc: 'Dos algoritmos — bilateral radial para mapas mentales y jerárquico por niveles para conceptuales — calculados con Zustand como store central.' },
+          { title: 'Exportación cliente',   desc: 'PNG (2× escala), JPG, PDF con orientación automática y JSON, renderizados del lado del cliente con html2canvas y jsPDF.' },
+        ],
+        challenge: 'Implementar el motor NLP y los algoritmos de layout sin bibliotecas especializadas. El mayor reto fue calcular posiciones de nodos dinámicamente evitando solapamientos. Además, coordinar el estado global del canvas en una sola store de Zustand sin afectar el rendimiento del editor.',
+        results: [
+          { type: 'bar',    label: 'Generación de mapa', before: 'Manual, nodo por nodo',  after: 'Automática desde texto o Wikipedia' },
+          { type: 'metric', label: 'Exportación',        value: 'No disponible → PNG, JPG, PDF, JSON' },
+          { type: 'metric', label: 'Persistencia',       value: 'Solo en sesión → MySQL (CRUD completo)' },
+          { type: 'metric', label: 'Tipos de mapa',      value: '— → Mental (bilateral) + Conceptual (jerárquico)' },
+          { type: 'metric', label: 'Personalización',    value: '— → Colores, imágenes, etiquetas en aristas' },
+        ],
+        stack: [
+          { text: 'React 18',      cls: 'tag--primary'   },
+          { text: 'ReactFlow',     cls: 'tag--primary'   },
+          { text: 'Zustand',       cls: 'tag--primary'   },
+          { text: 'TailwindCSS',   cls: 'tag--secondary' },
+          { text: 'Vite',          cls: 'tag--secondary' },
+          { text: 'Node.js',       cls: 'tag--secondary' },
+          { text: 'Express',       cls: 'tag--secondary' },
+          { text: 'MySQL',         cls: 'tag--secondary' },
+          { text: 'html2canvas',   cls: 'tag--tertiary'  },
+          { text: 'jsPDF',         cls: 'tag--tertiary'  },
+          { text: 'Wikipedia API', cls: 'tag--tertiary'  },
+          { text: 'NLP vanilla',   cls: 'tag--tertiary'  },
+        ],
+        links: [
+          { text: 'Ver sitio →', url: 'https://synapse-pearl-zeta.vercel.app/', cls: 'btn--primary' },
+        ],
+      },
+    };
+
+    /* ── Build modal HTML ── */
+    function buildModal(id) {
+      const d = PROJECT_DATA[id];
+      if (!d) return '';
+      const tagsHTML = d.tags.map(t => `<span class="tag ${t.cls}">${t.text}</span>`).join('');
+      const archHTML = d.arch.map((n, i) => {
+        const arr = i < d.arch.length - 1 ? '<div class="arch-arrow">→</div>' : '';
+        return `<div class="arch-node ${n.cls}">${n.label}<br/><small>${n.sub}</small></div>${arr}`;
+      }).join('');
+      const processHTML = d.process.map(p => `<li><strong>${p.title}:</strong> ${p.desc}</li>`).join('');
+      const resultsHTML = d.results.map(r => r.type === 'bar'
+        ? `<div class="result-item">
+             <div class="result-item__label">${r.label}</div>
+             <div class="result-item__bar"><div class="result-item__before" style="width:100%">${r.before}</div></div>
+             <div class="result-item__bar"><div class="result-item__after" style="width:80%">${r.after}</div></div>
+           </div>`
+        : `<div class="result-item">
+             <div class="result-item__label">${r.label}</div>
+             <div class="result-metric">${r.value}</div>
+           </div>`
+      ).join('');
+      const stackHTML = d.stack.map(t => `<span class="tag ${t.cls}">${t.text}</span>`).join('');
+      const linksHTML = d.links.length
+        ? `<div class="pc-modal__links">${d.links.map(l =>
+            `<a href="${l.url}" target="_blank" rel="noopener noreferrer" class="btn ${l.cls} btn--sm">${l.text}</a>`
+          ).join('')}</div>`
+        : '';
+      return `
+        <div class="pc-modal__tags">${tagsHTML}</div>
+        <h2 class="pc-modal__title">${d.title}</h2>
+        <p class="pc-modal__subtitle">${d.subtitle}</p>
+        <hr class="pc-modal__divider"/>
+        <span class="pc-modal__section-label">🎯 El Problema</span>
+        <p class="pc-modal__desc">${d.problem}</p>
+        <span class="pc-modal__section-label">⚙️ El Proceso</span>
+        <div class="architecture pc-modal__arch">${archHTML}</div>
+        <ul class="case-list pc-modal__list">${processHTML}</ul>
+        <span class="pc-modal__section-label">🔥 El Desafío</span>
+        <p class="pc-modal__desc">${d.challenge}</p>
+        <hr class="pc-modal__divider"/>
+        <span class="pc-modal__section-label">📊 Resultados</span>
+        <div class="case-results">${resultsHTML}</div>
+        <hr class="pc-modal__divider"/>
+        <span class="pc-modal__section-label">🔨 Stack</span>
+        <div class="pc-modal__stack">${stackHTML}</div>
+        ${linksHTML}
+      `;
+    }
+
+    /* ── Modal open / close ── */
+    const modal     = document.getElementById('pcModal');
+    const modalBody = document.getElementById('pcModalContent');
+    const btnClose  = document.getElementById('pcModalClose');
+    const backdrop  = document.getElementById('pcModalBackdrop');
+
+    function openModal(id) {
+      modalBody.innerHTML = buildModal(id);
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.pc-detail-btn').forEach(btn =>
+      btn.addEventListener('click', () => openModal(btn.dataset.id))
+    );
+    btnClose.addEventListener('click', closeModal);
+    backdrop.addEventListener('click', closeModal);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+    /* ── Scroll reveal ── */
+    const revealObs = new IntersectionObserver(entries => {
+      entries.forEach((entry, i) => {
+        if (!entry.isIntersecting) return;
+        entry.target.style.transitionDelay = `${i * 90}ms`;
+        entry.target.classList.add('card-visible');
+        revealObs.unobserve(entry.target);
+      });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.pc-card').forEach(c => revealObs.observe(c));
+  </script>
 </body>
 </html>
