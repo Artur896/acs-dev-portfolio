@@ -472,8 +472,8 @@ ul {
 [data-theme="light"] .theme-toggle__moon { opacity: 0; transform: scale(0.5); }
 
 .nav__logo-img {
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   object-fit: contain;
   border-radius: var(--radius-sm);
 }
