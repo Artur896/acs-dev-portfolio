@@ -615,6 +615,24 @@
             </div>
           </article>
 
+          <!-- Card 06: PlayRoom -->
+          <article class="pc-card" data-id="playroom">
+            <div class="pc-card__thumb">
+              <img src="img/playroom.png" alt="PlayRoom" loading="lazy" />
+            </div>
+            <div class="pc-card__body">
+              <h3 class="pc-card__title">PlayRoom</h3>
+              <div class="pc-card__tags">
+                <span class="tag tag--primary">Proyecto Personal</span>
+                <span class="tag tag--secondary">Juegos · Tiempo Real</span>
+              </div>
+            </div>
+            <div class="pc-card__actions">
+              <button class="btn btn--ghost pc-detail-btn" data-id="playroom">Ver detalles</button>
+              <a href="https://payroom-l8gp.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Ver demo →</a>
+            </div>
+          </article>
+
         </div><!-- /projs-grid -->
 
 
@@ -1006,6 +1024,50 @@
         ],
         links: [
           { text: 'Ver sitio →', url: 'https://synapse-pearl-zeta.vercel.app/', cls: 'btn--primary' },
+        ],
+      },
+      playroom: {
+        title: 'PlayRoom — Sala de Juegos Multijugador',
+        subtitle: 'Plataforma web full stack para jugar en tiempo real con amigos sin descargas, sin registro y sin esperas. Seis juegos clásicos, salas privadas con código y chat integrado.',
+        tags: [
+          { text: 'Proyecto Personal',   cls: 'tag--primary'   },
+          { text: 'Juegos Multijugador', cls: 'tag--secondary' },
+          { text: 'Full Stack',          cls: 'tag--secondary' },
+          { text: 'Tiempo Real',         cls: 'tag--secondary' },
+        ],
+        problem: 'Los juegos en línea con amigos suelen requerir instalación, cuentas, o plataformas de terceros con publicidad agresiva. Quería construir desde cero una sala de juegos que funcionara directamente desde el navegador, con conexión instantánea por código, sin fricciones.',
+        arch: [
+          { label: 'React + TypeScript',  sub: 'Canvas de juegos',  cls: 'arch-node--frontend' },
+          { label: 'Node.js / Socket.io', sub: 'WebSocket server',  cls: 'arch-node--backend'  },
+          { label: 'Estado en memoria',   sub: 'Salas efímeras',    cls: 'arch-node--db'       },
+        ],
+        process: [
+          { title: 'Canvas de juegos',            desc: 'Seis juegos implementados íntegramente en React sin librerías de juego externas: Tres en Raya, UNO, Ajedrez, Pregunta Bomba, Dominó y ¿Quién soy? Cada uno con su propia lógica de turnos, validación de jugadas y estados de victoria.' },
+          { title: 'Motor de ajedrez propio',     desc: 'Generación completa de movimientos legales para todas las piezas (incluyendo enroque, al paso y promoción de peones) implementada en TypeScript puro, sin dependencias externas. El tablero se sincroniza entre ambos jugadores vía WebSocket en tiempo real.' },
+          { title: 'Sistema de salas',            desc: 'El servidor mantiene salas efímeras en memoria con códigos aleatorios de 6 caracteres, expiración automática a las 4 horas y limpieza periódica. Cada sala trackea jugadores, tipo de juego, estado y host.' },
+          { title: 'Comunicación en tiempo real', desc: 'Arquitectura event-driven con Socket.io — los eventos de juego, el chat y la sincronización de estado viajan por WebSocket con fallback a polling. Reconexión automática y detección de desconexión integradas.' },
+          { title: 'Estado global con Zustand',   desc: 'Un store central gestiona la conexión socket, los jugadores, el estado de sala y el turno activo, sin prop drilling y con rendimiento fluido incluso en juegos con muchos re-renders (UNO, Dominó).' },
+        ],
+        challenge: 'Implementar seis juegos con reglas completas sin librerías especializadas. El mayor reto fue el ajedrez: calcular todos los movimientos legales pieza a pieza, incluyendo casos borde como el enroque (ambos lados) y la captura al paso, y sincronizar ese estado entre dos clientes de forma determinista sin inconsistencias. El segundo reto fue diseñar un protocolo de eventos WebSocket lo suficientemente genérico para seis juegos distintos sin que el servidor necesitara conocer las reglas de ninguno.',
+        results: [
+          { type: 'bar',    label: 'Acceso',                 before: 'Descarga / cuenta requerida',    after: 'Directo desde el navegador'          },
+          { type: 'metric', label: 'Conexión',               value: 'Plataformas de terceros → Código de sala de 6 caracteres'                        },
+          { type: 'metric', label: 'Juegos disponibles',     value: '— → 6 juegos clásicos'                                                          },
+          { type: 'metric', label: 'Ajedrez',                value: '— → Motor propio con movimientos legales completos'                              },
+          { type: 'metric', label: 'Persistencia de sesión', value: '— → Salas activas hasta 4 horas'                                               },
+        ],
+        stack: [
+          { text: 'React 18',      cls: 'tag--primary'   },
+          { text: 'TypeScript',    cls: 'tag--primary'   },
+          { text: 'Zustand',       cls: 'tag--primary'   },
+          { text: 'Node.js',       cls: 'tag--secondary' },
+          { text: 'Socket.io',     cls: 'tag--secondary' },
+          { text: 'Tailwind CSS',  cls: 'tag--secondary' },
+          { text: 'Vite',          cls: 'tag--secondary' },
+          { text: 'HTML/CSS puro', cls: 'tag--tertiary'  },
+        ],
+        links: [
+          { text: 'Ver demo →', url: 'https://payroom-l8gp.vercel.app/', cls: 'btn--primary' },
         ],
       },
     };
