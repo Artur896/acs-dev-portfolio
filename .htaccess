@@ -113,6 +113,12 @@ RewriteRule ^(.+)$ $1.html [L,QSA]
   Deny from all
 </FilesMatch>
 
+# Bloquear acceso a carpetas ocultas (.github, .git, etc.)
+<DirectoryMatch "^(.*/)?\.">
+  Order Allow,Deny
+  Deny from all
+</DirectoryMatch>
+
 # ============================================
 #  PÁGINAS DE ERROR PERSONALIZADAS
 # ============================================
