@@ -74,6 +74,14 @@
       line-height: 1.35; color: var(--text-primary);
     }
     .pc-card__tags { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+    .pc-card__result {
+      font-size: 0.73rem;
+      color: var(--accent-2);
+      font-family: var(--font-mono);
+      padding-top: var(--space-2);
+      border-top: 1px solid var(--border-subtle);
+      line-height: 1.4;
+    }
     .pc-card__actions {
       display: flex; gap: var(--space-2);
       padding: var(--space-3) var(--space-5) var(--space-5);
@@ -146,6 +154,79 @@
       .pc-modal { padding: var(--space-4); }
       .pc-modal__box { padding: var(--space-6); }
     }
+
+    /* ════════════════════════════
+       TECH GRID — GROUP HEADERS
+    ════════════════════════════ */
+    .tech-grid__group {
+      grid-column: 1 / -1;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding-bottom: var(--space-2);
+      border-bottom: 1px solid var(--border-subtle);
+      margin-top: var(--space-6);
+    }
+    .tech-grid__group:first-child { margin-top: 0; }
+
+    /* ════════════════════════════
+       SOFT SKILLS — MEJORAS
+    ════════════════════════════ */
+    .soft-card {
+      border-left: 3px solid transparent;
+      transition:
+        border-color var(--transition),
+        box-shadow var(--transition),
+        background var(--transition);
+    }
+    .soft-card:hover, .soft-card.is-open {
+      border-left-color: var(--accent);
+      box-shadow: -4px 0 24px rgba(124,106,255,0.08);
+    }
+    .soft-card__lesson {
+      background: rgba(124,106,255,0.07);
+      border-left: 2px solid var(--accent);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      padding: var(--space-3) var(--space-4);
+      font-size: 0.85rem;
+      line-height: 1.65;
+      margin-top: var(--space-3);
+    }
+    .soft-card__quote {
+      display: block;
+      margin-top: var(--space-3);
+      font-style: italic;
+      color: var(--accent-2);
+      font-size: 0.85rem;
+      padding-left: var(--space-3);
+      border-left: 2px solid var(--accent-2);
+    }
+    .soft-card__toggle {
+      font-size: 1.25rem;
+      line-height: 1;
+      color: var(--accent);
+      font-weight: 300;
+      transition: transform 0.3s cubic-bezier(0.22,1,0.36,1), color var(--transition);
+      flex-shrink: 0;
+    }
+    .soft-card.is-open .soft-card__toggle {
+      transform: rotate(45deg);
+    }
+    .soft-card__emoji {
+      font-size: 1.6rem;
+      flex-shrink: 0;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25));
+    }
+    .soft-card__tagline {
+      font-size: 0.78rem;
+      color: var(--accent);
+      font-family: var(--font-mono);
+      letter-spacing: 0.02em;
+      margin-top: 2px;
+    }
   </style>
 </head>
 <body>
@@ -167,9 +248,10 @@
       </a>
       <ul class="nav__links">
         <li><a href="#sobre-mi" class="nav__link">Sobre mí</a></li>
-        <li><a href="#habilidades" class="nav__link">Habilidades</a></li>
+        <li><a href="#habilidades" class="nav__link">Stack</a></li>
+        <li><a href="#blandas" class="nav__link">Habilidades</a></li>
         <li><a href="#proyectos" class="nav__link">Proyectos</a></li>
-        <li><a href="#certificaciones" class="nav__link">Certificaciones</a></li>
+        <li><a href="#certificaciones" class="nav__link">Certs</a></li>
         <li><a href="#contacto" class="nav__link">Contacto</a></li>
       </ul>
       <div class="nav__actions">
@@ -184,7 +266,8 @@
     </div>
     <div class="nav__mobile" id="navMobile">
       <a href="#sobre-mi" class="nav__mobile-link">Sobre mí</a>
-      <a href="#habilidades" class="nav__mobile-link">Habilidades</a>
+      <a href="#habilidades" class="nav__mobile-link">Stack Técnico</a>
+      <a href="#blandas" class="nav__mobile-link">Habilidades Blandas</a>
       <a href="#proyectos" class="nav__mobile-link">Proyectos</a>
       <a href="#certificaciones" class="nav__mobile-link">Certificaciones</a>
       <a href="#contacto" class="nav__mobile-link">Contacto</a>
@@ -401,103 +484,41 @@
       </div>
       <div class="container">
         <div class="section__header">
-          <span class="section__tag">02 — Habilidades</span>
-          <h2 class="section__title">Stack técnico</h2>
-          <p class="section__subtitle">Herramientas que uso en producción, no solo en tutoriales.</p>
+          <span class="section__tag">02 — Stack Técnico</span>
+          <h2 class="section__title">Tecnologías</h2>
+          <p class="section__subtitle">Filtra por área · hover en cada tarjeta para ver dónde la usé en producción.</p>
         </div>
-        <div class="skills__grid">
-
-          <div class="skill-card">
-            <div class="skill-card__header">
-              <span class="skill-card__icon">🔧</span>
-              <h3 class="skill-card__title">Backend</h3>
-              <span class="skill-card__level skill-card__level--primary">Principal</span>
-            </div>
-            <div class="skill-card__tags">
-              <span class="tag tag--primary">Laravel</span>
-              <span class="tag tag--primary">PHP</span>
-              <span class="tag tag--primary">MySQL</span>
-              <span class="tag tag--secondary">Flask</span>
-              <span class="tag tag--secondary">Python</span>
-              <span class="tag tag--tertiary">Node.js</span>
-            </div>
-          </div>
-
-          <div class="skill-card">
-            <div class="skill-card__header">
-              <span class="skill-card__icon">🎨</span>
-              <h3 class="skill-card__title">Frontend</h3>
-              <span class="skill-card__level skill-card__level--primary">Principal</span>
-            </div>
-            <div class="skill-card__tags">
-              <span class="tag tag--primary">React</span>
-              <span class="tag tag--primary">JavaScript (ES6+)</span>
-              <span class="tag tag--primary">HTML5 / CSS3</span>
-              <span class="tag tag--secondary">Tailwind CSS</span>
-              <span class="tag tag--secondary">Responsive Design</span>
-            </div>
-          </div>
-
-          <div class="skill-card">
-            <div class="skill-card__header">
-              <span class="skill-card__icon">💳</span>
-              <h3 class="skill-card__title">Integraciones & APIs</h3>
-              <span class="skill-card__level skill-card__level--secondary">Intermedio</span>
-            </div>
-            <div class="skill-card__tags">
-              <span class="tag tag--secondary">Stripe</span>
-              <span class="tag tag--secondary">PayPal</span>
-              <span class="tag tag--secondary">OAuth 2.0</span>
-              <span class="tag tag--secondary">REST APIs</span>
-              <span class="tag tag--tertiary">AWS</span>
-            </div>
-          </div>
-
-          <div class="skill-card">
-            <div class="skill-card__header">
-              <span class="skill-card__icon">🗺️</span>
-              <h3 class="skill-card__title">Geoespacial & Datos</h3>
-              <span class="skill-card__level skill-card__level--secondary">Intermedio</span>
-            </div>
-            <div class="skill-card__tags">
-              <span class="tag tag--secondary">Leaflet.js</span>
-              <span class="tag tag--secondary">GeoJSON</span>
-              <span class="tag tag--tertiary">ML (Python)</span>
-              <span class="tag tag--secondary">Análisis de Datos</span>
-            </div>
-          </div>
-
-          <div class="skill-card">
-            <div class="skill-card__header">
-              <span class="skill-card__icon">🛠️</span>
-              <h3 class="skill-card__title">DevOps & Herramientas</h3>
-              <span class="skill-card__level skill-card__level--secondary">Intermedio</span>
-            </div>
-            <div class="skill-card__tags">
-              <span class="tag tag--primary">Git / GitHub</span>
-              <span class="tag tag--secondary">Docker</span>
-              <span class="tag tag--secondary">CI/CD</span>
-              <span class="tag tag--tertiary">AWS</span>
-              <span class="tag tag--tertiary">Vercel</span>
-            </div>
-          </div>
-
-          <div class="skill-card">
-            <div class="skill-card__header">
-              <span class="skill-card__icon">⛓️</span>
-              <h3 class="skill-card__title">Blockchain</h3>
-              <span class="skill-card__level skill-card__level--secondary">Explorando</span>
-            </div>
-            <div class="skill-card__tags">
-              <span class="tag tag--secondary">Solana</span>
-              <span class="tag tag--secondary">Anchor</span>
-              <span class="tag tag--tertiary">Rust</span>
-              <span class="tag tag--secondary">Solana Actions</span>
-              <span class="tag tag--secondary">Blinks</span>
-            </div>
-          </div>
-
+        <!-- Filter tabs -->
+        <div class="tech-filters" id="techFilters">
+          <button class="tech-filter is-active" data-cat="all">Todos</button>
+          <button class="tech-filter" data-cat="backend">Backend</button>
+          <button class="tech-filter" data-cat="frontend">Frontend</button>
+          <button class="tech-filter" data-cat="tools">Herramientas</button>
+          <button class="tech-filter" data-cat="web3">Web3</button>
+          <button class="tech-filter" data-cat="security">Seguridad</button>
+          <button class="tech-filter" data-cat="ai">IA / ML</button>
         </div>
+        <!-- Tech grid — rendered by JS -->
+        <div class="tech-grid" id="techGrid"></div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- HABILIDADES BLANDAS -->
+    <section class="section soft-skills" id="blandas">
+      <div class="section__bg-fx">
+        <div class="fx-glow fx-glow--left"></div>
+        <div class="fx-glow fx-glow--right"></div>
+      </div>
+      <div class="container">
+        <div class="section__header">
+          <span class="section__tag">03 — Habilidades Blandas</span>
+          <h2 class="section__title">Lo que no está en el código</h2>
+          <p class="section__subtitle">Haz clic en cada habilidad para ver el caso real detrás.</p>
+        </div>
+        <!-- Soft skills grid — rendered by JS -->
+        <div class="soft-grid" id="softGrid"></div>
       </div>
     </section>
 
@@ -513,13 +534,33 @@
       </div>
       <div class="container">
         <div class="section__header">
-          <span class="section__tag">03 — Proyectos</span>
+          <span class="section__tag">04 — Proyectos</span>
           <h2 class="section__title">Estudios de caso</h2>
           <p class="section__subtitle">No solo código — problemas reales, decisiones técnicas justificadas y resultados medibles.</p>
         </div>
 
         <!-- ══ GRID DE PROYECTOS ══ -->
         <div class="projs-grid" style="margin-top:var(--space-8)">
+
+          <!-- Card 00: DevInsight -->
+          <article class="pc-card" data-id="devinsight">
+            <div class="pc-card__thumb">
+              <img src="img/devinsight.png" alt="DevInsight — Métricas DORA" loading="lazy" />
+            </div>
+            <div class="pc-card__body">
+              <h3 class="pc-card__title">DevInsight — Métricas DORA</h3>
+              <div class="pc-card__tags">
+                <span class="tag tag--primary">Proyecto Personal</span>
+                <span class="tag tag--secondary">SaaS · DevOps</span>
+                <span class="tag tag--tertiary">Laravel · Vue 3</span>
+              </div>
+              <p class="pc-card__result">↗ Métricas DORA en tiempo real · Multi-tenant · Setup &lt; 2 min</p>
+            </div>
+            <div class="pc-card__actions">
+              <button class="btn btn--ghost pc-detail-btn" data-id="devinsight">Ver detalles</button>
+              <a href="https://devinsight-34mi.onrender.com/" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Ver demo →</a>
+            </div>
+          </article>
 
           <!-- Card 01: EME -->
           <article class="pc-card" data-id="eme">
@@ -533,6 +574,7 @@
                 <span class="tag tag--secondary">SaaS · Salud</span>
                 <span class="tag tag--tertiary">PHP · MySQL</span>
               </div>
+              <p class="pc-card__result">↗ 16+ estados · 4 pasarelas de pago · inscripciones 100% online</p>
             </div>
             <div class="pc-card__actions">
               <button class="btn btn--ghost pc-detail-btn" data-id="eme">Ver detalles</button>
@@ -540,26 +582,7 @@
             </div>
           </article>
 
-          <!-- Card 02: BlinkTasks -->
-          <article class="pc-card" data-id="blink">
-            <div class="pc-card__thumb">
-              <img src="img/blink.png" alt="BlinkTasks" loading="lazy" />
-            </div>
-            <div class="pc-card__body">
-              <h3 class="pc-card__title">BlinkTasks</h3>
-              <div class="pc-card__tags">
-                <span class="tag tag--primary">Hackathon</span>
-                <span class="tag tag--secondary">Solana · Web3</span>
-                <span class="tag tag--tertiary">Rust · Anchor</span>
-              </div>
-            </div>
-            <div class="pc-card__actions">
-              <button class="btn btn--ghost pc-detail-btn" data-id="blink">Ver detalles</button>
-              <a href="https://blink-tasks-fc7g.vercel.app" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Ver demo →</a>
-            </div>
-          </article>
-
-          <!-- Card 03: Ferreteros Unidos -->
+          <!-- Card 02: Ferreteros Unidos -->
           <article class="pc-card" data-id="ferreteros">
             <div class="pc-card__thumb">
               <img src="img/ferreteros.png" alt="Ferreteros Unidos" loading="lazy" />
@@ -571,65 +594,11 @@
                 <span class="tag tag--secondary">Institucional</span>
                 <span class="tag tag--tertiary">PHP · Catálogo</span>
               </div>
+              <p class="pc-card__result">↗ 1,000+ SKUs online · clientes: Pemex, SEDENA, SAT</p>
             </div>
             <div class="pc-card__actions">
               <button class="btn btn--ghost pc-detail-btn" data-id="ferreteros">Ver detalles</button>
-            </div>
-          </article>
-
-          <!-- Card 04: Acuario Martinez -->
-          <article class="pc-card" data-id="acuario">
-            <div class="pc-card__thumb">
-              <img src="img/Am.png" alt="Acuario Martinez" loading="lazy" />
-            </div>
-            <div class="pc-card__body">
-              <h3 class="pc-card__title">Acuario Martinez</h3>
-              <div class="pc-card__tags">
-                <span class="tag tag--primary">Freelance</span>
-                <span class="tag tag--secondary">E-commerce</span>
-                <span class="tag tag--tertiary">Supabase · JS</span>
-              </div>
-            </div>
-            <div class="pc-card__actions">
-              <button class="btn btn--ghost pc-detail-btn" data-id="acuario">Ver detalles</button>
-              <a href="https://acuario-martinez.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Ver sitio →</a>
-            </div>
-          </article>
-
-          <!-- Card 05: Synapse -->
-          <article class="pc-card" data-id="synapse">
-            <div class="pc-card__thumb">
-              <img src="img/synapse.png" alt="Synapse" loading="lazy" />
-            </div>
-            <div class="pc-card__body">
-              <h3 class="pc-card__title">Synapse</h3>
-              <div class="pc-card__tags">
-                <span class="tag tag--primary">Personal · SaaS</span>
-                <span class="tag tag--secondary">Full Stack</span>
-                <span class="tag tag--tertiary">React · Node.js</span>
-              </div>
-            </div>
-            <div class="pc-card__actions">
-              <button class="btn btn--ghost pc-detail-btn" data-id="synapse">Ver detalles</button>
-              <a href="https://synapse-pearl-zeta.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Ver sitio →</a>
-            </div>
-          </article>
-
-          <!-- Card 06: PlayRoom -->
-          <article class="pc-card" data-id="playroom">
-            <div class="pc-card__thumb">
-              <img src="img/playroom.png" alt="PlayRoom" loading="lazy" />
-            </div>
-            <div class="pc-card__body">
-              <h3 class="pc-card__title">PlayRoom</h3>
-              <div class="pc-card__tags">
-                <span class="tag tag--primary">Proyecto Personal</span>
-                <span class="tag tag--secondary">Juegos · Tiempo Real</span>
-              </div>
-            </div>
-            <div class="pc-card__actions">
-              <button class="btn btn--ghost pc-detail-btn" data-id="playroom">Ver detalles</button>
-              <a href="https://payroom-l8gp.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Ver demo →</a>
+              <a href="https://ferreterosunidos.com" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Ver Sitio →</a>
             </div>
           </article>
 
@@ -659,7 +628,7 @@
       </div>
       <div class="container">
         <div class="section__header">
-          <span class="section__tag">04 — Certificaciones</span>
+          <span class="section__tag">05 — Certificaciones</span>
           <h2 class="section__title">Formación continua</h2>
         </div>
         <div class="certs__grid">
@@ -667,6 +636,7 @@
             <div class="cert-card__icon">🛡️</div>
             <div class="cert-card__body">
               <h3 class="cert-card__title">Fundamentos de Ciberseguridad</h3>
+              <span class="cert-card__meta">Coursera · Google — 2024</span>
               <p class="cert-card__desc">Principios de seguridad en aplicaciones web, manejo de vulnerabilidades y mejores prácticas de defensa.</p>
               <span class="cert-card__badge">Completado</span>
             </div>
@@ -675,6 +645,7 @@
             <div class="cert-card__icon">🤖</div>
             <div class="cert-card__body">
               <h3 class="cert-card__title">Inteligencia Artificial</h3>
+              <span class="cert-card__meta">Talent Huawei — 2024</span>
               <p class="cert-card__desc">Fundamentos de ML aplicados a análisis de datos. Complementa proyectos con componentes predictivos en Python.</p>
               <span class="cert-card__badge">Completado</span>
             </div>
@@ -715,7 +686,7 @@
       </div>
       <div class="container">
         <div class="section__header">
-          <span class="section__tag">05 — Contacto</span>
+          <span class="section__tag">06 — Contacto</span>
           <h2 class="section__title">¿Tienes un proyecto en mente?</h2>
           <p class="section__subtitle">Abierto a empleo en equipo y proyectos freelance. Cuéntame qué necesitas — respondo en menos de 24 horas.</p>
         </div>
@@ -815,6 +786,55 @@
   <script src="js/main.js"></script>
   <script>
     const PROJECT_DATA = {
+      devinsight: {
+        title: 'DevInsight — Métricas DORA para Equipos de Desarrollo',
+        subtitle: 'Plataforma SaaS multi-tenant que conecta con GitHub para medir la productividad real de equipos usando las métricas DORA: frecuencia de despliegue, tiempo de entrega, tasa de fallos y tiempo de recuperación — todo en tiempo real.',
+        tags: [
+          { text: 'Proyecto Personal', cls: 'tag--primary'   },
+          { text: 'SaaS',              cls: 'tag--secondary' },
+          { text: 'DevOps',            cls: 'tag--secondary' },
+          { text: 'Full Stack',        cls: 'tag--secondary' },
+          { text: 'Tiempo Real',       cls: 'tag--secondary' },
+        ],
+        problem: 'Los equipos de desarrollo raramente saben si están mejorando o empeorando. Las métricas DORA son el estándar de la industria para medir el rendimiento de entrega de software, pero calcularlas manualmente desde GitHub requiere horas de trabajo. Quería construir una herramienta que las genere automáticamente, en tiempo real, para cualquier equipo.',
+        arch: [
+          { label: 'Laravel + Inertia.js', sub: 'Multi-tenant SaaS',   cls: 'arch-node--frontend' },
+          { label: 'Webhooks + Horizon',   sub: 'Ingesta híbrida',     cls: 'arch-node--backend'  },
+          { label: 'Redis + Reverb',       sub: 'DORA en tiempo real', cls: 'arch-node--db'       },
+        ],
+        process: [
+          { title: 'Ingesta híbrida',               desc: 'Los datos de GitHub llegan por dos vías: webhooks para eventos en tiempo real (push, PR, deploy) y polling REST para sincronización histórica inicial. Un sistema de colas con 4 prioridades (Horizon) procesa los eventos de forma asíncrona e idempotente — los jobs usan upsert para ser seguros ante re-ejecuciones.' },
+          { title: 'Multi-tenancy con workspace_id', desc: 'Arquitectura single-database donde cada tabla de tenant lleva workspace_id. Un trait BelongsToWorkspace aplica global scope automáticamente y un middleware resuelve el workspace desde el slug de la ruta, inyectándolo en el contenedor de Laravel.' },
+          { title: 'Métricas pre-calculadas',        desc: 'Las métricas DORA no se calculan on-the-fly — se materializan en una tabla metrics_snapshots vía UpdateMetricsSnapshotJob cada vez que llega un evento relevante. Las lecturas son O(1) independientemente del volumen de datos históricos.' },
+          { title: 'Tiempo real con Reverb',         desc: 'Canales privados por workspace sobre Laravel Reverb con Redis pub/sub como backend, lo que permite escalar a múltiples nodos sin perder eventos. Los dashboards se actualizan en vivo sin polling desde el cliente.' },
+          { title: 'Caché con tags',                 desc: 'Redis como capa de caché con tags por workspace (ws-{id}) y por repositorio (repo-{id}), lo que permite invalidación quirúrgica cuando llega un webhook sin vaciar todo el caché.' },
+        ],
+        challenge: 'Diseñar el modelo de datos para que las métricas DORA fueran precisas independientemente del orden de llegada de los eventos. GitHub no garantiza orden — un webhook de deploy puede llegar antes que el PR que lo originó. El segundo reto fue el multi-tenancy: garantizar aislamiento total de datos entre workspaces sin esquemas separados, usando scopes globales y middleware, sin que un bug pueda filtrar datos entre clientes.',
+        results: [
+          { type: 'bar',    label: 'Métricas DORA',         before: 'Cálculo manual en hojas de cálculo', after: 'Automáticas desde GitHub' },
+          { type: 'metric', label: 'Latencia de datos',     value: 'Días/semanas de retraso → Tiempo real vía webhooks' },
+          { type: 'metric', label: 'Configuración',         value: '— → Conexión en < 2 minutos' },
+          { type: 'metric', label: 'Escalabilidad',         value: '— → Multi-tenant, un servidor para N equipos' },
+          { type: 'metric', label: 'Fiabilidad de ingesta', value: '— → Jobs idempotentes, seguros ante fallos' },
+        ],
+        stack: [
+          { text: 'Laravel 11',      cls: 'tag--primary'   },
+          { text: 'PHP',             cls: 'tag--primary'   },
+          { text: 'Inertia.js',      cls: 'tag--primary'   },
+          { text: 'Vue 3',           cls: 'tag--primary'   },
+          { text: 'Tailwind CSS',    cls: 'tag--secondary' },
+          { text: 'MySQL',           cls: 'tag--secondary' },
+          { text: 'Redis',           cls: 'tag--secondary' },
+          { text: 'Laravel Horizon', cls: 'tag--secondary' },
+          { text: 'Laravel Reverb',  cls: 'tag--secondary' },
+          { text: 'Stripe',          cls: 'tag--secondary' },
+          { text: 'GitHub API',      cls: 'tag--tertiary'  },
+          { text: 'Render',          cls: 'tag--tertiary'  },
+        ],
+        links: [
+          { text: 'Ver demo →', url: 'https://devinsight-34mi.onrender.com/', cls: 'btn--primary' },
+        ],
+      },
       eme: {
         title: 'Educación Médica Especializada',
         subtitle: 'Plataforma SaaS de educación médica con panel de administración completo para gestionar cursos de certificación (CRIO, ALSO, BLSO) dirigidos a profesionales de la salud en México, con presencia en 16+ estados.',
@@ -864,43 +884,6 @@
           { text: 'Ver sitio →', url: 'https://educacionmedicaespecializada.com.mx', cls: 'btn--primary' },
         ],
       },
-      blink: {
-        title: 'BlinkTasks',
-        subtitle: 'Gestión de tareas sobre la blockchain de Solana usando Solana Actions y Blinks — construido en hackathon oficial de Solana.',
-        tags: [
-          { text: 'Hackathon', cls: 'tag--primary'   },
-          { text: 'Solana',    cls: 'tag--secondary' },
-          { text: 'Web3',      cls: 'tag--secondary' },
-        ],
-        problem: 'Explorar gestión de tareas colaborativas en blockchain pública: acciones verificables sin intermediarios, accesibles desde cualquier URL con Solana Blinks — sin necesidad de abrir una dApp.',
-        arch: [
-          { label: 'Blinks UI', sub: 'Actions API',    cls: 'arch-node--frontend' },
-          { label: 'Anchor',    sub: 'Smart Contract', cls: 'arch-node--backend'  },
-          { label: 'Solana',    sub: 'Devnet',         cls: 'arch-node--db'       },
-        ],
-        process: [
-          { title: 'Anchor + Rust',  desc: 'Smart contract on-chain que gestiona creación, asignación y completado de tareas.' },
-          { title: 'Solana Blinks',  desc: 'Operación de tareas desde una URL embebible en cualquier plataforma.' },
-          { title: 'Solana Actions', desc: 'Endpoints REST que traducen interacciones en transacciones firmadas enviadas a la red.' },
-        ],
-        challenge: 'Integrar el flujo de firma de transacciones dentro de una UX fluida, sin exponer complejidad blockchain al usuario. Construido bajo la presión de tiempo de un hackathon.',
-        results: [
-          { type: 'metric', label: 'Contexto', value: 'Hackathon oficial de Solana' },
-          { type: 'metric', label: 'Deploy',   value: 'Live en Vercel · Devnet activo' },
-        ],
-        stack: [
-          { text: 'Rust',           cls: 'tag--tertiary'  },
-          { text: 'Anchor',         cls: 'tag--secondary' },
-          { text: 'Solana',         cls: 'tag--secondary' },
-          { text: 'Solana Actions', cls: 'tag--secondary' },
-          { text: 'Blinks',         cls: 'tag--secondary' },
-          { text: 'Vercel',         cls: 'tag--tertiary'  },
-        ],
-        links: [
-          { text: 'Ver demo →', url: 'https://blink-tasks-fc7g.vercel.app',    cls: 'btn--primary' },
-          { text: 'GitHub',     url: 'https://github.com/Artur896/BlinkTasks', cls: 'btn--ghost'   },
-        ],
-      },
       ferreteros: {
         title: 'Ferreteros Unidos',
         subtitle: 'Sitio web institucional con catálogo digital de 1,000+ productos y panel de administración para cadena de ferreterías con 50 años de experiencia en CDMX.',
@@ -936,139 +919,6 @@
           { text: 'XAMPP',      cls: 'tag--tertiary'  },
         ],
         links: [],
-      },
-      acuario: {
-        title: 'Acuario Martinez',
-        subtitle: 'Landing page animada con catálogo digital y panel de administración para tienda especializada en peces ornamentales y accesorios para acuario.',
-        tags: [
-          { text: 'Freelance',        cls: 'tag--primary'   },
-          { text: 'E-commerce',       cls: 'tag--secondary' },
-          { text: 'Catálogo Digital', cls: 'tag--secondary' },
-        ],
-        problem: 'La tienda no tenía presencia digital. Los clientes no podían consultar productos sin visitar físicamente el local, y las reservas se hacían solo por llamada. Sin inventario en línea, sin gestión de pedidos y sin catálogo fuera del local.',
-        arch: [
-          { label: 'Supabase',    sub: 'DB + Admin',            cls: 'arch-node--frontend' },
-          { label: 'HTML/CSS/JS', sub: 'Interfaz + Animaciones', cls: 'arch-node--backend' },
-          { label: 'WhatsApp API',sub: 'Reservas automáticas',  cls: 'arch-node--db'       },
-        ],
-        process: [
-          { title: 'Landing page animada',    desc: 'Pantalla de carga tipo acuario con llenado de agua, peces decorativos con animaciones independientes, burbujas flotantes y revelado por scroll.' },
-          { title: 'Catálogo digital',        desc: 'Filtros por categoría, búsqueda en tiempo real, tarjetas con imagen, precio y botón de reserva directa por WhatsApp.' },
-          { title: 'Sistema de reservas',     desc: 'Flujo completo desde modal de producto hasta mensaje pre-armado en WhatsApp, con registro automático del pedido en la base de datos.' },
-          { title: 'Panel de administración', desc: 'Auth con Supabase, CRUD de productos y categorías, subida de imágenes a Supabase Storage, gestión de pedidos con estados y dashboard con estadísticas.' },
-        ],
-        challenge: 'Construir una experiencia visual inmersiva — peces animados, pantalla de llenado de agua, burbujas — usando solo HTML, CSS y JS vanilla sin ninguna librería de animación. Integrar Supabase como BaaS completo (DB + Auth + Storage) para eliminar la necesidad de servidor propio y mantener el costo cercano a cero.',
-        results: [
-          { type: 'bar',    label: 'Presencia digital',  before: 'Antes: Ninguna', after: 'Después: Online' },
-          { type: 'metric', label: 'Catálogo',           value: 'Solo en tienda → 24/7 en línea' },
-          { type: 'metric', label: 'Reservas',           value: 'Solo por llamada → WhatsApp automatizado' },
-          { type: 'metric', label: 'Gestión de pedidos', value: 'Manual → Panel web en tiempo real' },
-          { type: 'metric', label: 'Costo servidor',     value: '— → $0 (Supabase free tier)' },
-        ],
-        stack: [
-          { text: 'HTML',             cls: 'tag--primary'   },
-          { text: 'CSS',              cls: 'tag--primary'   },
-          { text: 'JavaScript',       cls: 'tag--primary'   },
-          { text: 'Supabase',         cls: 'tag--secondary' },
-          { text: 'PostgreSQL',       cls: 'tag--secondary' },
-          { text: 'Supabase Auth',    cls: 'tag--secondary' },
-          { text: 'Supabase Storage', cls: 'tag--secondary' },
-          { text: 'Vercel',           cls: 'tag--tertiary'  },
-        ],
-        links: [
-          { text: 'Ver sitio →', url: 'https://acuario-martinez.vercel.app/', cls: 'btn--primary' },
-        ],
-      },
-      synapse: {
-        title: 'Synapse',
-        subtitle: 'Editor de mapas mentales y conceptuales con generación automática desde texto libre o Wikipedia, motor de layout propio y exportación en múltiples formatos.',
-        tags: [
-          { text: 'Personal · SaaS',    cls: 'tag--primary'   },
-          { text: 'Herramienta Visual', cls: 'tag--secondary' },
-          { text: 'Full Stack',         cls: 'tag--secondary' },
-        ],
-        problem: 'Las herramientas existentes de mapas mentales son demasiado simples o requieren suscripciones de pago para funciones básicas. La alternativa era construir desde cero un editor visual potente que generara estructuras automáticamente desde texto, sin depender de APIs de IA externas ni de costos por uso.',
-        arch: [
-          { label: 'React · ReactFlow', sub: 'Canvas interactivo', cls: 'arch-node--frontend' },
-          { label: 'Node.js · Express', sub: 'API REST CRUD',      cls: 'arch-node--backend'  },
-          { label: 'MySQL',             sub: 'Persistencia',       cls: 'arch-node--db'       },
-        ],
-        process: [
-          { title: 'Canvas interactivo',    desc: 'Editor basado en ReactFlow con nodos arrastrables, conexiones entre handles, edición inline de etiquetas, menú contextual (colores, imágenes, eliminar) y minimapa.' },
-          { title: 'NLP vanilla JS',        desc: 'Motor propio sin librerías externas que extrae temas y conceptos desde texto en español usando regex y filtrado de stopwords.' },
-          { title: 'Integración Wikipedia', desc: 'Búsqueda y consumo de la API pública en español; el artículo se procesa con el motor NLP y se convierte automáticamente en mapa estructurado.' },
-          { title: 'Motor de layout',       desc: 'Dos algoritmos — bilateral radial para mapas mentales y jerárquico por niveles para conceptuales — calculados con Zustand como store central.' },
-          { title: 'Exportación cliente',   desc: 'PNG (2× escala), JPG, PDF con orientación automática y JSON, renderizados del lado del cliente con html2canvas y jsPDF.' },
-        ],
-        challenge: 'Implementar el motor NLP y los algoritmos de layout sin bibliotecas especializadas. El mayor reto fue calcular posiciones de nodos dinámicamente evitando solapamientos. Además, coordinar el estado global del canvas en una sola store de Zustand sin afectar el rendimiento del editor.',
-        results: [
-          { type: 'bar',    label: 'Generación de mapa', before: 'Manual, nodo por nodo',  after: 'Automática desde texto o Wikipedia' },
-          { type: 'metric', label: 'Exportación',        value: 'No disponible → PNG, JPG, PDF, JSON' },
-          { type: 'metric', label: 'Persistencia',       value: 'Solo en sesión → MySQL (CRUD completo)' },
-          { type: 'metric', label: 'Tipos de mapa',      value: '— → Mental (bilateral) + Conceptual (jerárquico)' },
-          { type: 'metric', label: 'Personalización',    value: '— → Colores, imágenes, etiquetas en aristas' },
-        ],
-        stack: [
-          { text: 'React 18',      cls: 'tag--primary'   },
-          { text: 'ReactFlow',     cls: 'tag--primary'   },
-          { text: 'Zustand',       cls: 'tag--primary'   },
-          { text: 'TailwindCSS',   cls: 'tag--secondary' },
-          { text: 'Vite',          cls: 'tag--secondary' },
-          { text: 'Node.js',       cls: 'tag--secondary' },
-          { text: 'Express',       cls: 'tag--secondary' },
-          { text: 'MySQL',         cls: 'tag--secondary' },
-          { text: 'html2canvas',   cls: 'tag--tertiary'  },
-          { text: 'jsPDF',         cls: 'tag--tertiary'  },
-          { text: 'Wikipedia API', cls: 'tag--tertiary'  },
-          { text: 'NLP vanilla',   cls: 'tag--tertiary'  },
-        ],
-        links: [
-          { text: 'Ver sitio →', url: 'https://synapse-pearl-zeta.vercel.app/', cls: 'btn--primary' },
-        ],
-      },
-      playroom: {
-        title: 'PlayRoom — Sala de Juegos Multijugador',
-        subtitle: 'Plataforma web full stack para jugar en tiempo real con amigos sin descargas, sin registro y sin esperas. Seis juegos clásicos, salas privadas con código y chat integrado.',
-        tags: [
-          { text: 'Proyecto Personal',   cls: 'tag--primary'   },
-          { text: 'Juegos Multijugador', cls: 'tag--secondary' },
-          { text: 'Full Stack',          cls: 'tag--secondary' },
-          { text: 'Tiempo Real',         cls: 'tag--secondary' },
-        ],
-        problem: 'Los juegos en línea con amigos suelen requerir instalación, cuentas, o plataformas de terceros con publicidad agresiva. Quería construir desde cero una sala de juegos que funcionara directamente desde el navegador, con conexión instantánea por código, sin fricciones.',
-        arch: [
-          { label: 'React + TypeScript',  sub: 'Canvas de juegos',  cls: 'arch-node--frontend' },
-          { label: 'Node.js / Socket.io', sub: 'WebSocket server',  cls: 'arch-node--backend'  },
-          { label: 'Estado en memoria',   sub: 'Salas efímeras',    cls: 'arch-node--db'       },
-        ],
-        process: [
-          { title: 'Canvas de juegos',            desc: 'Seis juegos implementados íntegramente en React sin librerías de juego externas: Tres en Raya, UNO, Ajedrez, Pregunta Bomba, Dominó y ¿Quién soy? Cada uno con su propia lógica de turnos, validación de jugadas y estados de victoria.' },
-          { title: 'Motor de ajedrez propio',     desc: 'Generación completa de movimientos legales para todas las piezas (incluyendo enroque, al paso y promoción de peones) implementada en TypeScript puro, sin dependencias externas. El tablero se sincroniza entre ambos jugadores vía WebSocket en tiempo real.' },
-          { title: 'Sistema de salas',            desc: 'El servidor mantiene salas efímeras en memoria con códigos aleatorios de 6 caracteres, expiración automática a las 4 horas y limpieza periódica. Cada sala trackea jugadores, tipo de juego, estado y host.' },
-          { title: 'Comunicación en tiempo real', desc: 'Arquitectura event-driven con Socket.io — los eventos de juego, el chat y la sincronización de estado viajan por WebSocket con fallback a polling. Reconexión automática y detección de desconexión integradas.' },
-          { title: 'Estado global con Zustand',   desc: 'Un store central gestiona la conexión socket, los jugadores, el estado de sala y el turno activo, sin prop drilling y con rendimiento fluido incluso en juegos con muchos re-renders (UNO, Dominó).' },
-        ],
-        challenge: 'Implementar seis juegos con reglas completas sin librerías especializadas. El mayor reto fue el ajedrez: calcular todos los movimientos legales pieza a pieza, incluyendo casos borde como el enroque (ambos lados) y la captura al paso, y sincronizar ese estado entre dos clientes de forma determinista sin inconsistencias. El segundo reto fue diseñar un protocolo de eventos WebSocket lo suficientemente genérico para seis juegos distintos sin que el servidor necesitara conocer las reglas de ninguno.',
-        results: [
-          { type: 'bar',    label: 'Acceso',                 before: 'Descarga / cuenta requerida',    after: 'Directo desde el navegador'          },
-          { type: 'metric', label: 'Conexión',               value: 'Plataformas de terceros → Código de sala de 6 caracteres'                        },
-          { type: 'metric', label: 'Juegos disponibles',     value: '— → 6 juegos clásicos'                                                          },
-          { type: 'metric', label: 'Ajedrez',                value: '— → Motor propio con movimientos legales completos'                              },
-          { type: 'metric', label: 'Persistencia de sesión', value: '— → Salas activas hasta 4 horas'                                               },
-        ],
-        stack: [
-          { text: 'React 18',      cls: 'tag--primary'   },
-          { text: 'TypeScript',    cls: 'tag--primary'   },
-          { text: 'Zustand',       cls: 'tag--primary'   },
-          { text: 'Node.js',       cls: 'tag--secondary' },
-          { text: 'Socket.io',     cls: 'tag--secondary' },
-          { text: 'Tailwind CSS',  cls: 'tag--secondary' },
-          { text: 'Vite',          cls: 'tag--secondary' },
-          { text: 'HTML/CSS puro', cls: 'tag--tertiary'  },
-        ],
-        links: [
-          { text: 'Ver demo →', url: 'https://payroom-l8gp.vercel.app/', cls: 'btn--primary' },
-        ],
       },
     };
 
@@ -1157,6 +1007,221 @@
     }, { threshold: 0.08 });
 
     document.querySelectorAll('.pc-card').forEach(c => revealObs.observe(c));
+
+    /* ══════════════════════════════════════════
+       TECH GRID
+    ══════════════════════════════════════════ */
+    const TECHS = [
+      // Backend
+      { n:'Laravel',       i:'⚡', cat:'backend',  pct:92, lvl:'Principal',  use:'EME · DevInsight · Synapse' },
+      { n:'PHP',           i:'🐘', cat:'backend',  pct:88, lvl:'Principal',  use:'EME · Ferreteros' },
+      { n:'MySQL',         i:'🗄️', cat:'backend',  pct:85, lvl:'Principal',  use:'EME · Synapse · Ferreteros' },
+      { n:'Node.js',       i:'🟢', cat:'backend',  pct:72, lvl:'Intermedio', use:'Synapse · PlayRoom' },
+      { n:'Python',        i:'🐍', cat:'backend',  pct:65, lvl:'Intermedio', use:'Flask · Scripts · ML' },
+      { n:'Flask',         i:'🌶️', cat:'backend',  pct:60, lvl:'Intermedio', use:'Proyectos de datos' },
+      { n:'Redis',         i:'🔴', cat:'backend',  pct:72, lvl:'Intermedio', use:'DevInsight · Caché + Pub/Sub' },
+      // Frontend
+      { n:'JavaScript',    i:'🟡', cat:'frontend', pct:90, lvl:'Principal',  use:'Todos los proyectos' },
+      { n:'React',         i:'⚛️', cat:'frontend', pct:85, lvl:'Principal',  use:'Synapse · PlayRoom' },
+      { n:'HTML5 / CSS3',  i:'🎨', cat:'frontend', pct:92, lvl:'Principal',  use:'Todos los proyectos' },
+      { n:'TypeScript',    i:'🔷', cat:'frontend', pct:70, lvl:'Intermedio', use:'PlayRoom' },
+      { n:'Tailwind CSS',  i:'💨', cat:'frontend', pct:78, lvl:'Intermedio', use:'Synapse · PlayRoom' },
+      { n:'Zustand',       i:'🐻', cat:'frontend', pct:72, lvl:'Intermedio', use:'Synapse · PlayRoom' },
+      { n:'Vue 3',         i:'💚', cat:'frontend', pct:75, lvl:'Intermedio', use:'DevInsight' },
+      { n:'Inertia.js',    i:'🔀', cat:'frontend', pct:72, lvl:'Intermedio', use:'DevInsight' },
+      // Herramientas
+      { n:'Git / GitHub',  i:'🐙', cat:'tools',    pct:88, lvl:'Principal',  use:'Todos los proyectos' },
+      { n:'REST APIs',     i:'🔌', cat:'tools',    pct:88, lvl:'Principal',  use:'EME · Synapse · Acuario' },
+      { n:'Vercel',        i:'▲',  cat:'tools',    pct:80, lvl:'Intermedio', use:'Synapse · PlayRoom · Acuario' },
+      { n:'Supabase',      i:'⚡', cat:'tools',    pct:72, lvl:'Intermedio', use:'Acuario Martinez' },
+      { n:'Stripe',        i:'💳', cat:'tools',    pct:78, lvl:'Intermedio', use:'EME · DevInsight' },
+      { n:'PayPal API',    i:'💰', cat:'tools',    pct:70, lvl:'Intermedio', use:'EME' },
+      { n:'OAuth 2.0',     i:'🔑', cat:'tools',    pct:70, lvl:'Intermedio', use:'EME · Login Google' },
+      { n:'Docker',        i:'🐳', cat:'tools',    pct:65, lvl:'Intermedio', use:'Dev environment' },
+      { n:'Laravel Horizon',i:'🌅', cat:'tools',    pct:68, lvl:'Intermedio', use:'DevInsight · Colas' },
+      { n:'Laravel Reverb',i:'📡', cat:'tools',    pct:65, lvl:'Intermedio', use:'DevInsight · WebSockets' },
+      { n:'Render',        i:'▶',  cat:'tools',    pct:62, lvl:'Intermedio', use:'DevInsight · Deploy' },
+      { n:'AWS',           i:'☁️', cat:'tools',    pct:48, lvl:'Básico',     use:'Discovery Day' },
+      // Web3
+      { n:'Solana',        i:'◎',  cat:'web3',     pct:50, lvl:'Explorando', use:'BlinkTasks' },
+      { n:'Anchor',        i:'⚓', cat:'web3',     pct:45, lvl:'Explorando', use:'BlinkTasks' },
+      { n:'Rust',          i:'🦀', cat:'web3',     pct:40, lvl:'Explorando', use:'BlinkTasks' },
+      { n:'Blinks',        i:'⚡', cat:'web3',     pct:42, lvl:'Explorando', use:'BlinkTasks' },
+      // Seguridad
+      { n:'OWASP Top 10',  i:'🛡️', cat:'security', pct:70, lvl:'Intermedio', use:'Buenas prácticas' },
+      { n:'bcrypt',        i:'🔒', cat:'security', pct:80, lvl:'Intermedio', use:'EME · Synapse' },
+      { n:'JWT',           i:'🎫', cat:'security', pct:72, lvl:'Intermedio', use:'Autenticación' },
+      { n:'XSS / CSRF',    i:'🚧', cat:'security', pct:68, lvl:'Intermedio', use:'Prevención activa' },
+      { n:'SQL Injection',  i:'💉', cat:'security', pct:75, lvl:'Intermedio', use:'Queries preparadas' },
+      // IA / ML
+      { n:'pandas',        i:'🐼', cat:'ai',       pct:70, lvl:'Aplicado',   use:'Proyecto ML funcional' },
+      { n:'scikit-learn',  i:'🤖', cat:'ai',       pct:68, lvl:'Aplicado',   use:'Proyecto ML funcional' },
+      { n:'matplotlib',    i:'📊', cat:'ai',       pct:65, lvl:'Aplicado',   use:'Visualización de datos' },
+      { n:'ML Supervisado',i:'📈', cat:'ai',       pct:68, lvl:'Aplicado',   use:'Modelo en producción' },
+      { n:'Leaflet.js',    i:'🗺️', cat:'tools',    pct:68, lvl:'Intermedio', use:'Mapas geoespaciales' },
+    ];
+
+    const CAT_ORDER  = ['backend','frontend','tools','web3','security','ai'];
+    const CAT_LABELS = { backend:'Backend', frontend:'Frontend', tools:'Herramientas', web3:'Web3', security:'Seguridad', ai:'IA / ML' };
+    const LVL_CLS    = { 'Principal':'principal','Intermedio':'intermedio','Explorando':'explorando','Formación':'formacion','Básico':'basico','Aplicado':'aplicado' };
+
+    function makeTechCard(t) {
+      const div = document.createElement('div');
+      div.className = 'tech-card';
+      div.dataset.cat = t.cat;
+      div.innerHTML = `
+        <div class="tech-card__top">
+          <span class="tech-card__icon">${t.i}</span>
+          <span class="tech-card__name">${t.n}</span>
+        </div>
+        <div class="tech-card__track">
+          <div class="tech-card__fill" data-pct="${t.pct}"></div>
+        </div>
+        <div class="tech-card__foot">
+          <span class="tech-card__badge tech-card__badge--${LVL_CLS[t.lvl]}">${t.lvl}</span>
+          <span class="tech-card__use">${t.use}</span>
+        </div>`;
+      return div;
+    }
+
+    function buildTechGrid(cat) {
+      const grid = document.getElementById('techGrid');
+      grid.innerHTML = '';
+
+      const filtered = cat === 'all' ? [...TECHS] : TECHS.filter(t => t.cat === cat);
+      filtered.sort((a, b) => b.pct - a.pct).forEach(t => grid.appendChild(makeTechCard(t)));
+
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        grid.querySelectorAll('.tech-card__fill').forEach(f => { f.style.width = f.dataset.pct + '%'; });
+      }));
+    }
+
+    // Init tech grid
+    buildTechGrid('all');
+
+    // Animate bars when section enters viewport
+    const techBarObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        e.target.querySelectorAll('.tech-card__fill').forEach(f => { f.style.width = f.dataset.pct + '%'; });
+        techBarObs.unobserve(e.target);
+      });
+    }, { threshold: 0.1 });
+    techBarObs.observe(document.getElementById('techGrid'));
+
+    // Filter buttons
+    document.getElementById('techFilters').addEventListener('click', e => {
+      const btn = e.target.closest('.tech-filter');
+      if (!btn) return;
+      document.querySelectorAll('.tech-filter').forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      buildTechGrid(btn.dataset.cat);
+    });
+
+    /* ══════════════════════════════════════════
+       SOFT SKILLS ACCORDION
+    ══════════════════════════════════════════ */
+    const SOFT_SKILLS = [
+      {
+        emoji: '🤝',
+        title: 'Trabajo en equipo',
+        tagline: 'Conflictos productivos y dailies que sí funcionan',
+        story: 'En el desarrollo de EME tuve un desacuerdo con el cliente sobre el flujo de registro de alumnos: yo priorizaba simplicidad técnica, él quería más pasos visuales. En lugar de argumentar, preparé dos prototipos para la siguiente daily. Revisamos ambos juntos y elegimos el suyo, con una mejora de rendimiento que yo aporté.',
+        lesson: '<strong>Aprendí:</strong> No saltar de implementación a producción sin validar con quien usará el sistema. Hoy prototipo siempre antes de argumentar.',
+        quote: null,
+      },
+      {
+        emoji: '💬',
+        title: 'Comunicación',
+        tagline: 'Técnico para devs, claro para clientes',
+        story: 'Al explicarle a un cliente no técnico por qué necesitábamos OAuth en lugar de un login propio, usé esta analogía: "En lugar de hacerte una llave nueva, le preguntamos a quien ya te conoce si puedes entrar." Entendió en 30 segundos y aprobó el sprint sin más preguntas.',
+        lesson: '<strong>Aprendí:</strong> El nivel de detalle técnico debe ajustarse al interlocutor, no a lo que yo quiero explicar.',
+        quote: '"Ah, ahora sí lo entiendo. Procede."',
+      },
+      {
+        emoji: '🔄',
+        title: 'Adaptabilidad',
+        tagline: 'Fix temporal en 2 horas, solución permanente al día siguiente',
+        story: 'El webhook de Stripe en EME dejó de dispararse un viernes por la tarde tras un cambio de IP del servidor. En 2 horas implementé un fallback que notificaba al admin por email con los datos de la transacción pendiente. El lunes diagnostiqué la causa raíz y corregí la configuración de forma definitiva.',
+        lesson: '<strong>Aprendí:</strong> Un sistema roto que funciona "a medias" siempre supera a uno completamente detenido. El parche no reemplaza el diagnóstico, pero compra el tiempo para hacerlo bien.',
+        quote: null,
+      },
+      {
+        emoji: '⏱️',
+        title: 'Gestión del tiempo',
+        tagline: 'Freelance + universidad + proyectos propios en paralelo',
+        story: 'Mientras desarrollaba EME en producción, cursaba ingeniería en la UTZin  y avanzaba en proyectos personales. Usé un tablero Kanban personal con tres carriles: "hoy", "esta semana" y "cuando pueda". La regla era simple: primero lo que tiene consecuencias reales para un cliente, luego lo académico, después lo personal.',
+        lesson: '<strong>Aprendí:</strong> No todas las tareas tienen el mismo peso. Priorizar por impacto real, no por urgencia percibida, es lo que permite avanzar sin colapsarte.',
+        quote: null,
+      },
+      {
+        emoji: '🤲',
+        title: 'Empatía',
+        tagline: 'Escucha activa antes de escribir una línea de código',
+        story: 'La administradora de EME no encontraba dónde validar los comprobantes de pago porque yo los había puesto en un submenú que tenía sentido para mí. En lugar de explicarle dónde estaba, le pregunté cómo esperaba ella que funcionara. Rediseñé ese flujo en una tarde sin tocar el backend.',
+        lesson: '<strong>Aprendí:</strong> La UX correcta no es la que tiene sentido para quien la construye, sino para quien la usa a diario.',
+        quote: '"Ahora sí lo veo a la primera."',
+      },
+      {
+        emoji: '🌟',
+        title: 'Liderazgo',
+        tagline: 'Los avances pequeños también merecen celebrarse',
+        story: 'En el hackathon de Solana, después de horas de errores de compilación, logramos deployar el smart contract en devnet. Antes de continuar, paramos 5 minutos, mandamos un "¡Funcionó! 🎉" en el chat y tomamos un break. Ese momento de cierre nos dio el segundo aire para terminar el proyecto a tiempo.',
+        lesson: '<strong>Aprendí:</strong> Celebrar los logros intermedios no es perder tiempo — es mantener al equipo motivado para el siguiente obstáculo. El momentum importa.',
+        quote: null,
+      },
+      {
+        emoji: '📚',
+        title: 'Aprendizaje continuo',
+        tagline: 'Los errores documentados son experiencia; los que no, se repiten',
+        story: 'En las primeras semanas de EME guardé sesiones en cookies sin flags httpOnly ni Secure. Tres semanas después, revisando OWASP, me di cuenta del riesgo. Corregí el sistema y escribí en mi wiki personal: fecha → problema → por qué lo hice mal → cómo lo arreglé. He consultado esa nota en dos proyectos posteriores.',
+        lesson: '<strong>Aprendí:</strong> Un error que documentas vale más que diez aciertos que olvidas. El diario técnico es mi herramienta más barata y más útil.',
+        quote: null,
+      },
+      {
+        emoji: '🏗️',
+        title: 'Pensamiento arquitectónico',
+        tagline: 'Diseñar para los casos que el sistema no puede controlar',
+        story: 'En DevInsight, el modelo de datos para métricas DORA tenía un problema de fondo: GitHub no garantiza el orden de llegada de los eventos. Un webhook de deploy puede llegar antes que el PR que lo originó. En lugar de asumir orden, diseñé cada job para recalcular el snapshot completo con los datos disponibles en ese momento. Idempotente, convergente y correcto independientemente del orden. Para el multi-tenancy, en vez de esquemas separados usé un global scope automático: cada consulta filtra por workspace_id sin que el dev tenga que recordarlo.',
+        lesson: '<strong>Aprendí:</strong> Los sistemas distribuidos no se diseñan para el caso feliz — se diseñan para cuando las cosas llegan mal, tarde o dos veces. La idempotencia no es un detalle, es lo que hace que un sistema sea confiable en producción.',
+        quote: null,
+      },
+    ];
+
+    function buildSoftGrid() {
+      const grid = document.getElementById('softGrid');
+      SOFT_SKILLS.forEach(s => {
+        const card = document.createElement('div');
+        card.className = 'soft-card';
+        card.innerHTML = `
+          <div class="soft-card__header">
+            <span class="soft-card__emoji">${s.emoji}</span>
+            <div class="soft-card__meta">
+              <div class="soft-card__title">${s.title}</div>
+              <div class="soft-card__tagline">${s.tagline}</div>
+            </div>
+            <span class="soft-card__toggle">+</span>
+          </div>
+          <div class="soft-card__body">
+            <div class="soft-card__inner">
+              <div class="soft-card__content">
+                <p class="soft-card__story">${s.story}</p>
+                <div class="soft-card__lesson">${s.lesson}</div>
+                ${s.quote ? `<span class="soft-card__quote">"${s.quote}"</span>` : ''}
+              </div>
+            </div>
+          </div>`;
+        card.querySelector('.soft-card__header').addEventListener('click', () => {
+          const isOpen = card.classList.contains('is-open');
+          // Close others
+          document.querySelectorAll('.soft-card.is-open').forEach(c => c.classList.remove('is-open'));
+          if (!isOpen) card.classList.add('is-open');
+        });
+        grid.appendChild(card);
+      });
+    }
+
+    buildSoftGrid();
   </script>
 </body>
 </html>

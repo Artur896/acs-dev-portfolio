@@ -1506,6 +1506,15 @@ ul {
   line-height: 1.5;
 }
 
+.cert-card__meta {
+  font-size: 0.72rem;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  display: block;
+  margin-bottom: var(--space-2);
+  opacity: 0.85;
+}
+
 .cert-card__badge {
   font-size: 0.7rem;
   padding: 2px 10px;
@@ -4187,4 +4196,282 @@ a.contact__item-value:hover {
 
 [data-theme="light"] .wa-bubble__tooltip {
   background: #ffffff;
+}
+
+/* ============================================
+   TECH GRID — Interactive Stack
+   ============================================ */
+.tech-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: var(--space-6) 0 var(--space-8);
+}
+
+.tech-filter {
+  padding: 0.38rem 1.1rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  font-family: var(--font-mono);
+  cursor: pointer;
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+
+.tech-filter:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.tech-filter.is-active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  box-shadow: 0 0 14px var(--accent-glow);
+}
+
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--space-3);
+}
+
+.tech-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition), opacity 0.25s ease;
+}
+
+.tech-card:hover {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-accent);
+  transform: translateY(-3px);
+}
+
+.tech-card.is-hidden {
+  display: none;
+}
+
+.tech-card__top {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+
+.tech-card__icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  line-height: 1.25;
+}
+
+.tech-card__name {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.tech-card__track {
+  height: 3px;
+  background: var(--border-subtle);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.tech-card__fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  width: 0;
+  transition: width 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.tech-card__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-1);
+}
+
+.tech-card__badge {
+  font-size: 0.6rem;
+  font-family: var(--font-mono);
+  padding: 1px 7px;
+  border-radius: var(--radius-full);
+}
+
+.tech-card__badge--principal  { background: var(--accent-glow);          color: var(--accent); }
+.tech-card__badge--intermedio { background: var(--accent-2-glow);        color: var(--accent-2); }
+.tech-card__badge--explorando { background: rgba(245,158,11,0.12);       color: var(--warning); }
+.tech-card__badge--formacion  { background: rgba(152,152,184,0.1);       color: var(--text-secondary); }
+.tech-card__badge--aplicado   { background: rgba(245,158,11,0.12);       color: #f59e0b; }
+.tech-card__badge--basico     { background: rgba(152,152,184,0.1);       color: var(--text-secondary); }
+
+.tech-card__use {
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 75px;
+  opacity: 0;
+  transition: opacity var(--transition), color var(--transition);
+}
+
+.tech-card:hover .tech-card__use {
+  opacity: 1;
+  color: var(--accent-2);
+}
+
+/* ============================================
+   SOFT SKILLS — Acordeón
+   ============================================ */
+.soft-skills {
+  background: var(--bg-surface);
+}
+
+.soft-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--space-3);
+}
+
+.soft-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.soft-card.is-open {
+  border-color: var(--accent);
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+
+.soft-card__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  cursor: pointer;
+  user-select: none;
+  transition: background var(--transition);
+}
+
+.soft-card__header:hover { background: var(--bg-card-hover); }
+
+.soft-card__emoji {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.soft-card.is-open .soft-card__emoji {
+  transform: rotate(-8deg) scale(1.1);
+}
+
+.soft-card__meta { flex: 1; min-width: 0; }
+
+.soft-card__title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  transition: color var(--transition);
+  line-height: 1.3;
+}
+
+.soft-card.is-open .soft-card__title,
+.soft-card__header:hover .soft-card__title { color: var(--accent); }
+
+.soft-card__tagline {
+  font-size: 0.73rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.soft-card__toggle {
+  font-size: 1rem;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  transition: transform 0.3s ease, color var(--transition);
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.soft-card.is-open .soft-card__toggle {
+  transform: rotate(45deg);
+  color: var(--accent);
+}
+
+/* Acordeón con grid-template-rows */
+.soft-card__body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.soft-card.is-open .soft-card__body {
+  grid-template-rows: 1fr;
+}
+
+.soft-card__inner { overflow: hidden; }
+
+.soft-card__content {
+  padding: var(--space-4) var(--space-5) var(--space-5);
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.soft-card__story {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.soft-card__lesson {
+  background: var(--accent-glow);
+  border-left: 2px solid var(--accent);
+  padding: var(--space-3) var(--space-4);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 0.8rem;
+  color: var(--text-primary);
+  line-height: 1.55;
+}
+
+.soft-card__lesson strong { color: var(--accent); }
+
+.soft-card__quote {
+  font-size: 0.77rem;
+  color: var(--accent-2);
+  font-style: italic;
+  font-family: var(--font-mono);
+  padding: var(--space-2) var(--space-3);
+  background: var(--accent-2-glow);
+  border-radius: var(--radius-sm);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .tech-grid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  }
+  .soft-grid {
+    grid-template-columns: 1fr;
+  }
+  .tech-filters {
+    gap: var(--space-2);
+  }
 }

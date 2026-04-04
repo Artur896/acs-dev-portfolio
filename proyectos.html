@@ -382,6 +382,21 @@
       border-top: 1px solid var(--border-subtle);
       margin: var(--space-5) 0;
     }
+    .pc-modal__subtitle {
+      font-size: 0.9rem; color: var(--text-secondary);
+      line-height: 1.65; margin-bottom: var(--space-5);
+    }
+    .pc-modal__links { display: flex; gap: var(--space-3); margin-top: var(--space-5); flex-wrap: wrap; }
+    .pc-modal__list { margin-bottom: var(--space-5); }
+    .case-list { padding-left: var(--space-5); display: flex; flex-direction: column; gap: var(--space-3); }
+    .case-list li { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.65; }
+    .case-list li strong { color: var(--text-primary); }
+    .case-results { display: flex; flex-direction: column; gap: var(--space-3); margin-bottom: var(--space-5); }
+    .result-item__label { font-size: 0.78rem; font-family: var(--font-mono); color: var(--text-muted); margin-bottom: var(--space-1); }
+    .result-item__bar { background: var(--bg-surface); border-radius: var(--radius-sm); overflow: hidden; height: 28px; margin-bottom: 4px; }
+    .result-item__before { height: 100%; background: rgba(255,255,255,0.05); display: flex; align-items: center; padding: 0 var(--space-3); font-size: 0.78rem; color: var(--text-muted); }
+    .result-item__after  { height: 100%; background: rgba(0,212,170,0.15);   display: flex; align-items: center; padding: 0 var(--space-3); font-size: 0.78rem; color: var(--accent-2); }
+    .result-metric { font-size: 0.85rem; color: var(--text-secondary); padding: var(--space-2) var(--space-3); background: var(--bg-surface); border-radius: var(--radius-sm); border-left: 2px solid var(--accent); }
 
     /* ════════════════════════════
        BOTTOM CTA
@@ -495,14 +510,92 @@
         <!-- Filtros -->
         <div class="projs-filter" role="group" aria-label="Filtrar proyectos">
           <button class="projs-filter__btn active" data-filter="all">Todos</button>
+          <button class="projs-filter__btn" data-filter="personal">Personal</button>
+          <button class="projs-filter__btn" data-filter="freelance">Freelance</button>
+          <button class="projs-filter__btn" data-filter="web3">Web3</button>
           <button class="projs-filter__btn" data-filter="gobierno">Gobierno</button>
           <button class="projs-filter__btn" data-filter="educacion">Educación</button>
-          <button class="projs-filter__btn" data-filter="produccion">Producción</button>
         </div>
 
         <div class="projs-grid" id="projsGrid">
 
-          <!-- ══ Card 01: Geolocalización ══ -->
+          <!-- ══ Card 01: BlinkTasks ══ -->
+          <article class="pc-card" data-id="blink" data-category="personal web3">
+            <div class="pc-card__thumb">
+              <img src="img/blink.png" alt="BlinkTasks" loading="lazy" />
+            </div>
+            <div class="pc-card__body">
+              <h3 class="pc-card__title">BlinkTasks</h3>
+              <div class="pc-card__tags">
+                <span class="tag tag--primary">Hackathon</span>
+                <span class="tag tag--secondary">Solana · Web3</span>
+                <span class="tag tag--tertiary">Rust · Anchor</span>
+              </div>
+            </div>
+            <div class="pc-card__actions">
+              <button class="btn btn--ghost pc-detail-btn" data-id="blink">Ver detalles</button>
+              <a href="https://blink-tasks-fc7g.vercel.app" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Ver demo →</a>
+            </div>
+          </article>
+
+          <!-- ══ Card 02: Acuario Martinez ══ -->
+          <article class="pc-card" data-id="acuario" data-category="personal freelance">
+            <div class="pc-card__thumb">
+              <img src="img/Am.png" alt="Acuario Martinez" loading="lazy" />
+            </div>
+            <div class="pc-card__body">
+              <h3 class="pc-card__title">Acuario Martinez</h3>
+              <div class="pc-card__tags">
+                <span class="tag tag--primary">Freelance</span>
+                <span class="tag tag--secondary">E-commerce</span>
+                <span class="tag tag--tertiary">Supabase · JS</span>
+              </div>
+            </div>
+            <div class="pc-card__actions">
+              <button class="btn btn--ghost pc-detail-btn" data-id="acuario">Ver detalles</button>
+              <a href="https://acuario-martinez.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Ver sitio →</a>
+            </div>
+          </article>
+
+          <!-- ══ Card 03: Synapse ══ -->
+          <article class="pc-card" data-id="synapse" data-category="personal">
+            <div class="pc-card__thumb">
+              <img src="img/synapse.png" alt="Synapse" loading="lazy" />
+            </div>
+            <div class="pc-card__body">
+              <h3 class="pc-card__title">Synapse</h3>
+              <div class="pc-card__tags">
+                <span class="tag tag--primary">Personal · SaaS</span>
+                <span class="tag tag--secondary">Full Stack</span>
+                <span class="tag tag--tertiary">React · Node.js</span>
+              </div>
+            </div>
+            <div class="pc-card__actions">
+              <button class="btn btn--ghost pc-detail-btn" data-id="synapse">Ver detalles</button>
+              <a href="https://synapse-pearl-zeta.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Ver sitio →</a>
+            </div>
+          </article>
+
+          <!-- ══ Card 04: PlayRoom ══ -->
+          <article class="pc-card" data-id="playroom" data-category="personal">
+            <div class="pc-card__thumb">
+              <img src="img/playroom.png" alt="PlayRoom" loading="lazy" />
+            </div>
+            <div class="pc-card__body">
+              <h3 class="pc-card__title">PlayRoom</h3>
+              <div class="pc-card__tags">
+                <span class="tag tag--primary">Proyecto Personal</span>
+                <span class="tag tag--secondary">Juegos · Tiempo Real</span>
+                <span class="tag tag--tertiary">React · Socket.io</span>
+              </div>
+            </div>
+            <div class="pc-card__actions">
+              <button class="btn btn--ghost pc-detail-btn" data-id="playroom">Ver detalles</button>
+              <a href="https://payroom-l8gp.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Ver demo →</a>
+            </div>
+          </article>
+
+          <!-- ══ Card 05: Geolocalización ══ -->
           <article class="pc-card" data-id="geo" data-category="gobierno produccion">
             <div class="pc-card__thumb pc-card__thumb--gradient pc-card__thumb--geo">
               <div class="pc-card__thumb-icon">
@@ -630,6 +723,170 @@
        2. Agrega una <article class="pc-card"> en el HTML
     ══════════════════════════════════ */
     const PROJECT_DATA = {
+      blink: {
+        title: 'BlinkTasks',
+        subtitle: 'Gestión de tareas sobre la blockchain de Solana usando Solana Actions y Blinks — construido en hackathon oficial de Solana.',
+        tags: [
+          { text: 'Hackathon', cls: 'tag--primary'   },
+          { text: 'Solana',    cls: 'tag--secondary' },
+          { text: 'Web3',      cls: 'tag--secondary' },
+        ],
+        problem: 'Explorar gestión de tareas colaborativas en blockchain pública: acciones verificables sin intermediarios, accesibles desde cualquier URL con Solana Blinks — sin necesidad de abrir una dApp.',
+        arch: [
+          { label: 'Blinks UI', sub: 'Actions API',    cls: 'arch-node--frontend' },
+          { label: 'Anchor',    sub: 'Smart Contract', cls: 'arch-node--backend'  },
+          { label: 'Solana',    sub: 'Devnet',         cls: 'arch-node--db'       },
+        ],
+        process: [
+          { title: 'Anchor + Rust',  desc: 'Smart contract on-chain que gestiona creación, asignación y completado de tareas.' },
+          { title: 'Solana Blinks',  desc: 'Operación de tareas desde una URL embebible en cualquier plataforma sin abrir una dApp.' },
+          { title: 'Solana Actions', desc: 'Endpoints REST que traducen interacciones en transacciones firmadas enviadas a la red.' },
+        ],
+        challenge: 'Integrar el flujo de firma de transacciones dentro de una UX fluida, sin exponer complejidad blockchain al usuario. Construido bajo la presión de tiempo de un hackathon.',
+        results: [
+          { type: 'metric', label: 'Contexto', value: 'Hackathon oficial de Solana' },
+          { type: 'metric', label: 'Deploy',   value: 'Live en Vercel · Smart contract en Devnet' },
+        ],
+        stack: [
+          { text: 'Rust',           cls: 'tag--tertiary'  },
+          { text: 'Anchor',         cls: 'tag--secondary' },
+          { text: 'Solana',         cls: 'tag--secondary' },
+          { text: 'Solana Actions', cls: 'tag--secondary' },
+          { text: 'Blinks',         cls: 'tag--secondary' },
+          { text: 'Vercel',         cls: 'tag--tertiary'  },
+        ],
+        links: [
+          { text: 'Ver demo →', url: 'https://blink-tasks-fc7g.vercel.app',    cls: 'btn--primary' },
+          { text: 'GitHub',     url: 'https://github.com/Artur896/BlinkTasks', cls: 'btn--ghost'   },
+        ],
+      },
+      acuario: {
+        title: 'Acuario Martinez',
+        subtitle: 'Landing page animada con catálogo digital y panel de administración para tienda especializada en peces ornamentales y accesorios para acuario.',
+        tags: [
+          { text: 'Freelance',        cls: 'tag--primary'   },
+          { text: 'E-commerce',       cls: 'tag--secondary' },
+          { text: 'Catálogo Digital', cls: 'tag--secondary' },
+        ],
+        problem: 'La tienda no tenía presencia digital. Los clientes no podían consultar productos sin visitar físicamente el local, y las reservas se hacían solo por llamada. Sin inventario en línea, sin gestión de pedidos y sin catálogo fuera del local.',
+        arch: [
+          { label: 'Supabase',     sub: 'DB + Admin',             cls: 'arch-node--frontend' },
+          { label: 'HTML/CSS/JS',  sub: 'Interfaz + Animaciones', cls: 'arch-node--backend'  },
+          { label: 'WhatsApp API', sub: 'Reservas automáticas',   cls: 'arch-node--db'       },
+        ],
+        process: [
+          { title: 'Landing page animada',    desc: 'Pantalla de carga tipo acuario con llenado de agua, peces con animaciones independientes, burbujas flotantes y revelado por scroll.' },
+          { title: 'Catálogo digital',        desc: 'Filtros por categoría, búsqueda en tiempo real, tarjetas con imagen, precio y botón de reserva directa por WhatsApp.' },
+          { title: 'Sistema de reservas',     desc: 'Flujo completo desde modal de producto hasta mensaje pre-armado en WhatsApp, con registro automático del pedido en la base de datos.' },
+          { title: 'Panel de administración', desc: 'Auth con Supabase, CRUD de productos y categorías, subida de imágenes a Supabase Storage, gestión de pedidos con estados y dashboard con estadísticas.' },
+        ],
+        challenge: 'Construir una experiencia visual inmersiva — peces animados, llenado de agua, burbujas — usando solo HTML, CSS y JS vanilla sin ninguna librería de animación. Integrar Supabase como BaaS completo (DB + Auth + Storage) para eliminar la necesidad de servidor propio y mantener el costo cercano a cero.',
+        results: [
+          { type: 'bar',    label: 'Presencia digital',  before: 'Ninguna', after: 'Online 24/7' },
+          { type: 'metric', label: 'Reservas',           value: 'Solo por llamada → WhatsApp automatizado' },
+          { type: 'metric', label: 'Gestión de pedidos', value: 'Manual → Panel web en tiempo real' },
+          { type: 'metric', label: 'Costo servidor',     value: '— → $0 (Supabase free tier)' },
+        ],
+        stack: [
+          { text: 'HTML',             cls: 'tag--primary'   },
+          { text: 'CSS',              cls: 'tag--primary'   },
+          { text: 'JavaScript',       cls: 'tag--primary'   },
+          { text: 'Supabase',         cls: 'tag--secondary' },
+          { text: 'PostgreSQL',       cls: 'tag--secondary' },
+          { text: 'Supabase Auth',    cls: 'tag--secondary' },
+          { text: 'Supabase Storage', cls: 'tag--secondary' },
+          { text: 'Vercel',           cls: 'tag--tertiary'  },
+        ],
+        links: [
+          { text: 'Ver sitio →', url: 'https://acuario-martinez.vercel.app/', cls: 'btn--primary' },
+        ],
+      },
+      synapse: {
+        title: 'Synapse',
+        subtitle: 'Editor de mapas mentales y conceptuales con generación automática desde texto libre o Wikipedia, motor de layout propio y exportación en múltiples formatos.',
+        tags: [
+          { text: 'Personal · SaaS',    cls: 'tag--primary'   },
+          { text: 'Herramienta Visual', cls: 'tag--secondary' },
+          { text: 'Full Stack',         cls: 'tag--secondary' },
+        ],
+        problem: 'Las herramientas existentes de mapas mentales son demasiado simples o requieren suscripciones de pago para funciones básicas. La alternativa era construir desde cero un editor visual potente que generara estructuras automáticamente desde texto, sin depender de APIs de IA externas ni de costos por uso.',
+        arch: [
+          { label: 'React · ReactFlow', sub: 'Canvas interactivo', cls: 'arch-node--frontend' },
+          { label: 'Node.js · Express', sub: 'API REST CRUD',      cls: 'arch-node--backend'  },
+          { label: 'MySQL',             sub: 'Persistencia',       cls: 'arch-node--db'       },
+        ],
+        process: [
+          { title: 'Canvas interactivo',    desc: 'Editor basado en ReactFlow con nodos arrastrables, conexiones entre handles, edición inline, menú contextual (colores, imágenes, eliminar) y minimapa.' },
+          { title: 'NLP vanilla JS',        desc: 'Motor propio sin librerías externas que extrae temas y conceptos desde texto en español usando regex y filtrado de stopwords.' },
+          { title: 'Integración Wikipedia', desc: 'Búsqueda y consumo de la API pública en español; el artículo se procesa con el motor NLP y se convierte en mapa estructurado.' },
+          { title: 'Motor de layout',       desc: 'Dos algoritmos — bilateral radial para mapas mentales y jerárquico por niveles para conceptuales — calculados con Zustand como store central.' },
+          { title: 'Exportación cliente',   desc: 'PNG (2×), JPG, PDF con orientación automática y JSON, renderizados del lado del cliente con html2canvas y jsPDF.' },
+        ],
+        challenge: 'Implementar el motor NLP y los algoritmos de layout sin bibliotecas especializadas. El mayor reto fue calcular posiciones de nodos dinámicamente evitando solapamientos, y coordinar el estado global del canvas en una sola store de Zustand sin degradar el rendimiento.',
+        results: [
+          { type: 'bar',    label: 'Generación de mapa', before: 'Manual, nodo por nodo', after: 'Automática desde texto o Wikipedia' },
+          { type: 'metric', label: 'Exportación',        value: 'No disponible → PNG, JPG, PDF, JSON' },
+          { type: 'metric', label: 'Tipos de mapa',      value: '— → Mental (bilateral) + Conceptual (jerárquico)' },
+          { type: 'metric', label: 'Persistencia',       value: 'Solo en sesión → MySQL (CRUD completo)' },
+        ],
+        stack: [
+          { text: 'React 18',      cls: 'tag--primary'   },
+          { text: 'ReactFlow',     cls: 'tag--primary'   },
+          { text: 'Zustand',       cls: 'tag--primary'   },
+          { text: 'TailwindCSS',   cls: 'tag--secondary' },
+          { text: 'Vite',          cls: 'tag--secondary' },
+          { text: 'Node.js',       cls: 'tag--secondary' },
+          { text: 'Express',       cls: 'tag--secondary' },
+          { text: 'MySQL',         cls: 'tag--secondary' },
+          { text: 'html2canvas',   cls: 'tag--tertiary'  },
+          { text: 'jsPDF',         cls: 'tag--tertiary'  },
+          { text: 'Wikipedia API', cls: 'tag--tertiary'  },
+        ],
+        links: [
+          { text: 'Ver sitio →', url: 'https://synapse-pearl-zeta.vercel.app/', cls: 'btn--primary' },
+        ],
+      },
+      playroom: {
+        title: 'PlayRoom — Sala de Juegos Multijugador',
+        subtitle: 'Plataforma web full stack para jugar en tiempo real con amigos sin descargas, sin registro y sin esperas. Seis juegos clásicos, salas privadas con código y chat integrado.',
+        tags: [
+          { text: 'Proyecto Personal',   cls: 'tag--primary'   },
+          { text: 'Juegos Multijugador', cls: 'tag--secondary' },
+          { text: 'Full Stack',          cls: 'tag--secondary' },
+          { text: 'Tiempo Real',         cls: 'tag--secondary' },
+        ],
+        problem: 'Los juegos en línea con amigos suelen requerir instalación, cuentas o plataformas de terceros con publicidad agresiva. Quería construir desde cero una sala de juegos que funcionara directamente desde el navegador, con conexión instantánea por código, sin fricciones.',
+        arch: [
+          { label: 'React + TypeScript',  sub: 'Canvas de juegos', cls: 'arch-node--frontend' },
+          { label: 'Node.js / Socket.io', sub: 'WebSocket server', cls: 'arch-node--backend'  },
+          { label: 'Estado en memoria',   sub: 'Salas efímeras',   cls: 'arch-node--db'       },
+        ],
+        process: [
+          { title: 'Canvas de juegos',            desc: 'Seis juegos en React sin librerías de juego externas: Tres en Raya, UNO, Ajedrez, Pregunta Bomba, Dominó y ¿Quién soy? Cada uno con lógica de turnos, validación de jugadas y estados de victoria.' },
+          { title: 'Motor de ajedrez propio',     desc: 'Movimientos legales completos (enroque, al paso, promoción) implementados en TypeScript puro. Tablero sincronizado entre jugadores vía WebSocket.' },
+          { title: 'Sistema de salas',            desc: 'Salas efímeras en memoria con códigos de 6 caracteres, expiración a las 4 horas y limpieza periódica. El servidor no conoce las reglas de ningún juego.' },
+          { title: 'Comunicación en tiempo real', desc: 'Arquitectura event-driven con Socket.io — eventos de juego, chat y sincronización de estado con reconexión automática y detección de desconexión.' },
+        ],
+        challenge: 'Implementar seis juegos con reglas completas sin librerías. El reto principal fue el ajedrez: calcular movimientos legales pieza a pieza incluyendo casos borde y sincronizar el estado de forma determinista entre dos clientes. El segundo reto fue un protocolo de eventos WebSocket genérico para seis juegos distintos.',
+        results: [
+          { type: 'bar',    label: 'Acceso',              before: 'Descarga / cuenta requerida', after: 'Directo desde el navegador' },
+          { type: 'metric', label: 'Juegos disponibles',  value: '— → 6 juegos clásicos completos' },
+          { type: 'metric', label: 'Motor de ajedrez',    value: '— → Implementación propia en TypeScript' },
+          { type: 'metric', label: 'Sesión',              value: '— → Salas activas hasta 4 horas' },
+        ],
+        stack: [
+          { text: 'React 18',      cls: 'tag--primary'   },
+          { text: 'TypeScript',    cls: 'tag--primary'   },
+          { text: 'Zustand',       cls: 'tag--primary'   },
+          { text: 'Node.js',       cls: 'tag--secondary' },
+          { text: 'Socket.io',     cls: 'tag--secondary' },
+          { text: 'Tailwind CSS',  cls: 'tag--secondary' },
+          { text: 'Vite',          cls: 'tag--secondary' },
+        ],
+        links: [
+          { text: 'Ver demo →', url: 'https://payroom-l8gp.vercel.app/', cls: 'btn--primary' },
+        ],
+      },
       geo: {
         title: 'Sistema de Geolocalización Gubernamental',
         tags: [
@@ -680,47 +937,70 @@
       const d = PROJECT_DATA[id];
       if (!d) return '';
 
-      const tagsHTML = d.tags
-        .map(t => `<span class="tag ${t.cls}">${t.text}</span>`)
-        .join('');
+      const tagsHTML = d.tags.map(t => `<span class="tag ${t.cls}">${t.text}</span>`).join('');
+      const archHTML = d.arch.map((n, i) => {
+        const arrow = i < d.arch.length - 1 ? '<div class="arch-arrow">→</div>' : '';
+        return `<div class="arch-node ${n.cls}">${n.label}<br/><small>${n.sub}</small></div>${arrow}`;
+      }).join('');
+      const stackHTML = d.stack.map(t => `<span class="tag ${t.cls}">${t.text}</span>`).join('');
 
-      const archHTML = d.arch
-        .map((n, i) => {
-          const arrow = i < d.arch.length - 1
-            ? '<div class="arch-arrow">→</div>'
-            : '';
-          return `<div class="arch-node ${n.cls}">${n.label}<br/><small>${n.sub}</small></div>${arrow}`;
-        })
-        .join('');
+      // Rich format (problem / process / challenge / results / links)
+      if (d.problem) {
+        const processHTML = d.process.map(p => `<li><strong>${p.title}:</strong> ${p.desc}</li>`).join('');
+        const resultsHTML = (d.results || []).map(r => r.type === 'bar'
+          ? `<div class="result-item">
+               <div class="result-item__label">${r.label}</div>
+               <div class="result-item__bar"><div class="result-item__before" style="width:100%">${r.before}</div></div>
+               <div class="result-item__bar"><div class="result-item__after" style="width:80%">${r.after}</div></div>
+             </div>`
+          : `<div class="result-item">
+               <div class="result-item__label">${r.label}</div>
+               <div class="result-metric">${r.value}</div>
+             </div>`
+        ).join('');
+        const linksHTML = (d.links || []).length
+          ? `<div class="pc-modal__links">${d.links.map(l =>
+              `<a href="${l.url}" target="_blank" rel="noopener noreferrer" class="btn ${l.cls} btn--sm">${l.text}</a>`
+            ).join('')}</div>`
+          : '';
+        return `
+          <div class="pc-modal__tags">${tagsHTML}</div>
+          <h2 class="pc-modal__title">${d.title}</h2>
+          <p class="pc-modal__subtitle">${d.subtitle}</p>
+          <hr class="pc-modal__divider"/>
+          <span class="pc-modal__section-label">🎯 El Problema</span>
+          <p class="pc-modal__desc">${d.problem}</p>
+          <span class="pc-modal__section-label">⚙️ El Proceso</span>
+          <div class="architecture pc-modal__arch">${archHTML}</div>
+          <ul class="case-list pc-modal__list">${processHTML}</ul>
+          <span class="pc-modal__section-label">🔥 El Desafío</span>
+          <p class="pc-modal__desc">${d.challenge}</p>
+          <hr class="pc-modal__divider"/>
+          <span class="pc-modal__section-label">📊 Resultados</span>
+          <div class="case-results">${resultsHTML}</div>
+          <hr class="pc-modal__divider"/>
+          <span class="pc-modal__section-label">🔨 Stack</span>
+          <div class="pc-modal__stack">${stackHTML}</div>
+          ${linksHTML}
+        `;
+      }
 
-      const stackHTML = d.stack
-        .map(t => `<span class="tag ${t.cls}">${t.text}</span>`)
-        .join('');
-
+      // Simple format (desc / arch / stack / url)
       const urlBtn = d.url
         ? `<a href="${d.url}" target="_blank" rel="noopener noreferrer"
-              class="btn btn--primary btn--sm" style="margin-top:var(--space-2)">
-              Ver sitio →
-           </a>`
+              class="btn btn--primary btn--sm" style="margin-top:var(--space-2)">Ver sitio →</a>`
         : '';
-
       return `
         <div class="pc-modal__tags">${tagsHTML}</div>
         <h2 class="pc-modal__title">${d.title}</h2>
-
         <p class="pc-modal__section-label">Descripción</p>
         <p class="pc-modal__desc">${d.desc}</p>
-
         <hr class="pc-modal__divider"/>
-
         <p class="pc-modal__section-label">Arquitectura</p>
         <div class="architecture pc-modal__arch">${archHTML}</div>
-
         <hr class="pc-modal__divider"/>
-
         <p class="pc-modal__section-label">Stack</p>
         <div class="pc-modal__stack">${stackHTML}</div>
-
         ${urlBtn}
       `;
     }
