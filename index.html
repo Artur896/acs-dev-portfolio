@@ -15,6 +15,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@2/dist/iconify-icon.min.js" defer></script>
   <style>
     /* ════════════════════════════
        PROJECT CARD (pc-card)
@@ -542,23 +543,23 @@
         <!-- ══ GRID DE PROYECTOS ══ -->
         <div class="projs-grid" style="margin-top:var(--space-8)">
 
-          <!-- Card 00: DevInsight -->
-          <article class="pc-card" data-id="devinsight">
+          <!-- Card 00: Rompelo -->
+          <article class="pc-card" data-id="rompelo">
             <div class="pc-card__thumb">
-              <img src="img/devinsight.png" alt="DevInsight — Métricas DORA" loading="lazy" />
+              <img src="img/rompelo.png" alt="Rompelo — Aprende Programando en el Navegador" loading="lazy" />
             </div>
             <div class="pc-card__body">
-              <h3 class="pc-card__title">DevInsight — Métricas DORA</h3>
+              <h3 class="pc-card__title">Rompelo — Aprende Programando en el Navegador</h3>
               <div class="pc-card__tags">
                 <span class="tag tag--primary">Proyecto Personal</span>
-                <span class="tag tag--secondary">SaaS · DevOps</span>
-                <span class="tag tag--tertiary">Laravel · Vue 3</span>
+                <span class="tag tag--secondary">Educación · Full Stack</span>
+                <span class="tag tag--tertiary">Next.js · WASM</span>
               </div>
-              <p class="pc-card__result">↗ Métricas DORA en tiempo real · Multi-tenant · Setup &lt; 2 min</p>
+              <p class="pc-card__result">↗ 11 cursos · 149 lecciones · 4 runtimes reales en el navegador</p>
             </div>
             <div class="pc-card__actions">
-              <button class="btn btn--ghost pc-detail-btn" data-id="devinsight">Ver detalles</button>
-              <a href="https://devinsight-34mi.onrender.com/" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Ver demo →</a>
+              <button class="btn btn--ghost pc-detail-btn" data-id="rompelo">Ver detalles</button>
+              <a href="https://rompelo-web.vercel.app" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Ver sitio →</a>
             </div>
           </article>
 
@@ -786,53 +787,55 @@
   <script src="js/main.js"></script>
   <script>
     const PROJECT_DATA = {
-      devinsight: {
-        title: 'DevInsight — Métricas DORA para Equipos de Desarrollo',
-        subtitle: 'Plataforma SaaS multi-tenant que conecta con GitHub para medir la productividad real de equipos usando las métricas DORA: frecuencia de despliegue, tiempo de entrega, tasa de fallos y tiempo de recuperación — todo en tiempo real.',
+      rompelo: {
+        title: 'Rompelo — Aprende a Programar Rompiendo Cosas, en el Navegador',
+        subtitle: 'Plataforma educativa full stack para aprender Git, Python, JavaScript, TypeScript, SQL y más — sin instalar nada, sin configurar nada, directo desde el navegador. Once cursos, 149 lecciones y cuatro runtimes reales corriendo en tu navegador.',
         tags: [
           { text: 'Proyecto Personal', cls: 'tag--primary'   },
-          { text: 'SaaS',              cls: 'tag--secondary' },
-          { text: 'DevOps',            cls: 'tag--secondary' },
+          { text: 'Educación',         cls: 'tag--secondary' },
           { text: 'Full Stack',        cls: 'tag--secondary' },
-          { text: 'Tiempo Real',       cls: 'tag--secondary' },
+          { text: 'Browser-native',    cls: 'tag--secondary' },
+          { text: 'Open Source',       cls: 'tag--tertiary'  },
         ],
-        problem: 'Los equipos de desarrollo raramente saben si están mejorando o empeorando. Las métricas DORA son el estándar de la industria para medir el rendimiento de entrega de software, pero calcularlas manualmente desde GitHub requiere horas de trabajo. Quería construir una herramienta que las genere automáticamente, en tiempo real, para cualquier equipo.',
+        problem: 'Las plataformas de cursos te dan video. Las de ejercicios te dan simulaciones con trucos de JavaScript. Ninguna te da código real corriendo en tu máquina — porque para eso necesitarías instalar Python, Git, un editor, configurar el PATH, resolver conflictos de versión... El setup mata las ganas antes de escribir una línea. Quería construir el gimnasio que me hubiera gustado tener: llega, escribe, rompe, aprende.',
         arch: [
-          { label: 'Laravel + Inertia.js', sub: 'Multi-tenant SaaS',   cls: 'arch-node--frontend' },
-          { label: 'Webhooks + Horizon',   sub: 'Ingesta híbrida',     cls: 'arch-node--backend'  },
-          { label: 'Redis + Reverb',       sub: 'DORA en tiempo real', cls: 'arch-node--db'       },
+          { label: 'Next.js 14 (App Router)', sub: 'Lecciones guiadas',    cls: 'arch-node--frontend' },
+          { label: 'Runtimes nativos',         sub: 'WASM / iframe',        cls: 'arch-node--backend'  },
+          { label: 'Validación en vivo',        sub: 'Progreso por usuario', cls: 'arch-node--db'       },
         ],
         process: [
-          { title: 'Ingesta híbrida',               desc: 'Los datos de GitHub llegan por dos vías: webhooks para eventos en tiempo real (push, PR, deploy) y polling REST para sincronización histórica inicial. Un sistema de colas con 4 prioridades (Horizon) procesa los eventos de forma asíncrona e idempotente — los jobs usan upsert para ser seguros ante re-ejecuciones.' },
-          { title: 'Multi-tenancy con workspace_id', desc: 'Arquitectura single-database donde cada tabla de tenant lleva workspace_id. Un trait BelongsToWorkspace aplica global scope automáticamente y un middleware resuelve el workspace desde el slug de la ruta, inyectándolo en el contenedor de Laravel.' },
-          { title: 'Métricas pre-calculadas',        desc: 'Las métricas DORA no se calculan on-the-fly — se materializan en una tabla metrics_snapshots vía UpdateMetricsSnapshotJob cada vez que llega un evento relevante. Las lecturas son O(1) independientemente del volumen de datos históricos.' },
-          { title: 'Tiempo real con Reverb',         desc: 'Canales privados por workspace sobre Laravel Reverb con Redis pub/sub como backend, lo que permite escalar a múltiples nodos sin perder eventos. Los dashboards se actualizan en vivo sin polling desde el cliente.' },
-          { title: 'Caché con tags',                 desc: 'Redis como capa de caché con tags por workspace (ws-{id}) y por repositorio (repo-{id}), lo que permite invalidación quirúrgica cuando llega un webhook sin vaciar todo el caché.' },
+          { title: 'Motor Git en el navegador',               desc: 'isomorphic-git corre un Git completamente funcional en el cliente — SHA-1 auténticos, objetos blob/tree/commit, estructura .git real. Los alumnos practican commit, rebase, cherry-pick y reflog exactamente igual que en su terminal, sin tocar el servidor.' },
+          { title: 'Python nativo con Pyodide',               desc: 'CPython 3.11 compilado a WebAssembly. No es una simulación: es el intérprete oficial, con stdlib completa, manejo de excepciones real y soporte de paquetes vía micropip. Primera carga lenta; después queda en caché como PWA.' },
+          { title: 'Sandbox JS y Live Preview',               desc: 'Código JavaScript corre en un iframe aislado sin acceso al DOM principal — ES2022, async/await, top-level await. El editor HTML/CSS/JS usa CodeMirror 6 con auto-save y hot reload: cada pulsación actualiza el preview al instante.' },
+          { title: 'Sistema de lecciones con validación automática', desc: 'Cada una de las 149 lecciones define criterios de aceptación que se verifican en tiempo real mientras el alumno escribe. Sin botón de "comprobar": el avance se desbloquea en cuanto el código cumple el objetivo. El historial de progreso se persiste por usuario con NextAuth (GitHub + Google).' },
+          { title: 'Rutas de carrera curadas',                desc: 'Cuatro learning paths estructurados — Iniciación a la Programación, Frontend Apprentice, DevOps Engineer y Fullstack Web Master — que agrupan cursos en secuencia progresiva con contexto de carrera.' },
         ],
-        challenge: 'Diseñar el modelo de datos para que las métricas DORA fueran precisas independientemente del orden de llegada de los eventos. GitHub no garantiza orden — un webhook de deploy puede llegar antes que el PR que lo originó. El segundo reto fue el multi-tenancy: garantizar aislamiento total de datos entre workspaces sin esquemas separados, usando scopes globales y middleware, sin que un bug pueda filtrar datos entre clientes.',
+        challenge: 'El mayor reto fue hacer que cuatro runtimes completamente distintos coexistieran de forma coherente en el mismo front, cada uno con su modelo de ejecución, su ciclo de vida y sus limitaciones de WASM. Git necesita un filesystem virtual (memfs/BrowserFS); Pyodide requiere un SharedArrayBuffer y cabeceras de aislamiento específicas; el sandbox JS necesita que el iframe esté en el mismo origen pero sin acceso al contexto padre. Coordinar eso sin que el alumno note ninguna fricción — y que funcione offline como PWA — fue el nudo de toda la arquitectura.',
         results: [
-          { type: 'bar',    label: 'Métricas DORA',         before: 'Cálculo manual en hojas de cálculo', after: 'Automáticas desde GitHub' },
-          { type: 'metric', label: 'Latencia de datos',     value: 'Días/semanas de retraso → Tiempo real vía webhooks' },
-          { type: 'metric', label: 'Configuración',         value: '— → Conexión en < 2 minutos' },
-          { type: 'metric', label: 'Escalabilidad',         value: '— → Multi-tenant, un servidor para N equipos' },
-          { type: 'metric', label: 'Fiabilidad de ingesta', value: '— → Jobs idempotentes, seguros ante fallos' },
+          { type: 'bar',    label: 'Setup',              before: 'Instalar Python, Git, editor',   after: 'Abrir el navegador' },
+          { type: 'bar',    label: 'Git real',           before: 'Terminal local',                 after: 'isomorphic-git en browser' },
+          { type: 'bar',    label: 'Python real',        before: 'CPython instalado',              after: 'Pyodide (WASM) en browser' },
+          { type: 'metric', label: 'Validación',         value: 'Manual / tests externos → Tiempo real, automática' },
+          { type: 'metric', label: 'Offline',            value: 'No aplica → PWA con cache de runtimes' },
+          { type: 'metric', label: 'Cursos disponibles', value: '— → 11 cursos · 149 lecciones' },
         ],
         stack: [
-          { text: 'Laravel 11',      cls: 'tag--primary'   },
-          { text: 'PHP',             cls: 'tag--primary'   },
-          { text: 'Inertia.js',      cls: 'tag--primary'   },
-          { text: 'Vue 3',           cls: 'tag--primary'   },
-          { text: 'Tailwind CSS',    cls: 'tag--secondary' },
-          { text: 'MySQL',           cls: 'tag--secondary' },
-          { text: 'Redis',           cls: 'tag--secondary' },
-          { text: 'Laravel Horizon', cls: 'tag--secondary' },
-          { text: 'Laravel Reverb',  cls: 'tag--secondary' },
-          { text: 'Stripe',          cls: 'tag--secondary' },
-          { text: 'GitHub API',      cls: 'tag--tertiary'  },
-          { text: 'Render',          cls: 'tag--tertiary'  },
+          { text: 'Next.js 14',          cls: 'tag--primary'   },
+          { text: 'React 18',            cls: 'tag--primary'   },
+          { text: 'TypeScript',          cls: 'tag--primary'   },
+          { text: 'Tailwind CSS',        cls: 'tag--secondary' },
+          { text: 'Framer Motion',       cls: 'tag--secondary' },
+          { text: 'NextAuth',            cls: 'tag--secondary' },
+          { text: 'isomorphic-git',      cls: 'tag--secondary' },
+          { text: 'Pyodide (CPython WASM)', cls: 'tag--secondary' },
+          { text: 'CodeMirror 6',        cls: 'tag--secondary' },
+          { text: 'xterm.js',            cls: 'tag--secondary' },
+          { text: 'Express.js',          cls: 'tag--tertiary'  },
+          { text: 'Redis',               cls: 'tag--tertiary'  },
+          { text: 'Monorepo (npm workspaces)', cls: 'tag--tertiary' },
         ],
         links: [
-          { text: 'Ver demo →', url: 'https://devinsight-34mi.onrender.com/', cls: 'btn--primary' },
+          { text: 'Ver sitio →', url: 'https://rompelo-web.vercel.app', cls: 'btn--primary' },
         ],
       },
       eme: {
@@ -1012,53 +1015,62 @@
        TECH GRID
     ══════════════════════════════════════════ */
     const TECHS = [
-      // Backend
-      { n:'Laravel',       i:'⚡', cat:'backend',  pct:92, lvl:'Principal',  use:'EME · DevInsight · Synapse' },
-      { n:'PHP',           i:'🐘', cat:'backend',  pct:88, lvl:'Principal',  use:'EME · Ferreteros' },
-      { n:'MySQL',         i:'🗄️', cat:'backend',  pct:85, lvl:'Principal',  use:'EME · Synapse · Ferreteros' },
-      { n:'Node.js',       i:'🟢', cat:'backend',  pct:72, lvl:'Intermedio', use:'Synapse · PlayRoom' },
-      { n:'Python',        i:'🐍', cat:'backend',  pct:65, lvl:'Intermedio', use:'Flask · Scripts · ML' },
-      { n:'Flask',         i:'🌶️', cat:'backend',  pct:60, lvl:'Intermedio', use:'Proyectos de datos' },
-      { n:'Redis',         i:'🔴', cat:'backend',  pct:72, lvl:'Intermedio', use:'DevInsight · Caché + Pub/Sub' },
-      // Frontend
-      { n:'JavaScript',    i:'🟡', cat:'frontend', pct:90, lvl:'Principal',  use:'Todos los proyectos' },
-      { n:'React',         i:'⚛️', cat:'frontend', pct:85, lvl:'Principal',  use:'Synapse · PlayRoom' },
-      { n:'HTML5 / CSS3',  i:'🎨', cat:'frontend', pct:92, lvl:'Principal',  use:'Todos los proyectos' },
-      { n:'TypeScript',    i:'🔷', cat:'frontend', pct:70, lvl:'Intermedio', use:'PlayRoom' },
-      { n:'Tailwind CSS',  i:'💨', cat:'frontend', pct:78, lvl:'Intermedio', use:'Synapse · PlayRoom' },
-      { n:'Zustand',       i:'🐻', cat:'frontend', pct:72, lvl:'Intermedio', use:'Synapse · PlayRoom' },
-      { n:'Vue 3',         i:'💚', cat:'frontend', pct:75, lvl:'Intermedio', use:'DevInsight' },
-      { n:'Inertia.js',    i:'🔀', cat:'frontend', pct:72, lvl:'Intermedio', use:'DevInsight' },
-      // Herramientas
-      { n:'Git / GitHub',  i:'🐙', cat:'tools',    pct:88, lvl:'Principal',  use:'Todos los proyectos' },
-      { n:'REST APIs',     i:'🔌', cat:'tools',    pct:88, lvl:'Principal',  use:'EME · Synapse · Acuario' },
-      { n:'Vercel',        i:'▲',  cat:'tools',    pct:80, lvl:'Intermedio', use:'Synapse · PlayRoom · Acuario' },
-      { n:'Supabase',      i:'⚡', cat:'tools',    pct:72, lvl:'Intermedio', use:'Acuario Martinez' },
-      { n:'Stripe',        i:'💳', cat:'tools',    pct:78, lvl:'Intermedio', use:'EME · DevInsight' },
-      { n:'PayPal API',    i:'💰', cat:'tools',    pct:70, lvl:'Intermedio', use:'EME' },
-      { n:'OAuth 2.0',     i:'🔑', cat:'tools',    pct:70, lvl:'Intermedio', use:'EME · Login Google' },
-      { n:'Docker',        i:'🐳', cat:'tools',    pct:65, lvl:'Intermedio', use:'Dev environment' },
-      { n:'Laravel Horizon',i:'🌅', cat:'tools',    pct:68, lvl:'Intermedio', use:'DevInsight · Colas' },
-      { n:'Laravel Reverb',i:'📡', cat:'tools',    pct:65, lvl:'Intermedio', use:'DevInsight · WebSockets' },
-      { n:'Render',        i:'▶',  cat:'tools',    pct:62, lvl:'Intermedio', use:'DevInsight · Deploy' },
-      { n:'AWS',           i:'☁️', cat:'tools',    pct:48, lvl:'Básico',     use:'Discovery Day' },
-      // Web3
-      { n:'Solana',        i:'◎',  cat:'web3',     pct:50, lvl:'Explorando', use:'BlinkTasks' },
-      { n:'Anchor',        i:'⚓', cat:'web3',     pct:45, lvl:'Explorando', use:'BlinkTasks' },
-      { n:'Rust',          i:'🦀', cat:'web3',     pct:40, lvl:'Explorando', use:'BlinkTasks' },
-      { n:'Blinks',        i:'⚡', cat:'web3',     pct:42, lvl:'Explorando', use:'BlinkTasks' },
-      // Seguridad
-      { n:'OWASP Top 10',  i:'🛡️', cat:'security', pct:70, lvl:'Intermedio', use:'Buenas prácticas' },
-      { n:'bcrypt',        i:'🔒', cat:'security', pct:80, lvl:'Intermedio', use:'EME · Synapse' },
-      { n:'JWT',           i:'🎫', cat:'security', pct:72, lvl:'Intermedio', use:'Autenticación' },
-      { n:'XSS / CSRF',    i:'🚧', cat:'security', pct:68, lvl:'Intermedio', use:'Prevención activa' },
-      { n:'SQL Injection',  i:'💉', cat:'security', pct:75, lvl:'Intermedio', use:'Queries preparadas' },
-      // IA / ML
-      { n:'pandas',        i:'🐼', cat:'ai',       pct:70, lvl:'Aplicado',   use:'Proyecto ML funcional' },
-      { n:'scikit-learn',  i:'🤖', cat:'ai',       pct:68, lvl:'Aplicado',   use:'Proyecto ML funcional' },
-      { n:'matplotlib',    i:'📊', cat:'ai',       pct:65, lvl:'Aplicado',   use:'Visualización de datos' },
-      { n:'ML Supervisado',i:'📈', cat:'ai',       pct:68, lvl:'Aplicado',   use:'Modelo en producción' },
-      { n:'Leaflet.js',    i:'🗺️', cat:'tools',    pct:68, lvl:'Intermedio', use:'Mapas geoespaciales' },
+      // Backend — Principal(88-100) → Aplicado(78-87) → Intermedio(65-77) → Básico(<65)
+      { n:'Laravel',        i:'logos:laravel',              cat:'backend',  pct:95, lvl:'Principal',  use:'DevInsight' },
+      { n:'PHP',            i:'logos:php',                  cat:'backend',  pct:94, lvl:'Principal',  use:'EME · Ferreteros · Control Escolar' },
+      { n:'MySQL',          i:'logos:mysql',                cat:'backend',  pct:93, lvl:'Principal',  use:'EME · DevInsight · Synapse · Ferreteros' },
+      { n:'Node.js',        i:'logos:nodejs-icon',          cat:'backend',  pct:88, lvl:'Principal',  use:'Rompelo · Synapse · PlayRoom' },
+      { n:'Python',         i:'logos:python',               cat:'backend',  pct:88, lvl:'Principal',  use:'Geolocalización Gubernamental · ML' },
+      { n:'PostgreSQL',     i:'logos:postgresql',           cat:'backend',  pct:85, lvl:'Aplicado',   use:'Acuario Martinez (Supabase)' },
+      { n:'Redis',          i:'logos:redis',                cat:'backend',  pct:72, lvl:'Intermedio', use:'Rompelo · DevInsight' },
+      { n:'Flask',          i:'logos:flask',                cat:'backend',  pct:70, lvl:'Intermedio', use:'Geolocalización Gubernamental' },
+      // Frontend — Principal(88-100) → Aplicado(78-87) → Intermedio(65-77)
+      { n:'HTML5 / CSS3',   i:'logos:html-5',               cat:'frontend', pct:95, lvl:'Principal',  use:'Todos los proyectos' },
+      { n:'JavaScript',     i:'logos:javascript',           cat:'frontend', pct:94, lvl:'Principal',  use:'Todos los proyectos' },
+      { n:'React',          i:'logos:react',                cat:'frontend', pct:90, lvl:'Principal',  use:'Rompelo · Synapse · PlayRoom' },
+      { n:'Next.js 14',     i:'logos:nextjs-icon',          cat:'frontend', pct:90, lvl:'Principal',  use:'Rompelo' },
+      { n:'Tailwind CSS',   i:'logos:tailwindcss-icon',     cat:'frontend', pct:88, lvl:'Principal',  use:'Rompelo · DevInsight · Synapse · PlayRoom' },
+      { n:'TypeScript',     i:'logos:typescript-icon',      cat:'frontend', pct:75, lvl:'Intermedio', use:'Rompelo · PlayRoom' },
+      { n:'Vue 3',          i:'logos:vue',                  cat:'frontend', pct:75, lvl:'Intermedio', use:'DevInsight' },
+      { n:'Inertia.js',     i:'logos:inertiajs',            cat:'frontend', pct:72, lvl:'Intermedio', use:'DevInsight' },
+      { n:'Zustand',        i:'simple-icons:zustand',       cat:'frontend', pct:72, lvl:'Intermedio', use:'Synapse · PlayRoom' },
+      { n:'ReactFlow',      i:'logos:react',                cat:'frontend', pct:65, lvl:'Intermedio', use:'Synapse' },
+      { n:'Framer Motion',  i:'logos:framer',               cat:'frontend', pct:65, lvl:'Intermedio', use:'Rompelo' },
+      // Herramientas — Principal(88-100) → Aplicado(78-87) → Intermedio(65-77) → Básico(<65)
+      { n:'Git / GitHub',   i:'logos:git-icon',          cat:'tools',    pct:95, lvl:'Principal',  use:'Todos los proyectos' },
+      { n:'REST APIs',      i:'mdi:api',                    cat:'tools',    pct:88, lvl:'Principal',  use:'Rompelo · EME · Synapse · Acuario' },
+      { n:'Vercel',         i:'logos:vercel-icon',          cat:'tools',    pct:82, lvl:'Aplicado',   use:'Rompelo · Synapse · PlayRoom · Acuario' },
+      { n:'Stripe',         i:'logos:stripe',               cat:'tools',    pct:78, lvl:'Aplicado',   use:'EME · DevInsight' },
+      { n:'Vite',           i:'logos:vitejs',               cat:'tools',    pct:75, lvl:'Intermedio', use:'Synapse · PlayRoom' },
+      { n:'OAuth 2.0',      i:'mdi:shield-key-outline',     cat:'tools',    pct:72, lvl:'Intermedio', use:'EME · Rompelo (NextAuth)' },
+      { n:'Socket.io',      i:'logos:socket-io',            cat:'tools',    pct:72, lvl:'Intermedio', use:'PlayRoom · Tiempo real' },
+      { n:'Supabase',       i:'logos:supabase-icon',        cat:'tools',    pct:72, lvl:'Intermedio', use:'Acuario Martinez' },
+      { n:'PayPal API',     i:'logos:paypal',               cat:'tools',    pct:70, lvl:'Intermedio', use:'EME' },
+      { n:'Laravel Horizon',i:'logos:laravel',              cat:'tools',    pct:68, lvl:'Intermedio', use:'DevInsight · Colas' },
+      { n:'Leaflet.js',     i:'logos:leaflet',              cat:'tools',    pct:68, lvl:'Intermedio', use:'Geolocalización Gubernamental' },
+      { n:'Laravel Reverb', i:'logos:laravel',              cat:'tools',    pct:65, lvl:'Intermedio', use:'DevInsight · WebSockets' },
+      { n:'Docker',         i:'logos:docker-icon',          cat:'tools',    pct:85, lvl:'Intermedio', use:'Dev environment' },
+      { n:'WebAssembly',    i:'logos:webassembly',          cat:'tools',    pct:62, lvl:'Básico',     use:'Rompelo (Pyodide)' },
+      { n:'Render',         i:'simple-icons:render',        cat:'tools',    pct:62, lvl:'Básico',     use:'DevInsight · Deploy' },
+      { n:'WebRTC',         i:'simple-icons:webrtc',        cat:'tools',    pct:60, lvl:'Básico',     use:'EME · Webinars en vivo' },
+      { n:'isomorphic-git', i:'logos:git-icon',             cat:'tools',    pct:70, lvl:'Intermedio',     use:'Rompelo · Git en browser' },
+      { n:'AWS',            i:'logos:aws',                  cat:'tools',    pct:66, lvl:'Intermedio',     use:'Discovery Day' },
+      // Web3 — Explorando
+      { n:'Solana',         i:'cryptocurrency-color:sol',   cat:'web3',     pct:50, lvl:'Explorando', use:'BlinkTasks' },
+      { n:'Anchor',         i:'mdi:anchor',                 cat:'web3',     pct:45, lvl:'Explorando', use:'BlinkTasks' },
+      { n:'Blinks',         i:'mdi:lightning-bolt',         cat:'web3',     pct:42, lvl:'Explorando', use:'BlinkTasks' },
+      { n:'Rust',           i:'logos:rust',                 cat:'web3',     pct:40, lvl:'Explorando', use:'BlinkTasks' },
+      // Seguridad — Aplicado(78-87) → Intermedio(65-77)
+      { n:'bcrypt',         i:'mdi:lock-check-outline',     cat:'security', pct:80, lvl:'Aplicado',   use:'EME · Synapse' },
+      { n:'SQL Injection',  i:'mdi:database-alert-outline', cat:'security', pct:75, lvl:'Intermedio', use:'Queries preparadas' },
+      { n:'JWT',            i:'logos:jwt-icon',             cat:'security', pct:72, lvl:'Intermedio', use:'Control Escolar · Autenticación' },
+      { n:'OWASP Top 10',   i:'simple-icons:owasp',         cat:'security', pct:70, lvl:'Intermedio', use:'Buenas prácticas' },
+      { n:'XSS / CSRF',     i:'mdi:shield-alert-outline',   cat:'security', pct:68, lvl:'Intermedio', use:'Prevención activa' },
+      // IA / ML — Principal(88-100) → Aplicado(78-87)
+      { n:'scikit-learn',   i:'simple-icons:scikitlearn',   cat:'ai',       pct:87, lvl:'Aplicado',  use:'Proyecto ML funcional' },
+      { n:'ML Supervisado', i:'mdi:chart-timeline-variant', cat:'ai',       pct:87, lvl:'Aplicado',   use:'Modelo en producción' },
+      { n:'matplotlib',     i:'logos:matplotlib',           cat:'ai',       pct:85, lvl:'Aplicado',   use:'Visualización de datos' },
+      { n:'pandas',         i:'logos:pandas-icon',          cat:'ai',       pct:80, lvl:'Aplicado',   use:'Proyecto ML funcional' },
     ];
 
     const CAT_ORDER  = ['backend','frontend','tools','web3','security','ai'];
@@ -1071,7 +1083,7 @@
       div.dataset.cat = t.cat;
       div.innerHTML = `
         <div class="tech-card__top">
-          <span class="tech-card__icon">${t.i}</span>
+          <span class="tech-card__icon"><iconify-icon icon="${t.i}" width="28" height="28" aria-hidden="true"></iconify-icon></span>
           <span class="tech-card__name">${t.n}</span>
         </div>
         <div class="tech-card__track">

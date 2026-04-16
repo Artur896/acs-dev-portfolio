@@ -519,6 +519,25 @@
 
         <div class="projs-grid" id="projsGrid">
 
+          <!-- ══ Card 00: DevInsight ══ -->
+          <article class="pc-card" data-id="devinsight" data-category="personal">
+            <div class="pc-card__thumb">
+              <img src="img/devinsight.png" alt="DevInsight — Métricas DORA" loading="lazy" />
+            </div>
+            <div class="pc-card__body">
+              <h3 class="pc-card__title">DevInsight — Métricas DORA</h3>
+              <div class="pc-card__tags">
+                <span class="tag tag--primary">Proyecto Personal</span>
+                <span class="tag tag--secondary">SaaS · DevOps</span>
+                <span class="tag tag--tertiary">Laravel · Vue 3</span>
+              </div>
+            </div>
+            <div class="pc-card__actions">
+              <button class="btn btn--ghost pc-detail-btn" data-id="devinsight">Ver detalles</button>
+              <a href="https://devinsight-34mi.onrender.com/" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Ver demo →</a>
+            </div>
+          </article>
+
           <!-- ══ Card 01: BlinkTasks ══ -->
           <article class="pc-card" data-id="blink" data-category="personal web3">
             <div class="pc-card__thumb">
@@ -723,6 +742,55 @@
        2. Agrega una <article class="pc-card"> en el HTML
     ══════════════════════════════════ */
     const PROJECT_DATA = {
+      devinsight: {
+        title: 'DevInsight — Métricas DORA para Equipos de Desarrollo',
+        subtitle: 'Plataforma SaaS multi-tenant que conecta con GitHub para medir la productividad real de equipos usando las métricas DORA: frecuencia de despliegue, tiempo de entrega, tasa de fallos y tiempo de recuperación — todo en tiempo real.',
+        tags: [
+          { text: 'Proyecto Personal', cls: 'tag--primary'   },
+          { text: 'SaaS',              cls: 'tag--secondary' },
+          { text: 'DevOps',            cls: 'tag--secondary' },
+          { text: 'Full Stack',        cls: 'tag--secondary' },
+          { text: 'Tiempo Real',       cls: 'tag--secondary' },
+        ],
+        problem: 'Los equipos de desarrollo raramente saben si están mejorando o empeorando. Las métricas DORA son el estándar de la industria para medir el rendimiento de entrega de software, pero calcularlas manualmente desde GitHub requiere horas de trabajo. Quería construir una herramienta que las genere automáticamente, en tiempo real, para cualquier equipo.',
+        arch: [
+          { label: 'Laravel + Inertia.js', sub: 'Multi-tenant SaaS',   cls: 'arch-node--frontend' },
+          { label: 'Webhooks + Horizon',   sub: 'Ingesta híbrida',     cls: 'arch-node--backend'  },
+          { label: 'Redis + Reverb',       sub: 'DORA en tiempo real', cls: 'arch-node--db'       },
+        ],
+        process: [
+          { title: 'Ingesta híbrida',               desc: 'Los datos de GitHub llegan por dos vías: webhooks para eventos en tiempo real (push, PR, deploy) y polling REST para sincronización histórica inicial. Un sistema de colas con 4 prioridades (Horizon) procesa los eventos de forma asíncrona e idempotente — los jobs usan upsert para ser seguros ante re-ejecuciones.' },
+          { title: 'Multi-tenancy con workspace_id', desc: 'Arquitectura single-database donde cada tabla de tenant lleva workspace_id. Un trait BelongsToWorkspace aplica global scope automáticamente y un middleware resuelve el workspace desde el slug de la ruta, inyectándolo en el contenedor de Laravel.' },
+          { title: 'Métricas pre-calculadas',        desc: 'Las métricas DORA no se calculan on-the-fly — se materializan en una tabla metrics_snapshots vía UpdateMetricsSnapshotJob cada vez que llega un evento relevante. Las lecturas son O(1) independientemente del volumen de datos históricos.' },
+          { title: 'Tiempo real con Reverb',         desc: 'Canales privados por workspace sobre Laravel Reverb con Redis pub/sub como backend, lo que permite escalar a múltiples nodos sin perder eventos. Los dashboards se actualizan en vivo sin polling desde el cliente.' },
+          { title: 'Caché con tags',                 desc: 'Redis como capa de caché con tags por workspace (ws-{id}) y por repositorio (repo-{id}), lo que permite invalidación quirúrgica cuando llega un webhook sin vaciar todo el caché.' },
+        ],
+        challenge: 'Diseñar el modelo de datos para que las métricas DORA fueran precisas independientemente del orden de llegada de los eventos. GitHub no garantiza orden — un webhook de deploy puede llegar antes que el PR que lo originó. El segundo reto fue el multi-tenancy: garantizar aislamiento total de datos entre workspaces sin esquemas separados, usando scopes globales y middleware, sin que un bug pueda filtrar datos entre clientes.',
+        results: [
+          { type: 'bar',    label: 'Métricas DORA',         before: 'Cálculo manual en hojas de cálculo', after: 'Automáticas desde GitHub' },
+          { type: 'metric', label: 'Latencia de datos',     value: 'Días/semanas de retraso → Tiempo real vía webhooks' },
+          { type: 'metric', label: 'Configuración',         value: '— → Conexión en < 2 minutos' },
+          { type: 'metric', label: 'Escalabilidad',         value: '— → Multi-tenant, un servidor para N equipos' },
+          { type: 'metric', label: 'Fiabilidad de ingesta', value: '— → Jobs idempotentes, seguros ante fallos' },
+        ],
+        stack: [
+          { text: 'Laravel 11',      cls: 'tag--primary'   },
+          { text: 'PHP',             cls: 'tag--primary'   },
+          { text: 'Inertia.js',      cls: 'tag--primary'   },
+          { text: 'Vue 3',           cls: 'tag--primary'   },
+          { text: 'Tailwind CSS',    cls: 'tag--secondary' },
+          { text: 'MySQL',           cls: 'tag--secondary' },
+          { text: 'Redis',           cls: 'tag--secondary' },
+          { text: 'Laravel Horizon', cls: 'tag--secondary' },
+          { text: 'Laravel Reverb',  cls: 'tag--secondary' },
+          { text: 'Stripe',          cls: 'tag--secondary' },
+          { text: 'GitHub API',      cls: 'tag--tertiary'  },
+          { text: 'Render',          cls: 'tag--tertiary'  },
+        ],
+        links: [
+          { text: 'Ver demo →', url: 'https://devinsight-34mi.onrender.com/', cls: 'btn--primary' },
+        ],
+      },
       blink: {
         title: 'BlinkTasks',
         subtitle: 'Gestión de tareas sobre la blockchain de Solana usando Solana Actions y Blinks — construido en hackathon oficial de Solana.',
