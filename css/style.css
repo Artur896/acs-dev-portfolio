@@ -315,6 +315,12 @@ ul {
   border: 1px solid rgba(245,158,11,0.2);
 }
 
+.tag--incubation {
+  background: rgba(56,189,248,0.1);
+  color: #38bdf8;
+  border: 1px solid rgba(56,189,248,0.25);
+}
+
 /* ============================================
    SECTION LAYOUT
    ============================================ */

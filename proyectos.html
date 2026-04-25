@@ -179,6 +179,11 @@
       background:
         linear-gradient(135deg, var(--bg-card) 0%, var(--bg-surface) 100%);
     }
+    .pc-card__thumb--corenet {
+      background:
+        radial-gradient(ellipse 70% 60% at 50% 40%, rgba(124,106,255,0.22) 0%, transparent 70%),
+        linear-gradient(135deg, #0d0a24 0%, #180d35 50%, #09070f 100%);
+    }
 
     /* Scanline texture on gradient thumbs */
     .pc-card__thumb--gradient::before {
@@ -519,7 +524,26 @@
 
         <div class="projs-grid" id="projsGrid">
 
-          <!-- ══ Card 00: DevInsight ══ -->
+          <!-- ══ Card 00: CoreNet ══ -->
+          <article class="pc-card" data-id="corenet" data-category="personal web3">
+            <div class="pc-card__thumb">
+              <img src="img/corenet.png" alt="CoreNet — Marketplace de Cómputo en Solana" loading="lazy" />
+            </div>
+            <div class="pc-card__body">
+              <h3 class="pc-card__title">CoreNet — Marketplace de Cómputo en Solana</h3>
+              <div class="pc-card__tags">
+                <span class="tag tag--primary">Certificación</span>
+                <span class="tag tag--secondary">DePIN · Blockchain</span>
+                <span class="tag tag--tertiary">Rust · Anchor · React</span>
+              </div>
+            </div>
+            <div class="pc-card__actions">
+              <button class="btn btn--ghost pc-detail-btn" data-id="corenet">Ver detalles</button>
+              <a href="https://core-net-jade.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn btn--primary">Ver demo →</a>
+            </div>
+          </article>
+
+          <!-- ══ Card 01: DevInsight ══ -->
           <article class="pc-card" data-id="devinsight" data-category="personal">
             <div class="pc-card__thumb">
               <img src="img/devinsight.png" alt="DevInsight — Métricas DORA" loading="lazy" />
@@ -549,6 +573,7 @@
                 <span class="tag tag--primary">Hackathon</span>
                 <span class="tag tag--secondary">Solana · Web3</span>
                 <span class="tag tag--tertiary">Rust · Anchor</span>
+                <span class="tag tag--incubation">Incubación</span>
               </div>
             </div>
             <div class="pc-card__actions">
@@ -742,6 +767,54 @@
        2. Agrega una <article class="pc-card"> en el HTML
     ══════════════════════════════════ */
     const PROJECT_DATA = {
+      corenet: {
+        title: 'CoreNet — Marketplace Descentralizado de Cómputo en Solana',
+        subtitle: 'Plataforma descentralizada donde cualquier persona con una PC potente puede monetizar su hardware ofreciendo cómputo bajo demanda, y cualquier cliente puede ejecutar trabajos reales sin depender de AWS, Google Cloud o Azure. Todo el flujo de pago corre on-chain en Solana con escrow automático.',
+        tags: [
+          { text: 'Certificación', cls: 'tag--primary'   },
+          { text: 'DePIN',         cls: 'tag--secondary' },
+          { text: 'Blockchain',    cls: 'tag--secondary' },
+          { text: 'Full Stack',    cls: 'tag--secondary' },
+          { text: 'Solana',        cls: 'tag--tertiary'  },
+        ],
+        problem: 'El cómputo en la nube está monopolizado por tres empresas. Es caro, centralizado y requiere tarjeta de crédito, KYC y contratos. Los proveedores independientes con hardware potente no tienen forma de monetizarlo directamente. CoreNet elimina al intermediario: el pago va del cliente al proveedor sin que nadie más lo toque.',
+        arch: [
+          { label: 'Anchor Program', sub: 'Rust · Lógica on-chain',  cls: 'arch-node--frontend' },
+          { label: 'Provider Daemon', sub: 'TypeScript · Docker',     cls: 'arch-node--backend'  },
+          { label: 'React Frontend',  sub: 'Marketplace + jobs',      cls: 'arch-node--db'       },
+        ],
+        process: [
+          { title: 'Programa Anchor en Rust',  desc: 'Siete instrucciones implementadas desde cero: initialize, register_node, submit_job, accept_job, complete_job, cancel_job y deregister_node. Tres PDAs con seeds deterministas: NetworkState global, NodeAccount por proveedor y JobAccount por job. Compatible con Anchor 1.0.1, la versión más reciente con cambios de API no documentados que requirieron análisis del código fuente del framework.' },
+          { title: 'Escrow on-chain',          desc: 'El pago en SOL se bloquea en la PDA del job al momento del submit mediante CPI al System Program. Solo se libera al proveedor cuando el job se marca como completado. Si el cliente cancela antes de que sea aceptado, recupera todo automáticamente al cerrar la cuenta.' },
+          { title: 'Provider Daemon',          desc: 'Proceso TypeScript que corre en la máquina del proveedor, monitorea la blockchain cada 5 segundos buscando jobs aceptados, descarga los inputs desde IPFS, ejecuta el trabajo dentro de un contenedor Docker con límites de CPU y RAM definidos en el job, sube los outputs a IPFS y llama complete_job on-chain. Soporta GPU con --gpus all mediante un flag en el spec.' },
+          { title: 'IPFS para archivos',       desc: 'El spec del job es un JSON almacenado on-chain con hasta 200 caracteres. Para archivos grandes (datasets, escenas 3D, videos) el cliente sube a IPFS y referencia el CID en el spec. El daemon descarga por CID antes de ejecutar y sube el output de vuelta. El frontend integra upload directo al nodo IPFS local con CORS configurado.' },
+          { title: 'Frontend React',           desc: 'Onboarding con selección de rol (Proveedor / Cliente) antes de conectar wallet. Marketplace que carga todos los nodos activos de la chain y permite seleccionarlos con un click. Job ID autogenerado basado en el historial del cliente. Sesión persistida en localStorage para evitar pantalla en blanco al recargar con wallet caducada.' },
+        ],
+        challenge: 'Anchor 1.0.1 introdujo cambios de API sin documentar. El macro #[program] genera pub use crate::__client_accounts esperando esos módulos en la raíz del crate, pero al tener cada instrucción en su propio archivo los módulos quedan en submódulos y el compilador falla con errores crípticos. La solución requirió leer el código fuente de anchor-syn para entender la generación de código y añadir pub(crate) use manualmente para cada instrucción en lib.rs. El segundo reto fue el diseño del escrow: los lamports de renta y de pago coexisten en la misma PDA, y la secuencia de transferencia de lamports antes del cierre de cuenta debe ser exacta para no dejar fondos bloqueados permanentemente.',
+        results: [
+          { type: 'bar',    label: 'Acceso a cómputo',  before: 'Cuenta en AWS / GCP requerida',               after: 'Directo desde el navegador' },
+          { type: 'bar',    label: 'Pago',               before: 'Tarjeta de crédito + contrato',               after: 'SOL en escrow, liberado al completar' },
+          { type: 'metric', label: 'Confianza',          value: 'Contrato legal con proveedor → Validación on-chain de CPU y RAM' },
+          { type: 'metric', label: 'Reputación',         value: 'Reseñas en plataforma centralizada → Score acumulado on-chain, inmutable' },
+          { type: 'metric', label: 'Jobs con archivos',  value: 'Upload a S3 / GCS → IPFS descentralizado con CID on-chain' },
+          { type: 'metric', label: 'Ejecución',          value: 'Servidor del proveedor → Docker con límites reales del job' },
+        ],
+        stack: [
+          { text: 'Rust',              cls: 'tag--tertiary'  },
+          { text: 'Anchor 1.0.1',      cls: 'tag--secondary' },
+          { text: 'Solana',            cls: 'tag--secondary' },
+          { text: 'TypeScript',        cls: 'tag--primary'   },
+          { text: 'React 18',          cls: 'tag--primary'   },
+          { text: 'Vite',              cls: 'tag--primary'   },
+          { text: 'IPFS (Kubo)',       cls: 'tag--secondary' },
+          { text: 'Docker',            cls: 'tag--secondary' },
+          { text: '@coral-xyz/anchor', cls: 'tag--tertiary'  },
+          { text: '@solana/web3.js',   cls: 'tag--tertiary'  },
+        ],
+        links: [
+          { text: 'Ver demo →', url: 'https://core-net-jade.vercel.app/', cls: 'btn--primary' },
+        ],
+      },
       devinsight: {
         title: 'DevInsight — Métricas DORA para Equipos de Desarrollo',
         subtitle: 'Plataforma SaaS multi-tenant que conecta con GitHub para medir la productividad real de equipos usando las métricas DORA: frecuencia de despliegue, tiempo de entrega, tasa de fallos y tiempo de recuperación — todo en tiempo real.',
