@@ -65,10 +65,14 @@
     }
     .projs-hero__title span { color: var(--accent); }
     .projs-hero__desc {
-      font-size: 1rem;
+      font-size: 0.96rem;
       color: var(--text-secondary);
       max-width: 480px;
-      line-height: 1.7;
+      line-height: 1.75;
+    }
+    .projs-hero__desc strong {
+      color: var(--text-primary);
+      font-weight: 600;
     }
 
     /* ════════════════════════════
@@ -504,7 +508,7 @@
         </a>
         <p class="projs-hero__tag">Proyectos adicionales</p>
         <h1 class="projs-hero__title">Más <span>trabajos</span></h1>
-        <p class="projs-hero__desc">Proyectos complementarios al portfolio principal — sistemas de producción, backend gubernamental y herramientas de gestión.</p>
+        <p class="projs-hero__desc">Proyectos complementarios — <strong>sistemas en producción</strong>, Web3, APIs backend y herramientas de gestión reales.</p>
       </div>
     </section>
 
@@ -565,7 +569,7 @@
           <!-- ══ Card 01: BlinkTasks ══ -->
           <article class="pc-card" data-id="blink" data-category="personal web3">
             <div class="pc-card__thumb">
-              <img src="img/blink.png" alt="BlinkTasks" loading="lazy" />
+              <img src="img/seleccion.png" alt="BlinkTasks — Seleccionado Solana Latam Labs" loading="lazy" />
             </div>
             <div class="pc-card__body">
               <h3 class="pc-card__title">BlinkTasks</h3>
@@ -686,6 +690,33 @@
             </div>
             <div class="pc-card__actions">
               <button class="btn btn--ghost pc-detail-btn" data-id="escolar">Ver detalles</button>
+            </div>
+          </article>
+
+          <!-- ══ Card: Users API ══ -->
+          <article class="pc-card" data-id="usersapi" data-category="personal">
+            <div class="pc-card__thumb pc-card__thumb--gradient pc-card__thumb--corenet">
+              <div class="pc-card__thumb-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 24 24"
+                     fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                     style="color:var(--accent)">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+              </div>
+            </div>
+            <div class="pc-card__body">
+              <h3 class="pc-card__title">Users API — REST con Spring Boot</h3>
+              <div class="pc-card__tags">
+                <span class="tag tag--primary">Proyecto Personal</span>
+                <span class="tag tag--secondary">Java · Spring Boot</span>
+                <span class="tag tag--tertiary">REST · Swagger</span>
+              </div>
+            </div>
+            <div class="pc-card__actions">
+              <button class="btn btn--ghost pc-detail-btn" data-id="usersapi">Ver detalles</button>
             </div>
           </article>
 
@@ -1049,6 +1080,48 @@
           { text: 'GeoJSON',    cls: 'tag--secondary' },
         ],
         url: null,
+      },
+      usersapi: {
+        title: 'Users API — REST con Spring Boot',
+        subtitle: 'API REST completa de gestión de usuarios construida con Java 17 y Spring Boot 3. Incluye CRUD, autenticación por RFC con contraseñas cifradas en AES, validaciones personalizadas con anotaciones propias y documentación Swagger/OpenAPI.',
+        tags: [
+          { text: 'Proyecto Personal', cls: 'tag--primary'   },
+          { text: 'Java · Spring Boot', cls: 'tag--secondary' },
+          { text: 'REST API',          cls: 'tag--secondary' },
+          { text: 'Intermedio',        cls: 'tag--tertiary'  },
+        ],
+        problem: 'Aprender Java a nivel intermedio construyendo algo real y no un "Hello World". El objetivo fue dominar Spring Boot, el patrón MVC, la validación con Jakarta Validation y el cifrado de datos en un proyecto de backend completo, sin frontend externo.',
+        arch: [
+          { label: 'Spring MVC',  sub: 'Controllers REST',  cls: 'arch-node--frontend' },
+          { label: 'Service Layer', sub: 'Lógica de negocio', cls: 'arch-node--backend'  },
+          { label: 'Repository',  sub: 'In-memory store',   cls: 'arch-node--db'       },
+        ],
+        process: [
+          { title: 'CRUD completo con PATCH parcial', desc: 'Endpoints GET (con sortedBy y filter), POST, PATCH y DELETE. El PATCH acepta un Map<String, Object> y actualiza solo los campos enviados, sin requerir el objeto completo.' },
+          { title: 'Validaciones personalizadas',     desc: 'Anotación @RfcFormat con su propio ConstraintValidator que valida el formato RFC mexicano. Anotación @AndresFormat para el formato de teléfono. Integradas con Jakarta Validation para que funcionen automáticamente con @Valid.' },
+          { title: 'Cifrado AES',                    desc: 'Contraseñas almacenadas cifradas con AES a través de AesUtil. El endpoint de login descifra en runtime y compara sin exponer el hash.' },
+          { title: 'Autenticación por RFC',          desc: 'Login vía POST /login con tax_id + password. Busca el usuario por RFC, descifra la contraseña y responde 200 o 401 según corresponda.' },
+          { title: 'Swagger / OpenAPI',              desc: 'Documentación automática con springdoc-openapi-starter-webmvc-ui disponible en /swagger-ui. Todos los endpoints documentados con sus tipos de respuesta.' },
+          { title: 'DTO + GlobalExceptionHandler',   desc: 'UserResponseDTO oculta campos sensibles (password) en las respuestas. GlobalExceptionHandler centraliza el manejo de errores de validación y errores 404.' },
+        ],
+        challenge: 'Implementar validaciones personalizadas con Jakarta Validation requirió entender el ciclo de vida de las anotaciones y ConstraintValidators en Spring. El segundo reto fue diseñar el PATCH parcial sin frameworks adicionales — usar Map<String, Object> y un switch expression fue la solución más limpia sin añadir dependencias.',
+        results: [
+          { type: 'bar',    label: 'Validación',         before: 'Manual en el controller',           after: 'Anotaciones propias con Jakarta' },
+          { type: 'metric', label: 'Endpoints',          value: 'GET · POST · PATCH · DELETE + /login' },
+          { type: 'metric', label: 'Seguridad',          value: 'Contraseñas cifradas AES · DTO sin exposición de datos' },
+          { type: 'metric', label: 'Documentación',      value: 'Swagger UI auto-generado en /swagger-ui' },
+        ],
+        stack: [
+          { text: 'Java 17',          cls: 'tag--primary'   },
+          { text: 'Spring Boot 3',    cls: 'tag--primary'   },
+          { text: 'Spring MVC',       cls: 'tag--primary'   },
+          { text: 'Jakarta Validation', cls: 'tag--secondary' },
+          { text: 'Lombok',           cls: 'tag--secondary' },
+          { text: 'OpenAPI / Swagger', cls: 'tag--secondary' },
+          { text: 'AES',              cls: 'tag--secondary' },
+          { text: 'Maven',            cls: 'tag--tertiary'  },
+        ],
+        links: [],
       },
       escolar: {
         title: 'Sistema de Control Escolar',

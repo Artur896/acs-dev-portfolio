@@ -174,60 +174,8 @@
     .tech-grid__group:first-child { margin-top: 0; }
 
     /* ════════════════════════════
-       SOFT SKILLS — MEJORAS
+       SOFT SKILLS — overrides vacíos (estilos en style.css)
     ════════════════════════════ */
-    .soft-card {
-      border-left: 3px solid transparent;
-      transition:
-        border-color var(--transition),
-        box-shadow var(--transition),
-        background var(--transition);
-    }
-    .soft-card:hover, .soft-card.is-open {
-      border-left-color: var(--accent);
-      box-shadow: -4px 0 24px rgba(124,106,255,0.08);
-    }
-    .soft-card__lesson {
-      background: rgba(124,106,255,0.07);
-      border-left: 2px solid var(--accent);
-      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-      padding: var(--space-3) var(--space-4);
-      font-size: 0.85rem;
-      line-height: 1.65;
-      margin-top: var(--space-3);
-    }
-    .soft-card__quote {
-      display: block;
-      margin-top: var(--space-3);
-      font-style: italic;
-      color: var(--accent-2);
-      font-size: 0.85rem;
-      padding-left: var(--space-3);
-      border-left: 2px solid var(--accent-2);
-    }
-    .soft-card__toggle {
-      font-size: 1.25rem;
-      line-height: 1;
-      color: var(--accent);
-      font-weight: 300;
-      transition: transform 0.3s cubic-bezier(0.22,1,0.36,1), color var(--transition);
-      flex-shrink: 0;
-    }
-    .soft-card.is-open .soft-card__toggle {
-      transform: rotate(45deg);
-    }
-    .soft-card__emoji {
-      font-size: 1.6rem;
-      flex-shrink: 0;
-      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25));
-    }
-    .soft-card__tagline {
-      font-size: 0.78rem;
-      color: var(--accent);
-      font-family: var(--font-mono);
-      letter-spacing: 0.02em;
-      margin-top: 2px;
-    }
   </style>
 </head>
 <body>
@@ -394,7 +342,7 @@
               Empecé a programar por curiosidad a los 17 años. Hoy, con casi 3 años de experiencia laboral real, construyo sistemas que resuelven problemas de negocio concretos.
             </p>
             <p class="about__text">
-              Soy Fullstack Developer con TSU en Tecnologías de la Información (Entornos Virtuales y Negocios Digitales), actualmente cursando Ingeniería en la Universidad Tecnológica de Zinacantepec. He trabajado en producción para el sector médico privado y para el Gobierno del Estado de México, usando <strong>Laravel, React, MySQL y Docker</strong>.
+              Soy Fullstack Developer con TSU en Tecnologías de la Información (Entornos Virtuales y Negocios Digitales), egresado Ingeniería en la Universidad Tecnológica de Zinacantepec. He trabajado en producción para el sector médico privado y para el Gobierno del Estado de México, usando <strong>Laravel, React, MySQL y Docker</strong>.
             </p>
             <p class="about__text">
               Llevo 4 años enfocado en programación — los últimos 2 años 8 meses en entornos laborales reales. Eso me dio algo que los cursos no enseñan: entender cuándo <em>no</em> usar una tecnología y cómo tomar decisiones técnicas que el negocio pueda costear y mantener.
@@ -487,7 +435,7 @@
         <div class="section__header">
           <span class="section__tag">02 — Stack Técnico</span>
           <h2 class="section__title">Tecnologías</h2>
-          <p class="section__subtitle">Filtra por área · hover en cada tarjeta para ver dónde la usé en producción.</p>
+          <p class="section__subtitle">Filtra por área — hover en cada tarjeta para ver <strong>dónde la usé en producción real</strong>.</p>
         </div>
         <!-- Filter tabs -->
         <div class="tech-filters" id="techFilters">
@@ -516,7 +464,7 @@
         <div class="section__header">
           <span class="section__tag">03 — Habilidades Blandas</span>
           <h2 class="section__title">Lo que no está en el código</h2>
-          <p class="section__subtitle">Haz clic en cada habilidad para ver el caso real detrás.</p>
+          <p class="section__subtitle">Cada habilidad respaldada por <strong>un caso real</strong> — haz clic para leer la historia.</p>
         </div>
         <!-- Soft skills grid — rendered by JS -->
         <div class="soft-grid" id="softGrid"></div>
@@ -537,7 +485,7 @@
         <div class="section__header">
           <span class="section__tag">04 — Proyectos</span>
           <h2 class="section__title">Estudios de caso</h2>
-          <p class="section__subtitle">No solo código — problemas reales, decisiones técnicas justificadas y resultados medibles.</p>
+          <p class="section__subtitle">No solo código — <strong>problemas reales, decisiones técnicas justificadas</strong> y resultados medibles.</p>
         </div>
 
         <!-- ══ GRID DE PROYECTOS ══ -->
@@ -667,12 +615,27 @@
               <span class="cert-card__badge">Titulado</span>
             </div>
           </div>
-          <div class="cert-card cert-card--progress">
+          <div class="cert-card">
+            <div class="cert-card__icon">⛓️</div>
+            <div class="cert-card__body">
+              <h3 class="cert-card__title">Solana Latam Builders Program</h3>
+              <span class="cert-card__meta">WayLearn · Solana Foundation — Abril 2026</span>
+              <p class="cert-card__desc">Bootcamp de desarrollo en Solana con Rust. BlinkTasks fue <strong>seleccionado para incubación</strong> en el Solana Latam Labs Program por WayLearn y Solana Foundation.</p>
+              <div style="display:flex;gap:0.5rem;flex-wrap:wrap;align-items:center;margin-top:0.5rem;">
+                <span class="cert-card__badge">Completado</span>
+                <button id="btnVerCert"
+                   style="background:none;border:none;cursor:pointer;font-family:var(--font-mono);font-size:0.72rem;color:var(--accent);letter-spacing:0.04em;padding:0;transition:opacity 0.2s"
+                   onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">Ver certificado →</button>
+              </div>
+            </div>
+          </div>
+          <div class="cert-card">
             <div class="cert-card__icon">🏛️</div>
             <div class="cert-card__body">
-              <h3 class="cert-card__title">Ingeniería en Entornos Virtuales</h3>
-              <p class="cert-card__desc">Universidad Tecnológica de Zinacantepec — Continuación de formación en desarrollo de software y arquitectura de sistemas.</p>
-              <span class="cert-card__badge cert-card__badge--progress">En curso</span>
+              <h3 class="cert-card__title">Ingeniería en Entornos Virtuales y Negocios Digitales</h3>
+              <span class="cert-card__meta">Universidad Tecnológica de Zinacantepec — 2026</span>
+              <p class="cert-card__desc">Titulado en Ingeniería en desarrollo de software y arquitectura de sistemas. Título físico en trámite.</p>
+              <span class="cert-card__badge">Titulado</span>
             </div>
           </div>
         </div>
@@ -689,7 +652,7 @@
         <div class="section__header">
           <span class="section__tag">06 — Contacto</span>
           <h2 class="section__title">¿Tienes un proyecto en mente?</h2>
-          <p class="section__subtitle">Abierto a empleo en equipo y proyectos freelance. Cuéntame qué necesitas — respondo en menos de 24 horas.</p>
+          <p class="section__subtitle">Disponible para <strong>empleo en equipo</strong> y proyectos freelance. Cuéntame qué necesitas — respondo en menos de 24 horas.</p>
         </div>
         <div class="contact__grid">
           <div class="contact__info">
@@ -781,6 +744,30 @@
         </svg>
       </button>
       <div id="pcModalContent"></div>
+    </div>
+  </div>
+
+  <!-- MODAL CERTIFICADO SOLANA -->
+  <div id="certModal" style="
+    display:none; position:fixed; inset:0; z-index:1000;
+    align-items:center; justify-content:center; padding:1.5rem;
+    background:rgba(0,0,0,0.82); backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);">
+    <div style="position:relative; max-width:720px; width:100%; border-radius:16px; overflow:hidden;
+                box-shadow:0 24px 80px rgba(0,0,0,0.6), 0 0 60px rgba(124,106,255,0.15);">
+      <button id="certModalClose" aria-label="Cerrar" style="
+        position:absolute; top:12px; right:12px; z-index:10;
+        width:32px; height:32px; border-radius:50%;
+        background:rgba(0,0,0,0.55); border:1px solid rgba(255,255,255,0.15);
+        color:#fff; cursor:pointer; font-size:1rem; display:flex;
+        align-items:center; justify-content:center; line-height:1;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 6 6 18M6 6l12 12"/>
+        </svg>
+      </button>
+      <img src="img/Cert_Solana.png" alt="Certificado Solana Latam Builders Program"
+           style="width:100%; display:block;" />
     </div>
   </div>
 
@@ -1023,6 +1010,8 @@
       { n:'Python',         i:'logos:python',               cat:'backend',  pct:88, lvl:'Principal',  use:'Geolocalización Gubernamental · ML' },
       { n:'PostgreSQL',     i:'logos:postgresql',           cat:'backend',  pct:85, lvl:'Aplicado',   use:'Acuario Martinez (Supabase)' },
       { n:'Redis',          i:'logos:redis',                cat:'backend',  pct:72, lvl:'Intermedio', use:'Rompelo · DevInsight' },
+      { n:'Java 17',        i:'logos:java',                 cat:'backend',  pct:68, lvl:'Intermedio', use:'Users API · Spring Boot' },
+      { n:'Spring Boot',    i:'logos:spring-icon',          cat:'backend',  pct:65, lvl:'Intermedio', use:'Users API · REST API' },
       { n:'Flask',          i:'logos:flask',                cat:'backend',  pct:70, lvl:'Intermedio', use:'Geolocalización Gubernamental' },
       // Frontend — Principal(88-100) → Aplicado(78-87) → Intermedio(65-77)
       { n:'HTML5 / CSS3',   i:'logos:html-5',               cat:'frontend', pct:95, lvl:'Principal',  use:'Todos los proyectos' },
@@ -1201,6 +1190,11 @@
       },
     ];
 
+    const TOGGLE_ICON = `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+      fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 5v14M5 12h14"/>
+    </svg>`;
+
     function buildSoftGrid() {
       const grid = document.getElementById('softGrid');
       SOFT_SKILLS.forEach(s => {
@@ -1208,25 +1202,28 @@
         card.className = 'soft-card';
         card.innerHTML = `
           <div class="soft-card__header">
-            <span class="soft-card__emoji">${s.emoji}</span>
+            <div class="soft-card__emoji-wrap">
+              <span class="soft-card__emoji">${s.emoji}</span>
+            </div>
             <div class="soft-card__meta">
               <div class="soft-card__title">${s.title}</div>
               <div class="soft-card__tagline">${s.tagline}</div>
             </div>
-            <span class="soft-card__toggle">+</span>
+            <span class="soft-card__toggle">${TOGGLE_ICON}</span>
           </div>
           <div class="soft-card__body">
             <div class="soft-card__inner">
-              <div class="soft-card__content">
+              <div class="soft-card__content${s.quote ? ' has-quote' : ''}">
                 <p class="soft-card__story">${s.story}</p>
-                <div class="soft-card__lesson">${s.lesson}</div>
-                ${s.quote ? `<span class="soft-card__quote">"${s.quote}"</span>` : ''}
+                <div class="soft-card__right-col">
+                  <div class="soft-card__lesson">${s.lesson}</div>
+                  ${s.quote ? `<div class="soft-card__quote">"${s.quote}"</div>` : ''}
+                </div>
               </div>
             </div>
           </div>`;
         card.querySelector('.soft-card__header').addEventListener('click', () => {
           const isOpen = card.classList.contains('is-open');
-          // Close others
           document.querySelectorAll('.soft-card.is-open').forEach(c => c.classList.remove('is-open'));
           if (!isOpen) card.classList.add('is-open');
         });
@@ -1235,6 +1232,19 @@
     }
 
     buildSoftGrid();
+
+    /* ── Modal certificado Solana ── */
+    const certModal      = document.getElementById('certModal');
+    const certModalClose = document.getElementById('certModalClose');
+    const btnVerCert     = document.getElementById('btnVerCert');
+
+    function openCertModal()  { certModal.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+    function closeCertModal() { certModal.style.display = 'none'; document.body.style.overflow = ''; }
+
+    btnVerCert.addEventListener('click', openCertModal);
+    certModalClose.addEventListener('click', closeCertModal);
+    certModal.addEventListener('click', e => { if (e.target === certModal) closeCertModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCertModal(); });
   </script>
 </body>
 </html>
